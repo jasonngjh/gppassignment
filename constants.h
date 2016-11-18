@@ -50,7 +50,7 @@ const UCHAR SHIP_DOWN_KEY = VK_DOWN;
 
 // graphic images
 const char NEBULA_IMAGE[] = "pictures\\orion.jpg";  // photo source NASA/courtesy of nasaimages.org 
-const char PLANET_IMAGE[] = "pictures\\planet.png"; // picture of planet
+const char PLANET_IMAGE[] = "pictures\\planet_wow.png"; // picture of planet
 const char SHIP_IMAGE[] = "pictures\\ship.png";   // spaceship
 
 const int  SHIP_START_FRAME = 0;         // starting frame of ship animation
@@ -62,7 +62,7 @@ const int  SHIP_HEIGHT = 32;             // height of ship image
 
 const float ROTATION_RATE = 180.0f;             // degrees per second
 const float SCALE_RATE = 0.2f;                  // % change per second
-const float SHIP_SPEED = 100.0f;                // pixels per second
+const float SHIP_SPEED = 500.0f;                // pixels per second
 const float SHIP_SCALE = 1.5f;                  // starting ship scale
 
 

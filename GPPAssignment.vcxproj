@@ -94,6 +94,14 @@
     <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\textureManager.cpp" />
     <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\winmain.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\orion.jpg" />
+    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\planet.png" />
+    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\planet_wow.png" />
+    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\ship.png" />
+    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\ship2.png" />
+    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\ship_wow.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

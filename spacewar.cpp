@@ -53,7 +53,7 @@ void Spacewar::initialize(HWND hwnd)
 	ship.setY(GAME_HEIGHT / 4);
 	ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	ship.setFrameDelay(SHIP_ANIMATION_DELAY);
-	ship.setDegrees(45.0f);                             // angle of ship
+	//ship.setDegrees(45.0f);                             // angle of ship
 
     return;
 }
@@ -65,16 +65,16 @@ void Spacewar::update()
 {
 	ship.update(frameTime);
 	// rotate ship
-	ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
+	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
 	// make ship smaller
-	ship.setScale(ship.getScale() - frameTime * SCALE_RATE);
+	//ship.setScale(ship.getScale() - frameTime * SCALE_RATE);
 	// move ship right
-	ship.setX(ship.getX() + frameTime * SHIP_SPEED);
+	/*ship.setX(ship.getX() + frameTime * SHIP_SPEED);
 	if (ship.getX() > GAME_WIDTH)               // if off screen right
 	{
 		ship.setX((float)-ship.getWidth());     // position off screen left
 		ship.setScale(SHIP_SCALE);              // set to starting size
-	}
+	}*/
 
 	//CONTROLS
 
@@ -134,7 +134,7 @@ void Spacewar::render()
 	graphics->spriteBegin();                // begin drawing sprites
 
 	nebula.draw();                          // add the orion nebula to the scene
-	planet.draw();                          // add the planet to the scene
+	//planet.draw();                          // add the planet to the scene
 	ship.draw();
 
 	graphics->spriteEnd();                  // end drawing sprites
