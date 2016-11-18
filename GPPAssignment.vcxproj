@@ -64,7 +64,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\constants.h" />
+    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\game.h" />
+    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\gameError.h" />
     <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\GitHubSyncTesting.h" />
+    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\graphics.h" />
+    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\image.h" />
+    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\input.h" />
+    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\spacewar.h" />
+    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\textureManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\game.cpp" />
+    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\graphics.cpp" />
+    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\image.cpp" />
+    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\input.cpp" />
+    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\spacewar.cpp" />
+    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\textureManager.cpp" />
+    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\winmain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
