@@ -44,25 +44,25 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\graphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\spacewar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\textureManager.cpp">
+    <ClCompile Include="textureManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="winmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="spacewar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
