@@ -62,7 +62,7 @@
     <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\textureManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\winmain.cpp">
+    <ClCompile Include="winmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

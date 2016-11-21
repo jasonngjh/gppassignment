@@ -92,7 +92,7 @@
     <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\input.cpp" />
     <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\spacewar.cpp" />
     <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\textureManager.cpp" />
-    <ClCompile Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\winmain.cpp" />
+    <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\orion.jpg" />
