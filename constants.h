@@ -48,21 +48,26 @@ const UCHAR SHIP_LEFT_KEY = VK_LEFT;
 const UCHAR SHIP_UP_KEY = VK_UP;
 const UCHAR SHIP_DOWN_KEY = VK_DOWN;
 
-// graphic images
-const char NEBULA_IMAGE[] = "pictures\\orion.jpg";  // photo source NASA/courtesy of nasaimages.org 
-const char PLANET_IMAGE[] = "pictures\\planet_wow.png"; // picture of planet
-const char SHIP_IMAGE[] = "pictures\\ship.png";   // spaceship
+// graphic images (names kept the same as of gameEngine)
+const char NEBULA_IMAGE[] = "pictures\\background.jpg";  // ORIGINAL PHOTO
+const char PLANET_IMAGE[] = "pictures\\planet.png"; // picture of planet
+const char SHIP_IMAGE[] = "pictures\\player.png";   // player
+const char ENEMY_ZOMBIE_IMAGE[] = "pictures\\enemy_zombie.png"; //enemy zombie
 
 const int  SHIP_START_FRAME = 0;         // starting frame of ship animation
 const int  SHIP_END_FRAME = 3;           // last frame of ship animation
 const float SHIP_ANIMATION_DELAY = 0.2f; // time between frames of ship animation original is 0.2f
+const float ENEMY_ANIMATION_DELAY = 0.15f;
+
+//MAYBE WE CAN MAKE IF HEALTH IS LOW, PLAYER BLINKS FASTER
+
 const int  SHIP_COLS = 2;                // ship texture has 2 columns
 const int  SHIP_WIDTH = 32;              // width of ship image
 const int  SHIP_HEIGHT = 32;             // height of ship image
 
 const float ROTATION_RATE = 180.0f;             // degrees per second
-const float SCALE_RATE = 0.2f;                  // % change per second
-const float SHIP_SPEED = 500.0f;                // pixels per second
+//const float SCALE_RATE = 0.2f;                  // % change per second
+const float SHIP_SPEED = 200.0f;                // pixels per second
 const float SHIP_SCALE = 1.5f;                  // starting ship scale
 
 
