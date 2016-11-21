@@ -25,7 +25,7 @@
 //-----------------------------------------------
 // window
 const char CLASS_NAME[] = "Spacewar";
-const char GAME_TITLE[] = "Pew! Pew Pew!";
+const char GAME_TITLE[] = "Surviive";
 const bool FULLSCREEN = false;              // windowed or fullscreen
 const UINT GAME_WIDTH =  640;               // width of game in pixels
 const UINT GAME_HEIGHT = 480;               // height of game in pixels
@@ -53,6 +53,7 @@ const char NEBULA_IMAGE[] = "pictures\\background.jpg";  // ORIGINAL PHOTO
 const char PLANET_IMAGE[] = "pictures\\planet.png"; // picture of planet
 const char SHIP_IMAGE[] = "pictures\\player.png";   // player
 const char ENEMY_ZOMBIE_IMAGE[] = "pictures\\enemy_zombie.png"; //enemy zombie
+const char WALL_IMAGE[] = "wall.png";//wall
 
 const int  SHIP_START_FRAME = 0;         // starting frame of ship animation
 const int  SHIP_END_FRAME = 3;           // last frame of ship animation

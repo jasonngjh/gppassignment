@@ -85,5 +85,8 @@
     <Image Include="pictures\ship2.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\..\..\Desktop\wall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

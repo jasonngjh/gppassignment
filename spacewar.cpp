@@ -31,8 +31,8 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet texture"));
 
 	//ship texture
-	if (!shipTexture.initialize(graphics, SHIP_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship texture"));
+	//if (!shipTexture.initialize(graphics, SHIP_IMAGE))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship texture"));
 
 	// nebula
 	if (!nebula.initialize(graphics, 0, 0, 0, &nebulaTexture))
@@ -144,7 +144,7 @@ void Spacewar::render()
 
 	nebula.draw();                          // add the orion nebula to the scene
 	//planet.draw();                          // add the planet to the scene
-	ship.draw();
+	//ship.draw();
 
 	graphics->spriteEnd();                  // end drawing sprites
 

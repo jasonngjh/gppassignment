@@ -95,6 +95,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\Desktop\wall.png" />
     <Image Include="pictures\orion.jpg" />
     <Image Include="pictures\planet.png" />
     <Image Include="pictures\planet_wow.png" />
