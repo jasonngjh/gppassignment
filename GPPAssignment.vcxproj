@@ -75,15 +75,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\constants.h" />
-    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\game.h" />
-    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\gameError.h" />
+    <ClInclude Include="constants.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="gameError.h" />
     <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\GitHubSyncTesting.h" />
-    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\graphics.h" />
-    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\image.h" />
-    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\input.h" />
-    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\spacewar.h" />
-    <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\textureManager.h" />
+    <ClInclude Include="graphics.h" />
+    <ClInclude Include="image.h" />
+    <ClInclude Include="input.h" />
+    <ClInclude Include="spacewar.h" />
+    <ClInclude Include="textureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp" />
@@ -95,12 +95,12 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\orion.jpg" />
-    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\planet.png" />
-    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\planet_wow.png" />
-    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\ship.png" />
-    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\ship2.png" />
-    <Image Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\pictures\ship_wow.png" />
+    <Image Include="pictures\orion.jpg" />
+    <Image Include="pictures\planet.png" />
+    <Image Include="pictures\planet_wow.png" />
+    <Image Include="pictures\ship.png" />
+    <Image Include="pictures\ship2.png" />
+    <Image Include="pictures\ship_wow.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
