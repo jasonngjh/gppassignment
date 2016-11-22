@@ -30,6 +30,15 @@ void Spacewar::initialize(HWND hwnd)
 	if (!planetTexture.initialize(graphics, PLANET_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet texture"));
 
+	if (!wall1Texture.initialize(graphics, WALL1_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall texture"));
+	if (!wall2Texture.initialize(graphics, WALL2_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall texture"));
+	if (!wall3Texture.initialize(graphics, WALL3_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall texture"));
+	if (!wall4Texture.initialize(graphics, WALL4_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall texture"));
+
 	//ship texture
 	//if (!shipTexture.initialize(graphics, SHIP_IMAGE))
 	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship texture"));
@@ -45,10 +54,25 @@ void Spacewar::initialize(HWND hwnd)
 	planet.setX(GAME_WIDTH*0.5f - planet.getWidth()*0.5f);
 	planet.setY(GAME_HEIGHT*0.5f - planet.getHeight()*0.5f);
 
-	// ship
+	// wall
+	if (!wall1.initialize(graphics, 0,0, 0, &wall1Texture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
+	if (!wall2.initialize(graphics, 0, 0, 0, &wall2Texture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
+	if (!wall3.initialize(graphics, 0, 0, 0, &wall3Texture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
+	if (!wall4.initialize(graphics, 0, 0, 0, &wall4Texture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
+	//ship
 	if (!ship.initialize(graphics, SHIP_WIDTH, SHIP_HEIGHT, SHIP_COLS, &shipTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship"));
 
+	wall1.setX(1);
+	wall1.setY(1);
+	//wall2.setY();
+	//wall2.setScale(1.035f);
+	wall3.setX(770);
+	wall4.setY(570);
 	ship.setX(GAME_WIDTH / 4);              // start above and left of planet
 	ship.setY(GAME_HEIGHT / 4);
 	ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
@@ -145,7 +169,10 @@ void Spacewar::render()
 	nebula.draw();                          // add the orion nebula to the scene
 	//planet.draw();                          // add the planet to the scene
 	//ship.draw();
-
+	wall1.draw();
+	wall2.draw();
+	wall3.draw();
+	wall4.draw();
 	graphics->spriteEnd();                  // end drawing sprites
 
 }
