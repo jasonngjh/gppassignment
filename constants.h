@@ -92,8 +92,8 @@ const int ZOMBIE_WIDTH = 32;
 
 //bullet
 const int BULLET_COLS = 2;
-const int BULLET_HEIGHT = 16;
-const int BULLET_WIDTH = 3;
+const int BULLET_HEIGHT = 32;
+const int BULLET_WIDTH = 32;
 
 
 #endif
