@@ -23,6 +23,7 @@ private:
 	TextureManager wall3Texture;		//wall Texture
 	TextureManager wall4Texture;		//wall Texture
 	TextureManager zombieTexture;
+	TextureManager bulletTexture;
 	Image   planet;                 // planet image
 	Image   nebula;                 // nebula image
 	Image ship;						//ship image
@@ -31,6 +32,7 @@ private:
 	Image wall3;
 	Image wall4;
 	Image zombie;
+	Image bullet;
 
 public:
     // Constructor

@@ -46,6 +46,9 @@ void Spacewar::initialize(HWND hwnd)
 	//ship texture
 	if (!shipTexture.initialize(graphics, SHIP_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship texture"));
+	//bullet texture
+	if (!bulletTexture.initialize(graphics, BULLET_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet texture"));
 
 	// nebula
 	if (!nebula.initialize(graphics, 0, 0, 0, &nebulaTexture))
@@ -75,6 +78,9 @@ void Spacewar::initialize(HWND hwnd)
 	if (!zombie.initialize(graphics, ZOMBIE_WIDTH, ZOMBIE_HEIGHT, ZOMBIE_COLS, &zombieTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
 
+	if (!bullet.initialize(graphics, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
+
 	wall1.setX(1);
 	wall1.setY(1);
 	//wall2.setY();
@@ -90,6 +96,10 @@ void Spacewar::initialize(HWND hwnd)
 	zombie.setY(GAME_HEIGHT / 4);
 	zombie.setFrames(ZOMBIE_START_FRAME, ZOMBIE_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	zombie.setFrameDelay(ZOMBIE_ANIMATION_DELAY);
+	bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
+	bullet.setY(GAME_HEIGHT / 4);
+	bullet.setFrames(BULLET_START_FRAME, BULLET_END_FRAME);
+	bullet.setFrameDelay(BULLET_ANIMATION_DELAY);
 
     return;
 }
@@ -100,6 +110,7 @@ void Spacewar::initialize(HWND hwnd)
 void Spacewar::update()
 {
 	ship.update(frameTime);
+	bullet.update(frameTime);
 	// rotate ship
 	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
 	// make ship smaller
@@ -152,9 +163,12 @@ void Spacewar::update()
 			ship.setY((float)-ship.getHeight());    // position off screen top
 	}
 
-	
+	if (input->isKeyDown(PLAYER_FIRE_KEY))
+		{
+		}
 
 	ship.update(frameTime);
+	bullet.update(frameTime);
 
 }
 
@@ -186,6 +200,7 @@ void Spacewar::render()
 	wall3.draw();
 	wall4.draw();
 	zombie.draw();
+	bullet.draw();
 	graphics->spriteEnd();                  // end drawing sprites
 
 }

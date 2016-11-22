@@ -47,6 +47,7 @@ const UCHAR SHIP_RIGHT_KEY = VK_RIGHT;
 const UCHAR SHIP_LEFT_KEY = VK_LEFT;
 const UCHAR SHIP_UP_KEY = VK_UP;
 const UCHAR SHIP_DOWN_KEY = VK_DOWN;
+const UCHAR PLAYER_FIRE_KEY = VK_SPACE;
 
 // graphic images (names kept the same as of gameEngine)
 const char NEBULA_IMAGE[] = "pictures\\background.jpg";  // ORIGINAL PHOTO
@@ -57,6 +58,7 @@ const char WALL1_IMAGE[] = "pictures\\wall1.png";//Left wall
 const char WALL2_IMAGE[] = "pictures\\wall2.png";//Top wall
 const char WALL3_IMAGE[] = "pictures\\wall1.png";//Right wall
 const char WALL4_IMAGE[] = "pictures\\wall2.png";//Bottomwall
+const char BULLET_IMAGE[] = "pictures\\bullet.png";//bullet
 
 const int  SHIP_START_FRAME = 0;         // starting frame of ship animation
 const int  SHIP_END_FRAME = 3;           // last frame of ship animation
@@ -64,6 +66,9 @@ const float SHIP_ANIMATION_DELAY = 0.2f; // time between frames of ship animatio
 const int  ZOMBIE_START_FRAME = 0;         // starting frame of ship animation
 const int  ZOMBIE_END_FRAME = 3;           // last frame of ship animation
 const float ZOMBIE_ANIMATION_DELAY = 0.15f;
+const int  BULLET_START_FRAME = 0;         // starting frame of ship animation
+const int  BULLET_END_FRAME = 3;           // last frame of ship animation
+const float BULLET_ANIMATION_DELAY = 0.15f;
 
 //MAYBE WE CAN MAKE IF HEALTH IS LOW, PLAYER BLINKS FASTER
 
@@ -84,4 +89,11 @@ const float WALL2_ROTATION_RATE=90.0f;
 const int  ZOMBIE_COLS = 2;
 const int ZOMBIE_HEIGHT = 32;
 const int ZOMBIE_WIDTH = 32;
+
+//bullet
+const int BULLET_COLS = 2;
+const int BULLET_HEIGHT = 32;
+const int BULLET_WIDTH = 32;
+
+
 #endif
