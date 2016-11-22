@@ -39,9 +39,13 @@ void Spacewar::initialize(HWND hwnd)
 	if (!wall4Texture.initialize(graphics, WALL4_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall texture"));
 
+	//zombie texture
+	if (!zombieTexture.initialize(graphics, ENEMY_ZOMBIE_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initialiing zombie texture"));
+
 	//ship texture
-	//if (!shipTexture.initialize(graphics, SHIP_IMAGE))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship texture"));
+	if (!shipTexture.initialize(graphics, SHIP_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship texture"));
 
 	// nebula
 	if (!nebula.initialize(graphics, 0, 0, 0, &nebulaTexture))
@@ -67,6 +71,10 @@ void Spacewar::initialize(HWND hwnd)
 	if (!ship.initialize(graphics, SHIP_WIDTH, SHIP_HEIGHT, SHIP_COLS, &shipTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship"));
 
+	//zombie
+	if (!zombie.initialize(graphics, ZOMBIE_WIDTH, ZOMBIE_HEIGHT, ZOMBIE_COLS, &zombieTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
+
 	wall1.setX(1);
 	wall1.setY(1);
 	//wall2.setY();
@@ -78,6 +86,10 @@ void Spacewar::initialize(HWND hwnd)
 	ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	ship.setFrameDelay(SHIP_ANIMATION_DELAY);
 	//ship.setDegrees(45.0f);                             // angle of ship
+	zombie.setX(GAME_WIDTH / 4);              // start above and left of planet
+	zombie.setY(GAME_HEIGHT / 4);
+	zombie.setFrames(ZOMBIE_START_FRAME, ZOMBIE_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
+	zombie.setFrameDelay(ZOMBIE_ANIMATION_DELAY);
 
     return;
 }
@@ -168,11 +180,12 @@ void Spacewar::render()
 
 	nebula.draw();                          // add the orion nebula to the scene
 	//planet.draw();                          // add the planet to the scene
-	//ship.draw();
+	ship.draw();
 	wall1.draw();
 	wall2.draw();
 	wall3.draw();
 	wall4.draw();
+	zombie.draw();
 	graphics->spriteEnd();                  // end drawing sprites
 
 }
@@ -185,7 +198,7 @@ void Spacewar::releaseAll()
 {
 	planetTexture.onLostDevice();
 	nebulaTexture.onLostDevice();
-
+	zombieTexture.onLostDevice();
     Game::releaseAll();
     return;
 }
@@ -198,7 +211,7 @@ void Spacewar::resetAll()
 {
 	nebulaTexture.onResetDevice();
 	planetTexture.onResetDevice();
-
+	zombieTexture.onResetDevice();
     Game::resetAll();
     return;
 }
