@@ -18,13 +18,15 @@ private:
 	TextureManager nebulaTexture;   // nebula texture
 	TextureManager planetTexture;   // planet texture
 	TextureManager shipTexture;		//ship texture
+	TextureManager bulletTexture;
 	TextureManager wall1Texture;		//wall Texture
 	TextureManager wall2Texture;		//wall Texture
 	TextureManager wall3Texture;		//wall Texture
 	TextureManager wall4Texture;		//wall Texture
 	Image   planet;                 // planet image
-	Image   nebula;                 // nebula image
-	Image ship;						//ship image
+	Image   nebula;                 // background image
+	Image ship;						//player character image
+	Image bullet;					//bullet image
 	Image wall1;
 	Image wall2;
 	Image wall3;

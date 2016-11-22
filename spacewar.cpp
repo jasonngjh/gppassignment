@@ -43,7 +43,10 @@ void Spacewar::initialize(HWND hwnd)
 	//if (!shipTexture.initialize(graphics, SHIP_IMAGE))
 	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship texture"));
 
-	// nebula
+	if (!bulletTexture.initialize(graphics, BULLET_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet texture"));
+
+	// background
 	if (!nebula.initialize(graphics, 0, 0, 0, &nebulaTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula"));
 
@@ -66,6 +69,10 @@ void Spacewar::initialize(HWND hwnd)
 	//ship
 	if (!ship.initialize(graphics, SHIP_WIDTH, SHIP_HEIGHT, SHIP_COLS, &shipTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship"));
+	
+	//bullet
+	if (!bullet.initialize(graphics, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
 
 	wall1.setX(1);
 	wall1.setY(1);
@@ -73,6 +80,12 @@ void Spacewar::initialize(HWND hwnd)
 	//wall2.setScale(1.035f);
 	wall3.setX(770);
 	wall4.setY(570);
+
+	bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
+	bullet.setY(GAME_HEIGHT / 4);
+	bullet.setFrames(BULLET_START_FRAME, BULLET_END_FRAME);
+	bullet.setFrameDelay(BULLET_ANIMATION_DELAY);
+
 	ship.setX(GAME_WIDTH / 4);              // start above and left of planet
 	ship.setY(GAME_HEIGHT / 4);
 	ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
@@ -88,6 +101,7 @@ void Spacewar::initialize(HWND hwnd)
 void Spacewar::update()
 {
 	ship.update(frameTime);
+	bullet.update(frameTime);
 	// rotate ship
 	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
 	// make ship smaller
@@ -140,10 +154,13 @@ void Spacewar::update()
 			ship.setY((float)-ship.getHeight());    // position off screen top
 	}
 
-	
+	if (input->isKeyDown(PLAYER_FIRE_KEY))
+	{
+
+	}
 
 	ship.update(frameTime);
-
+	bullet.update(frameTime);
 }
 
 //=============================================================================
@@ -169,6 +186,7 @@ void Spacewar::render()
 	nebula.draw();                          // add the orion nebula to the scene
 	//planet.draw();                          // add the planet to the scene
 	//ship.draw();
+	bullet.draw();
 	wall1.draw();
 	wall2.draw();
 	wall3.draw();

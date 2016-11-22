@@ -24,7 +24,7 @@
 //                  Constants
 //-----------------------------------------------
 // window
-const char CLASS_NAME[] = "Spacewar";
+const char CLASS_NAME[] = "Surviive";
 const char GAME_TITLE[] = "Surviive";
 const bool FULLSCREEN = false;              // windowed or fullscreen
 const UINT GAME_WIDTH =  800;               // width of game in pixels
@@ -47,12 +47,14 @@ const UCHAR SHIP_RIGHT_KEY = VK_RIGHT;
 const UCHAR SHIP_LEFT_KEY = VK_LEFT;
 const UCHAR SHIP_UP_KEY = VK_UP;
 const UCHAR SHIP_DOWN_KEY = VK_DOWN;
+const UCHAR PLAYER_FIRE_KEY = VK_SPACE;
 
 // graphic images (names kept the same as of gameEngine)
 const char NEBULA_IMAGE[] = "pictures\\background.jpg";  // ORIGINAL PHOTO
 const char PLANET_IMAGE[] = "pictures\\planet.png"; // picture of planet
 const char SHIP_IMAGE[] = "pictures\\player.png";   // player
 const char ENEMY_ZOMBIE_IMAGE[] = "pictures\\enemy_zombie.png"; //enemy zombie
+const char BULLET_IMAGE[] = "pictures\\bullet.png";
 const char WALL1_IMAGE[] = "pictures\\wall1.png";//Left wall
 const char WALL2_IMAGE[] = "pictures\\wall2.png";//Top wall
 const char WALL3_IMAGE[] = "pictures\\wall1.png";//Right wall
@@ -63,6 +65,10 @@ const int  SHIP_END_FRAME = 3;           // last frame of ship animation
 const float SHIP_ANIMATION_DELAY = 0.2f; // time between frames of ship animation original is 0.2f
 const float ENEMY_ANIMATION_DELAY = 0.15f;
 
+const int BULLET_START_FRAME = 0;
+const int BULLET_END_FRAME = 1;
+const float BULLET_ANIMATION_DELAY = 0.2f;
+
 //MAYBE WE CAN MAKE IF HEALTH IS LOW, PLAYER BLINKS FASTER
 
 const int  SHIP_COLS = 2;                // ship texture has 2 columns
@@ -72,6 +78,12 @@ const float ROTATION_RATE = 180.0f;             // degrees per second
 //const float SCALE_RATE = 0.2f;                  // % change per second
 const float SHIP_SPEED = 200.0f;                // pixels per second
 const float SHIP_SCALE = 1.5f;                 
+
+const int BULLET_COLS = 1;
+const float BULLET_WIDTH = 16;
+const float BULLET_HEIGHT = 3;
+const float BULLET_SPEED = 1000.0f;
+
 //left wall 
 const int WALL1_WIDTH = 20;
 const int WALL1_HEIGHT = 600;
