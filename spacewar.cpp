@@ -69,10 +69,10 @@ void Spacewar::initialize(HWND hwnd)
 
 	wall1.setX(1);
 	wall1.setY(1);
-	wall2.setX(315);
-	wall2.setY(-280);
-	wall2.setDegrees(90);
-	wall2.setScale(1.035f);
+	//wall2.setY();
+	//wall2.setScale(1.035f);
+	wall3.setX(770);
+	wall4.setY(570);
 	ship.setX(GAME_WIDTH / 4);              // start above and left of planet
 	ship.setY(GAME_HEIGHT / 4);
 	ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
@@ -171,7 +171,8 @@ void Spacewar::render()
 	//ship.draw();
 	wall1.draw();
 	wall2.draw();
-
+	wall3.draw();
+	wall4.draw();
 	graphics->spriteEnd();                  // end drawing sprites
 
 }

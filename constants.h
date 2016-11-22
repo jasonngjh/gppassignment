@@ -27,8 +27,8 @@
 const char CLASS_NAME[] = "Spacewar";
 const char GAME_TITLE[] = "Surviive";
 const bool FULLSCREEN = false;              // windowed or fullscreen
-const UINT GAME_WIDTH =  640;               // width of game in pixels
-const UINT GAME_HEIGHT = 480;               // height of game in pixels
+const UINT GAME_WIDTH =  800;               // width of game in pixels
+const UINT GAME_HEIGHT = 600;               // height of game in pixels
  
 // game
 const double PI = 3.14159265;
@@ -53,10 +53,10 @@ const char NEBULA_IMAGE[] = "pictures\\background.jpg";  // ORIGINAL PHOTO
 const char PLANET_IMAGE[] = "pictures\\planet.png"; // picture of planet
 const char SHIP_IMAGE[] = "pictures\\player.png";   // player
 const char ENEMY_ZOMBIE_IMAGE[] = "pictures\\enemy_zombie.png"; //enemy zombie
-const char WALL1_IMAGE[] = "pictures\\wall.png";//Left wall
-const char WALL2_IMAGE[] = "pictures\\wall.png";//Top wall
-const char WALL3_IMAGE[] = "pictures\\wall.png";//Right wall
-const char WALL4_IMAGE[] = "pictures\\wall.png";//Bottomwall
+const char WALL1_IMAGE[] = "pictures\\wall1.png";//Left wall
+const char WALL2_IMAGE[] = "pictures\\wall2.png";//Top wall
+const char WALL3_IMAGE[] = "pictures\\wall1.png";//Right wall
+const char WALL4_IMAGE[] = "pictures\\wall2.png";//Bottomwall
 
 const int  SHIP_START_FRAME = 0;         // starting frame of ship animation
 const int  SHIP_END_FRAME = 3;           // last frame of ship animation
@@ -74,7 +74,7 @@ const float SHIP_SPEED = 200.0f;                // pixels per second
 const float SHIP_SCALE = 1.5f;                 
 //left wall 
 const int WALL1_WIDTH = 20;
-const int WALL1_HEIGHT = 480;
+const int WALL1_HEIGHT = 600;
 //top wall
 const float WALL2_ROTATION_RATE=90.0f;
 #endif
