@@ -164,9 +164,10 @@ void Spacewar::update()
 	}
 
 	if (input->isKeyDown(PLAYER_FIRE_KEY))
-		{
-		}
-
+	{
+		//cant move while shooting
+		PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_FILENAME);
+	}
 	ship.update(frameTime);
 	bullet.update(frameTime);
 
