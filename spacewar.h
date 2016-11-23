@@ -6,6 +6,7 @@
 #include "game.h"
 #include "textureManager.h"
 #include "image.h"
+#include "bullet.h"
 
 //=============================================================================
 // Create game class
@@ -32,7 +33,7 @@ private:
 	Image wall3;
 	Image wall4;
 	Image zombie;
-	Image bullet;
+	Bullet bullet;
 
 public:
     // Constructor

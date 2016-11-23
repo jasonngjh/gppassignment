@@ -58,8 +58,8 @@ void Spacewar::initialize(HWND hwnd)
 	if (!planet.initialize(graphics, 0, 0, 0, &planetTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet"));
 	// place planet in center of screen
-	planet.setX(GAME_WIDTH*0.5f - planet.getWidth()*0.5f);
-	planet.setY(GAME_HEIGHT*0.5f - planet.getHeight()*0.5f);
+	//planet.setX(GAME_WIDTH*0.5f - planet.getWidth()*0.5f);
+	//planet.setY(GAME_HEIGHT*0.5f - planet.getHeight()*0.5f);
 
 	// wall
 	if (!wall1.initialize(graphics, 0,0, 0, &wall1Texture))
@@ -78,7 +78,7 @@ void Spacewar::initialize(HWND hwnd)
 	if (!zombie.initialize(graphics, ZOMBIE_WIDTH, ZOMBIE_HEIGHT, ZOMBIE_COLS, &zombieTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
 
-	if (!bullet.initialize(graphics, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
+	if (!bullet.initialize(this, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
 
 	wall1.setX(1);
@@ -96,10 +96,8 @@ void Spacewar::initialize(HWND hwnd)
 	zombie.setY(GAME_HEIGHT / 4);
 	zombie.setFrames(ZOMBIE_START_FRAME, ZOMBIE_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	zombie.setFrameDelay(ZOMBIE_ANIMATION_DELAY);
-	bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
-	bullet.setY(GAME_HEIGHT / 4);
-	bullet.setFrames(BULLET_START_FRAME, BULLET_END_FRAME);
-	bullet.setFrameDelay(BULLET_ANIMATION_DELAY);
+	//bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
+	//bullet.setY(GAME_HEIGHT / 4);
 
     return;
 }
@@ -110,7 +108,6 @@ void Spacewar::initialize(HWND hwnd)
 void Spacewar::update()
 {
 	ship.update(frameTime);
-	bullet.update(frameTime);
 	// rotate ship
 	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
 	// make ship smaller
@@ -130,7 +127,7 @@ void Spacewar::update()
 
 	if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
 	{
-		ship.setDegrees(270);
+		ship.setDegrees(270.0f);
 
 		ship.setX(ship.getX() + frameTime * SHIP_SPEED);
 		if (ship.getX() > GAME_WIDTH)               // if off screen right
@@ -165,26 +162,60 @@ void Spacewar::update()
 
 	if (input->isKeyDown(PLAYER_FIRE_KEY))
 	{
-		
 
 		//create Bullet at player X and Y
+		//add bullet to bullet array
 		
-		bullet.setDegrees(ship.getDegrees());
-		bullet.setX(ship.getCenterX());
-		bullet.setY(ship.getCenterY());
+		bullet.create(ship);
 
-		if ((bullet.getX() < GAME_WIDTH) || (bullet.getY() < GAME_HEIGHT))
-		{
-			bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
-			
-		}
+		
+
+		/*bullet.setDegrees(ship.getDegrees());
+		bullet.setX(ship.getCenterX());
+		bullet.setY(ship.getCenterY());*/
 
 		//cant move while shooting/shooting has delay
-		//PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_ASYNC);
+		
 
 	}
-	ship.update(frameTime);
-	bullet.update(frameTime);
+
+	if (bullet.getActive())
+	{
+		
+		bullet.setDegrees(ship.getDegrees());
+		bullet.update(frameTime);
+	}
+
+	/*if (bullet.getDegrees() == 270) //right
+		bullet.setX(bullet.getX() + frameTime * BULLET_SPEED);
+	else
+	if (bullet.getDegrees() == 90) //left
+		bullet.setX(bullet.getX() - frameTime * BULLET_SPEED);
+	else
+	if (bullet.getDegrees() == 180) //up
+		bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
+	else
+	if (bullet.getDegrees() == 0) //down
+		bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);*/
+
+	if (zombie.getX() > ship.getX())
+		zombie.setX(zombie.getX() - frameTime * ZOMBIE_SPEED);
+
+	if (zombie.getX() < ship.getX())
+		zombie.setX(zombie.getX() + frameTime * ZOMBIE_SPEED);
+
+	if (zombie.getY() > ship.getY())
+		zombie.setY(zombie.getY() - frameTime * ZOMBIE_SPEED);
+
+	if (zombie.getY() < ship.getY())
+		zombie.setY(zombie.getY() + frameTime * ZOMBIE_SPEED);
+
+	//ship.update(frameTime);
+	zombie.update(frameTime);
+
+	//code to check
+	//if bullet active
+	//PEW PEW!
 
 }
 
@@ -230,6 +261,7 @@ void Spacewar::releaseAll()
 	planetTexture.onLostDevice();
 	nebulaTexture.onLostDevice();
 	zombieTexture.onLostDevice();
+	bulletTexture.onLostDevice();
     Game::releaseAll();
     return;
 }
@@ -243,6 +275,7 @@ void Spacewar::resetAll()
 	nebulaTexture.onResetDevice();
 	planetTexture.onResetDevice();
 	zombieTexture.onResetDevice();
+	bulletTexture.onResetDevice();
     Game::resetAll();
     return;
 }
