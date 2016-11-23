@@ -165,8 +165,23 @@ void Spacewar::update()
 
 	if (input->isKeyDown(PLAYER_FIRE_KEY))
 	{
-		//cant move while shooting
-		PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_FILENAME);
+		
+
+		//create Bullet at player X and Y
+		
+		bullet.setDegrees(ship.getDegrees());
+		bullet.setX(ship.getCenterX());
+		bullet.setY(ship.getCenterY());
+
+		if ((bullet.getX() < GAME_WIDTH) || (bullet.getY() < GAME_HEIGHT))
+		{
+			bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
+			
+		}
+
+		//cant move while shooting/shooting has delay
+		//PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_ASYNC);
+
 	}
 	ship.update(frameTime);
 	bullet.update(frameTime);
