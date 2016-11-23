@@ -6,7 +6,8 @@
 #include "game.h"
 #include "textureManager.h"
 #include "image.h"
-
+#include "player.h"
+#include "wall.h"
 //=============================================================================
 // Create game class
 //=============================================================================
@@ -26,11 +27,11 @@ private:
 	TextureManager bulletTexture;
 	Image   planet;                 // planet image
 	Image   nebula;                 // nebula image
-	Image ship;						//ship image
-	Image wall1;
-	Image wall2;
-	Image wall3;
-	Image wall4;
+	Player ship;						//ship image
+	Wall wall1;
+	Wall wall2;
+	Wall wall3;
+	Wall wall4;
 	Image zombie;
 	Image bullet;
 

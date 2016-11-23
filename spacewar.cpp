@@ -62,16 +62,16 @@ void Spacewar::initialize(HWND hwnd)
 	planet.setY(GAME_HEIGHT*0.5f - planet.getHeight()*0.5f);
 
 	// wall
-	if (!wall1.initialize(graphics, 0,0, 0, &wall1Texture))
+	if (!wall1.initialize(this,WallNS::WIDTH,WallNS::HEIGHT,WallNS::TEXTURE_COLS,&wall1Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
-	if (!wall2.initialize(graphics, 0, 0, 0, &wall2Texture))
+	if (!wall2.initialize(this, 800, 30, WallNS::TEXTURE_COLS, &wall2Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
-	if (!wall3.initialize(graphics, 0, 0, 0, &wall3Texture))
+	if (!wall3.initialize(this, WallNS::WIDTH, WallNS::HEIGHT, WallNS::TEXTURE_COLS, &wall3Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
-	if (!wall4.initialize(graphics, 0, 0, 0, &wall4Texture))
+	if (!wall4.initialize(this, 800,30,WallNS::TEXTURE_COLS, &wall4Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
 	//ship
-	if (!ship.initialize(graphics, SHIP_WIDTH, SHIP_HEIGHT, SHIP_COLS, &shipTexture))
+	if (!ship.initialize(this, PlayerNS::WIDTH, PlayerNS::HEIGHT, PlayerNS::TEXTURE_COLS, &shipTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship"));
 
 	//zombie
@@ -83,8 +83,7 @@ void Spacewar::initialize(HWND hwnd)
 
 	wall1.setX(1);
 	wall1.setY(1);
-	//wall2.setY();
-	//wall2.setScale(1.035f);
+	//wall2.setY(570);
 	wall3.setX(770);
 	wall4.setY(570);
 	ship.setX(GAME_WIDTH / 4);              // start above and left of planet
@@ -198,51 +197,73 @@ void Spacewar::ai()
 // Handle collisions
 //=============================================================================
 void Spacewar::collisions()
-{}
-
-//=============================================================================
-// Render game items
-//=============================================================================
-void Spacewar::render()
 {
-
-	graphics->spriteBegin();                // begin drawing sprites
-
-	nebula.draw();                          // add the orion nebula to the scene
-	//planet.draw();                          // add the planet to the scene
-	ship.draw();
-	wall1.draw();
-	wall2.draw();
-	wall3.draw();
-	wall4.draw();
-	zombie.draw();
-	bullet.draw();
-	graphics->spriteEnd();                  // end drawing sprites
-
+	VECTOR2 collisionVector;
+	// if collision between ship and planet
+	if (ship.collidesWith(wall1, collisionVector))
+	{
+		// bounce off planet
+		ship.bounce(collisionVector, wall1);
+	}
+	if (ship.collidesWith(wall2, collisionVector))
+	{
+		// bounce off planet
+		ship.bounce(collisionVector, wall2);
+	}
+	if (ship.collidesWith(wall3, collisionVector))
+	{
+		// bounce off planet
+		ship.bounce(collisionVector, wall3);
+	}
+	if (ship.collidesWith(wall4, collisionVector))
+	{
+		// bounce off planet
+		ship.bounce(collisionVector, wall4);
+	}
 }
+	//=============================================================================
+	// Render game items
+	//=============================================================================
+	void Spacewar::render()
+	{
 
-//=============================================================================
-// The graphics device was lost.
-// Release all reserved video memory so graphics device may be reset.
-//=============================================================================
-void Spacewar::releaseAll()
-{
-	planetTexture.onLostDevice();
-	nebulaTexture.onLostDevice();
-	zombieTexture.onLostDevice();
-    Game::releaseAll();
-    return;
-}
+		graphics->spriteBegin();                // begin drawing sprites
 
-//=============================================================================
-// The grahics device has been reset.
-// Recreate all surfaces.
-//=============================================================================
-void Spacewar::resetAll()
-{
-	nebulaTexture.onResetDevice();
-	planetTexture.onResetDevice();
-	zombieTexture.onResetDevice();
-    Game::resetAll();
-    return;
-}
+		nebula.draw();                          // add the orion nebula to the scene
+		//planet.draw();                          // add the planet to the scene
+		ship.draw();
+		wall1.draw();
+		wall2.draw();
+		wall3.draw();
+		wall4.draw();
+		zombie.draw();
+		bullet.draw();
+		graphics->spriteEnd();                  // end drawing sprites
+
+	}
+
+	//=============================================================================
+	// The graphics device was lost.
+	// Release all reserved video memory so graphics device may be reset.
+	//=============================================================================
+	void Spacewar::releaseAll()
+	{
+		planetTexture.onLostDevice();
+		nebulaTexture.onLostDevice();
+		zombieTexture.onLostDevice();
+		Game::releaseAll();
+		return;
+	}
+
+	//=============================================================================
+	// The grahics device has been reset.
+	// Recreate all surfaces.
+	//=============================================================================
+	void Spacewar::resetAll()
+	{
+		nebulaTexture.onResetDevice();
+		planetTexture.onResetDevice();
+		zombieTexture.onResetDevice();
+		Game::resetAll();
+		return;
+	}
