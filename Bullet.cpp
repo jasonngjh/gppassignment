@@ -4,6 +4,7 @@
 // Chapter 6 ship.cpp v1.0
 
 #include "bullet.h"
+#include "player.h"
 
 //=============================================================================
 // default constructor
@@ -23,7 +24,30 @@ Bullet::Bullet() : Entity()
 	endFrame = BulletNS::BULLET_END_FRAME;      // last frame of ship animation
 	currentFrame = startFrame;
 	radius = BulletNS::WIDTH / 2.0;
-	collisionType = entityNS::BOX;
+	collisionType = entityNS::ROTATED_BOX;
+	active = false;
+}
+
+//=============================================================================
+// create
+// typically called once per frame
+// frameTime is used to regulate the speed of movement and animation
+//=============================================================================
+void Bullet::create(Image player)
+{
+	Bullet::setDegrees(player.getDegrees());
+	Bullet::setX(player.getCenterX());
+	Bullet::setY(player.getCenterY());
+
+	spriteData.angle = Bullet::getDegrees();
+
+	spriteData.x = Bullet::getX();                   // location on screen
+	spriteData.y = Bullet::getY();
+
+	active = true;
+
+	PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_ASYNC);
+
 }
 
 //=============================================================================
@@ -35,39 +59,42 @@ void Bullet::update(float frameTime)
 {
 	Entity::update(frameTime);
 	//spriteData.angle += frameTime * PlayerNS::ROTATION_RATE;  // rotate the ship
-	spriteData.x += frameTime * BULLET_SPEED;     // move ship along X 
-	spriteData.y += frameTime * BULLET_SPEED;     // move ship along Y
+	
+	//spriteData.angle = Bullet::getDegrees(); //somehow, this makes bullet start at player center instead of forward of player (maybe bullet is indeed travelling BUT???)
 
-	if (spriteData.angle == 270) //right
+	if (Bullet::getDegrees() == 270) //right
+	{
 		spriteData.x += frameTime * BULLET_SPEED;
-	else
-	if (spriteData.angle == 90) //left
+	}
+		
+	
+	if (Bullet::getDegrees() == 90) //left
 		spriteData.x -= frameTime * BULLET_SPEED;
-	else
-	if (spriteData.angle == 180) //up
-		spriteData.y += frameTime * BULLET_SPEED;
-	else
-	if (spriteData.angle == 0) //down
+	
+	if (Bullet::getDegrees() == 180) //up
 		spriteData.y -= frameTime * BULLET_SPEED;
+	
+	if (Bullet::getDegrees() == 0) //down
+		spriteData.y += frameTime * BULLET_SPEED;
 
 	// disappear off walls
 	// if hit right screen edge
 	if (spriteData.x > GAME_WIDTH - BulletNS::WIDTH*getScale())
 	{
-		//disappear
+		active = false;
 	}
-	else if (spriteData.x < 0)                  // else if hit left screen edge
+	else if (spriteData.x <= 0)                  // else if hit left screen edge
 	{
-		//disappear
+		active = false;
 	}
 	// if hit bottom screen edge
 	if (spriteData.y > GAME_HEIGHT - BulletNS::HEIGHT*getScale())
 	{
-		//disappear
+		active = false;
 	}
-	else if (spriteData.y < 0)                  // else if hit top screen edge
+	else if (spriteData.y <= 0)                  // else if hit top screen edge
 	{
-		//disappear
+		active = false;
 	}
 
 	

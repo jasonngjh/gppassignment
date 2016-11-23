@@ -4,6 +4,7 @@
 
 #include "entity.h"
 #include "constants.h"
+#include "player.h"
 
 namespace BulletNS
 {
@@ -15,7 +16,8 @@ namespace BulletNS
 	const int X = 0;
 	const int Y = 0;
 	const float BULLET_ANIMATION_DELAY = 0.05f;
-	const int BULLET_SPEED = 5000;
+	const int BULLET_SPEED = 500;
+	const bool isActive = true; //when created a bullet is active
 
 	//bullet
 	const int BULLET_COLS = 2;
@@ -32,6 +34,10 @@ public:
 
 	// inherited member functions
 	void update(float frameTime);
+
+	void create(Image player);
+
+		
 };
 #endif
 
