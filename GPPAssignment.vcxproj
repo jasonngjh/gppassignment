@@ -86,6 +86,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="spacewar.h" />
     <ClInclude Include="textureManager.h" />
+    <ClInclude Include="wall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="spacewar.cpp" />
     <ClCompile Include="textureManager.cpp" />
+    <ClCompile Include="wall.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
