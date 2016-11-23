@@ -67,8 +67,9 @@ const int  ZOMBIE_START_FRAME = 0;         // starting frame of ship animation
 const int  ZOMBIE_END_FRAME = 3;           // last frame of ship animation
 const float ZOMBIE_ANIMATION_DELAY = 0.15f;
 const int  BULLET_START_FRAME = 0;         // starting frame of ship animation
-const int  BULLET_END_FRAME = 3;           // last frame of ship animation
+const int  BULLET_END_FRAME = 1;           // last frame of ship animation
 const float BULLET_ANIMATION_DELAY = 0.15f;
+const int BULLET_SPEED = 1000;
 
 //MAYBE WE CAN MAKE IF HEALTH IS LOW, PLAYER BLINKS FASTER
 
@@ -86,13 +87,13 @@ const int WALL1_HEIGHT = 600;
 const float WALL2_ROTATION_RATE=90.0f;
 
 //zombie height and width
-const int  ZOMBIE_COLS = 2;
+const int ZOMBIE_COLS = 2;
 const int ZOMBIE_HEIGHT = 32;
 const int ZOMBIE_WIDTH = 32;
 
 //bullet
 const int BULLET_COLS = 2;
-const int BULLET_HEIGHT = 16;
+const int BULLET_HEIGHT = 12;
 const int BULLET_WIDTH = 3;
 
 
