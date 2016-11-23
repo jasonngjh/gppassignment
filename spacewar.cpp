@@ -96,8 +96,8 @@ void Spacewar::initialize(HWND hwnd)
 	zombie.setY(GAME_HEIGHT / 4);
 	zombie.setFrames(ZOMBIE_START_FRAME, ZOMBIE_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	zombie.setFrameDelay(ZOMBIE_ANIMATION_DELAY);
-	bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
-	bullet.setY(GAME_HEIGHT / 4);
+	//bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
+	//bullet.setY(GAME_HEIGHT / 4);
 	bullet.setFrames(BULLET_START_FRAME, BULLET_END_FRAME);
 	bullet.setFrameDelay(BULLET_ANIMATION_DELAY);
 
@@ -175,16 +175,62 @@ void Spacewar::update()
 
 		if ((bullet.getX() < GAME_WIDTH) || (bullet.getY() < GAME_HEIGHT))
 		{
-			bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
+			//bullet.setX(bullet.getY() - frameTime * BULLET_SPEED);
 			
 		}
 
 		//cant move while shooting/shooting has delay
-		//PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_ASYNC);
+		PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_ASYNC);
 
 	}
+
+	/*int degree = bullet.getDegrees();
+
+	switch (degree)
+	{
+		case 0:
+			bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);
+		case 90:
+			bullet.setX(bullet.getX() - frameTime * BULLET_SPEED);
+		case 180:
+			bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
+		case 270:
+			bullet.setX(bullet.getX() + frameTime * BULLET_SPEED);
+	}*/
+
+	if (bullet.getDegrees() == 270) //right
+		bullet.setX(bullet.getX() + frameTime * BULLET_SPEED);
+	else
+	if (bullet.getDegrees() == 90) //left
+		bullet.setX(bullet.getX() - frameTime * BULLET_SPEED);
+	else
+	if (bullet.getDegrees() == 180) //up
+		bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
+	else
+	if (bullet.getDegrees() == 0) //down
+		bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);
+
+	if (zombie.getX() > ship.getX())
+		zombie.setX(zombie.getX() - frameTime * ZOMBIE_SPEED);
+
+	if (zombie.getX() < ship.getX())
+		zombie.setX(zombie.getX() + frameTime * ZOMBIE_SPEED);
+
+	if (zombie.getY() > ship.getY())
+		zombie.setY(zombie.getY() - frameTime * ZOMBIE_SPEED);
+
+	if (zombie.getY() < ship.getY())
+		zombie.setY(zombie.getY() + frameTime * ZOMBIE_SPEED);
+
 	ship.update(frameTime);
 	bullet.update(frameTime);
+	zombie.update(frameTime);
+
+
+
+	//code to check
+	//if bullet active
+	//PEW PEW!
 
 }
 

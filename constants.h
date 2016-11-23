@@ -66,10 +66,11 @@ const float SHIP_ANIMATION_DELAY = 0.2f; // time between frames of ship animatio
 const int  ZOMBIE_START_FRAME = 0;         // starting frame of ship animation
 const int  ZOMBIE_END_FRAME = 3;           // last frame of ship animation
 const float ZOMBIE_ANIMATION_DELAY = 0.15f;
+const float ZOMBIE_SPEED = 50;
 const int  BULLET_START_FRAME = 0;         // starting frame of ship animation
 const int  BULLET_END_FRAME = 1;           // last frame of ship animation
-const float BULLET_ANIMATION_DELAY = 0.15f;
-const int BULLET_SPEED = 1000;
+const float BULLET_ANIMATION_DELAY = 0.05f;
+const int BULLET_SPEED = 5000;
 
 //MAYBE WE CAN MAKE IF HEALTH IS LOW, PLAYER BLINKS FASTER
 
