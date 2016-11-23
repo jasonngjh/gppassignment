@@ -64,18 +64,18 @@ void Bullet::update(float frameTime)
 
 	if (Bullet::getDegrees() == 270) //right
 	{
-		spriteData.x += frameTime * BULLET_SPEED;
+		spriteData.x += frameTime * BulletNS::BULLET_SPEED;
 	}
 		
 	
 	if (Bullet::getDegrees() == 90) //left
-		spriteData.x -= frameTime * BULLET_SPEED;
+		spriteData.x -= frameTime * BulletNS::BULLET_SPEED;
 	
 	if (Bullet::getDegrees() == 180) //up
-		spriteData.y -= frameTime * BULLET_SPEED;
+		spriteData.y -= frameTime * BulletNS::BULLET_SPEED;
 	
 	if (Bullet::getDegrees() == 0) //down
-		spriteData.y += frameTime * BULLET_SPEED;
+		spriteData.y += frameTime * BulletNS::BULLET_SPEED;
 
 	// disappear off walls
 	// if hit right screen edge
