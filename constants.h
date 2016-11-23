@@ -50,7 +50,7 @@ const UCHAR SHIP_DOWN_KEY = VK_DOWN;
 const UCHAR PLAYER_FIRE_KEY = VK_SPACE;
 
 // graphic images (names kept the same as of gameEngine)
-const char NEBULA_IMAGE[] = "pictures\\lol.png";  // ORIGINAL PHOTO
+const char NEBULA_IMAGE[] = "pictures\\background.jpg";  // ORIGINAL PHOTO
 const char PLANET_IMAGE[] = "pictures\\planet.png"; // picture of planet
 const char SHIP_IMAGE[] = "pictures\\player.png";   // player
 const char ENEMY_ZOMBIE_IMAGE[] = "pictures\\zombie.png"; //enemy zombie
@@ -66,10 +66,11 @@ const float SHIP_ANIMATION_DELAY = 0.2f; // time between frames of ship animatio
 const int  ZOMBIE_START_FRAME = 0;         // starting frame of ship animation
 const int  ZOMBIE_END_FRAME = 3;           // last frame of ship animation
 const float ZOMBIE_ANIMATION_DELAY = 0.15f;
+const float ZOMBIE_SPEED = 50;
 const int  BULLET_START_FRAME = 0;         // starting frame of ship animation
 const int  BULLET_END_FRAME = 1;           // last frame of ship animation
-const float BULLET_ANIMATION_DELAY = 0.15f;
-const int BULLET_SPEED = 1000;
+const float BULLET_ANIMATION_DELAY = 0.05f;
+const int BULLET_SPEED = 5000;
 
 //MAYBE WE CAN MAKE IF HEALTH IS LOW, PLAYER BLINKS FASTER
 
