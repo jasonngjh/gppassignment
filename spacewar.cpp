@@ -226,8 +226,6 @@ void Spacewar::update()
 	bullet.update(frameTime);
 	zombie.update(frameTime);
 
-
-
 	//code to check
 	//if bullet active
 	//PEW PEW!
