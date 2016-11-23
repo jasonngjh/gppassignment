@@ -76,20 +76,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="constants.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameError.h" />
     <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\GitHubSyncTesting.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="spacewar.h" />
     <ClInclude Include="textureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="spacewar.cpp" />
     <ClCompile Include="textureManager.cpp" />
     <ClCompile Include="winmain.cpp" />
