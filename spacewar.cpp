@@ -78,7 +78,7 @@ void Spacewar::initialize(HWND hwnd)
 	if (!zombie.initialize(graphics, ZOMBIE_WIDTH, ZOMBIE_HEIGHT, ZOMBIE_COLS, &zombieTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
 
-	if (!bullet.initialize(graphics, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
+	if (!bullet.initialize(this, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
 
 	wall1.setX(1);
@@ -184,21 +184,7 @@ void Spacewar::update()
 
 	}
 
-	/*int degree = bullet.getDegrees();
-
-	switch (degree)
-	{
-		case 0:
-			bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);
-		case 90:
-			bullet.setX(bullet.getX() - frameTime * BULLET_SPEED);
-		case 180:
-			bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
-		case 270:
-			bullet.setX(bullet.getX() + frameTime * BULLET_SPEED);
-	}*/
-
-	if (bullet.getDegrees() == 270) //right
+	/*if (bullet.getDegrees() == 270) //right
 		bullet.setX(bullet.getX() + frameTime * BULLET_SPEED);
 	else
 	if (bullet.getDegrees() == 90) //left
@@ -208,7 +194,7 @@ void Spacewar::update()
 		bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
 	else
 	if (bullet.getDegrees() == 0) //down
-		bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);
+		bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);*/
 
 	if (zombie.getX() > ship.getX())
 		zombie.setX(zombie.getX() - frameTime * ZOMBIE_SPEED);
