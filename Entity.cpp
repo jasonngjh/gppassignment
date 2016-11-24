@@ -10,11 +10,11 @@
 //=============================================================================
 Entity::Entity() : Image()
 {
-	radius = 1.0;
-	edge.left = -1;
-	edge.top = -1;
-	edge.right = 1;
-	edge.bottom = 1;
+	radius = 10.0;
+	edge.left = 0;
+	edge.top = 0;
+	edge.right = 30;
+	edge.bottom = 600;
 	mass = 1.0;
 	velocity.x = 0.0;
 	velocity.y = 0.0;
@@ -58,11 +58,11 @@ void Entity::activate()
 //=============================================================================
 void Entity::update(float frameTime)
 {
-	//velocity += deltaV;
-	//deltaV.x = 0;
-	//deltaV.y = 0;
+	velocity += deltaV;
+	deltaV.x = 0;
+	deltaV.y = 0;
 	Image::update(frameTime);
-	//rotatedBoxReady = false;    // for rotatedBox collision detection
+	rotatedBoxReady = false;    // for rotatedBox collision detection
 }
 
 //=============================================================================

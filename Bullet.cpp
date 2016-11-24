@@ -11,7 +11,7 @@
 //=============================================================================
 Bullet::Bullet() : Entity()
 {
-	spriteData.width = BulletNS::WIDTH;           // size of Ship1
+	spriteData.width = BulletNS::WIDTH;           // size of Bullet
 	spriteData.height = BulletNS::HEIGHT;
 	spriteData.x = BulletNS::X;                   // location on screen
 	spriteData.y = BulletNS::Y;

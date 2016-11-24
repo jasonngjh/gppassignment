@@ -22,7 +22,7 @@ Player::Player () : Entity()
 	startFrame = PlayerNS::SHIP_START_FRAME;      // first frame of ship animation
 	endFrame = PlayerNS::SHIP_END_FRAME;      // last frame of ship animation
     currentFrame = startFrame;
-	radius = PlayerNS::WIDTH / 2.0;
+	radius = 1;
     collisionType = entityNS::CIRCLE;
 }
 

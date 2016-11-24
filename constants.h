@@ -82,9 +82,15 @@ const float ROTATION_RATE = 180.0f;             // degrees per second
 const float SHIP_SPEED = 200.0f;                // pixels per second
 const float SHIP_SCALE = 1.5f;                 
 //left wall 
-const int WALL1_WIDTH = 20;
-const int WALL1_HEIGHT = 600;
+//const int WALL1_WIDTH = 30;
+//const int WALL1_HEIGHT = GAME_HEIGHT;
+//const int WALL1_x = GAME_WIDTH/2;
+//const int WALL1_y = GAME_HEIGHT/2;
 //top wall
+const int WALL2_WIDTH = 800;
+const int WALL2_HEIGHT = 30;
+const int wall2_x = 1;
+const int wall2_y = 1;
 const float WALL2_ROTATION_RATE=90.0f;
 
 //zombie height and width
