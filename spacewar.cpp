@@ -62,16 +62,16 @@ void Spacewar::initialize(HWND hwnd)
 	//planet.setY(GAME_HEIGHT*0.5f - planet.getHeight()*0.5f);
 
 	// wall
-	if (!wall1.initialize(graphics, 0,0, 0, &wall1Texture))
+	if (!wall1.initialize(this, WallNS::WIDTH, WallNS::HEIGHT, WallNS::TEXTURE_COLS, &wall1Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
-	if (!wall2.initialize(graphics, 0, 0, 0, &wall2Texture))
+	if (!wall2.initialize(this, WallNS::WIDTH, WallNS::HEIGHT, WallNS::TEXTURE_COLS, &wall2Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
-	if (!wall3.initialize(graphics, 0, 0, 0, &wall3Texture))
+	if (!wall3.initialize(this, WallNS::WIDTH, WallNS::HEIGHT, WallNS::TEXTURE_COLS, &wall3Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
-	if (!wall4.initialize(graphics, 0, 0, 0, &wall4Texture))
+	if (!wall4.initialize(this, WallNS::WIDTH, WallNS::HEIGHT, WallNS::TEXTURE_COLS, &wall4Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
 	//ship
-	if (!ship.initialize(graphics, SHIP_WIDTH, SHIP_HEIGHT, SHIP_COLS, &shipTexture))
+	if (!ship.initialize(this,PlayerNS::WIDTH, PlayerNS::HEIGHT, PlayerNS::TEXTURE_COLS, &shipTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship"));
 
 	//zombie
@@ -229,7 +229,32 @@ void Spacewar::ai()
 // Handle collisions
 //=============================================================================
 void Spacewar::collisions()
-{}
+{
+	VECTOR2 collisionVector;
+	// if collision between ship and planet
+	if (ship.collidesWith(wall1, collisionVector))
+	{
+		// bounce off planet
+		ship.bounce(collisionVector, wall1);
+		//ship1.damage(PLANET);
+	}
+	//if (ship2.collidesWith(planet, collisionVector))
+	//{
+	//	// bounce off planet
+	//	ship2.bounce(collisionVector, planet);
+	//	ship2.damage(PLANET);
+	//}
+	//// if collision between ships
+	//if (ship1.collidesWith(ship2, collisionVector))
+	//{
+	//	// bounce off ship
+	//	ship1.bounce(collisionVector, ship2);
+	//	ship1.damage(SHIP);
+	//	// change the direction of the collisionVector for ship2
+	//	ship2.bounce(collisionVector*-1, ship1);
+	//	ship2.damage(SHIP);
+	//}
+}
 
 //=============================================================================
 // Render game items
