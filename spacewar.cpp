@@ -164,39 +164,17 @@ void Spacewar::update()
 	{
 
 		//create Bullet at player X and Y
-		//add bullet to bullet array
-		
-		bullet.create(ship);
+		//add bullet to bullet array (for multiple bullets)
 
-		
-
-		/*bullet.setDegrees(ship.getDegrees());
-		bullet.setX(ship.getCenterX());
-		bullet.setY(ship.getCenterY());*/
-
-		//cant move while shooting/shooting has delay
-		
+		if (!bullet.getActive())
+			bullet.create(ship, ship.getDegrees());
 
 	}
 
 	if (bullet.getActive())
 	{
-		
-		bullet.setDegrees(ship.getDegrees());
 		bullet.update(frameTime);
 	}
-
-	/*if (bullet.getDegrees() == 270) //right
-		bullet.setX(bullet.getX() + frameTime * BULLET_SPEED);
-	else
-	if (bullet.getDegrees() == 90) //left
-		bullet.setX(bullet.getX() - frameTime * BULLET_SPEED);
-	else
-	if (bullet.getDegrees() == 180) //up
-		bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
-	else
-	if (bullet.getDegrees() == 0) //down
-		bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);*/
 
 	if (zombie.getX() > ship.getX())
 		zombie.setX(zombie.getX() - frameTime * ZOMBIE_SPEED);

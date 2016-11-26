@@ -17,6 +17,7 @@ Bullet::Bullet() : Entity()
 	spriteData.y = BulletNS::Y;
 	spriteData.rect.bottom = BulletNS::HEIGHT;    // rectangle to select parts of an image
 	spriteData.rect.right = BulletNS::WIDTH;
+	movementSpeed = BulletNS::BULLET_SPEED;
 	velocity.x = 0;                             // velocity X
 	velocity.y = 0;                             // velocity Y
 	frameDelay = BulletNS::BULLET_ANIMATION_DELAY;
@@ -33,13 +34,14 @@ Bullet::Bullet() : Entity()
 // typically called once per frame
 // frameTime is used to regulate the speed of movement and animation
 //=============================================================================
-void Bullet::create(Image player)
+void Bullet::create(Image player, float degree)
 {
 	Bullet::setDegrees(player.getDegrees());
 	Bullet::setX(player.getCenterX());
 	Bullet::setY(player.getCenterY());
 
-	spriteData.angle = Bullet::getDegrees();
+	//spriteData.angle = Bullet::getDegrees(); <<this and the next line somehow makes bullet change direction when player changes direction lol
+	//spriteData.angle = degree; 
 
 	spriteData.x = Bullet::getX();                   // location on screen
 	spriteData.y = Bullet::getY();
@@ -52,30 +54,30 @@ void Bullet::create(Image player)
 
 //=============================================================================
 // update
-// typically called once per frame
+// typically called once per frame, is only called when a bullet is active
 // frameTime is used to regulate the speed of movement and animation
 //=============================================================================
 void Bullet::update(float frameTime)
 {
+	if (active)
+		visible = true;
+
 	Entity::update(frameTime);
-	//spriteData.angle += frameTime * PlayerNS::ROTATION_RATE;  // rotate the ship
-	
-	//spriteData.angle = Bullet::getDegrees(); //somehow, this makes bullet start at player center instead of forward of player (maybe bullet is indeed travelling BUT???)
 
 	if (Bullet::getDegrees() == 270) //right
 	{
-		spriteData.x += frameTime * BulletNS::BULLET_SPEED;
+		spriteData.x += frameTime * movementSpeed;
 	}
-		
-	
+
+
 	if (Bullet::getDegrees() == 90) //left
-		spriteData.x -= frameTime * BulletNS::BULLET_SPEED;
-	
+		spriteData.x -= frameTime * movementSpeed;
+
 	if (Bullet::getDegrees() == 180) //up
-		spriteData.y -= frameTime * BulletNS::BULLET_SPEED;
-	
+		spriteData.y -= frameTime * movementSpeed;
+
 	if (Bullet::getDegrees() == 0) //down
-		spriteData.y += frameTime * BulletNS::BULLET_SPEED;
+		spriteData.y += frameTime * movementSpeed;
 
 	// disappear off walls
 	// if hit right screen edge
@@ -97,8 +99,7 @@ void Bullet::update(float frameTime)
 		active = false;
 	}
 
-	
-
-
+	if (!active)
+		visible = false;
 
 }

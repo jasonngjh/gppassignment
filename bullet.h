@@ -16,7 +16,7 @@ namespace BulletNS
 	const int X = 0;
 	const int Y = 0;
 	const float BULLET_ANIMATION_DELAY = 0.05f;
-	const int BULLET_SPEED = 10000;
+	const int BULLET_SPEED = 500;
 	const bool isActive = true; //when created a bullet is active
 
 	//bullet
@@ -35,7 +35,7 @@ public:
 	// inherited member functions
 	void update(float frameTime);
 
-	void create(Image player);
+	void create(Image player, float degree);
 
 		
 };
