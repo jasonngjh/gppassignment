@@ -66,7 +66,7 @@ const float SHIP_ANIMATION_DELAY = 0.2f; // time between frames of ship animatio
 const int  ZOMBIE_START_FRAME = 0;         // starting frame of ship animation
 const int  ZOMBIE_END_FRAME = 3;           // last frame of ship animation
 const float ZOMBIE_ANIMATION_DELAY = 0.15f;
-const float ZOMBIE_SPEED = 50;
+
 const int  BULLET_START_FRAME = 0;         // starting frame of ship animation
 const int  BULLET_END_FRAME = 1;           // last frame of ship animation
 const float BULLET_ANIMATION_DELAY = 0.05f;
@@ -80,18 +80,19 @@ const int  SHIP_HEIGHT = 32;             // height of ship image
 const float ROTATION_RATE = 180.0f;             // degrees per second
 //const float SCALE_RATE = 0.2f;                  // % change per second
 const float SHIP_SPEED = 200.0f;                // pixels per second
-const float SHIP_SCALE = 1.5f;                 
+const float SHIP_SCALE = 1.5f;         
+const float ZOMBIE_SPEED = SHIP_SPEED / 2;
 //left wall 
 //const int WALL1_WIDTH = 30;
 //const int WALL1_HEIGHT = GAME_HEIGHT;
 //const int WALL1_x = GAME_WIDTH/2;
 //const int WALL1_y = GAME_HEIGHT/2;
 //top wall
-const int WALL2_WIDTH = 800;
-const int WALL2_HEIGHT = 30;
-const int wall2_x = 1;
-const int wall2_y = 1;
-const float WALL2_ROTATION_RATE=90.0f;
+//const int WALL2_WIDTH = 800;
+//const int WALL2_HEIGHT = 30;
+//const int wall2_x = 1;
+//const int wall2_y = 1;
+//const float WALL2_ROTATION_RATE=90.0f;
 
 //zombie height and width
 const int ZOMBIE_COLS = 2;

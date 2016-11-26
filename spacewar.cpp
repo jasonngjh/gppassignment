@@ -81,25 +81,23 @@ void Spacewar::initialize(HWND hwnd)
 
 	if (!bullet.initialize(this, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
+	/*wall1.setX(1);
+	wall1.setY(1);*/
 
-	//wall1.setX(1);
-	//wall1.setY(1);
-	//wall2.setY();
-	//wall2.setScale(1.035f);
-	//wall1.get
 	wall3.setX(770);
 	wall4.setY(570);
 	ship.setX(GAME_WIDTH / 4);              // start above and left of planet
 	ship.setY(GAME_HEIGHT / 4);
 	ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	ship.setFrameDelay(SHIP_ANIMATION_DELAY);
-//	ship.setVelocity(VECTOR2(PlayerNS::SPEED, -PlayerNS::SPEED)); // VECTOR2(X, Y)
+	ship.setVelocity(VECTOR2(PlayerNS::SPEED, -PlayerNS::SPEED)); // VECTOR2(X, Y)
 
-	//ship.setDegrees(45.0f);                             // angle of ship
+	//ship.setDegrees(45.0f);     \                       // angle of ship
 	zombie.setX(GAME_WIDTH / 4);              // start above and left of planet
 	zombie.setY(GAME_HEIGHT / 4);
 	zombie.setFrames(ZOMBIE_START_FRAME, ZOMBIE_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	zombie.setFrameDelay(ZOMBIE_ANIMATION_DELAY);
+
 	//bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
 	//bullet.setY(GAME_HEIGHT / 4);
 
@@ -111,7 +109,7 @@ void Spacewar::initialize(HWND hwnd)
 //=============================================================================
 void Spacewar::update()
 {
-	wall1.update(frameTime);
+	
 	ship.update(frameTime);
 	// rotate ship
 	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
@@ -202,7 +200,7 @@ void Spacewar::update()
 	else
 	if (bullet.getDegrees() == 0) //down
 		bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);*/
-
+	
 	if (zombie.getX() > ship.getX())
 		zombie.setX(zombie.getX() - frameTime * ZOMBIE_SPEED);
 
@@ -217,6 +215,7 @@ void Spacewar::update()
 
 	//ship.update(frameTime);
 	zombie.update(frameTime);
+	wall1.update(frameTime);
 	//VECTOR2 collisionVector2;
 	//if (wall1.getActive())
 	/*{
@@ -284,9 +283,9 @@ void Spacewar::render()
 	//planet.draw();                          // add the planet to the scene
 	ship.draw();
 	wall1.draw();
-	wall2.draw();
-	wall3.draw();
-	wall4.draw();
+	//wall2.draw();
+	//wall3.draw();
+	//wall4.draw();
 	zombie.draw();
 	bullet.draw();
 	graphics->spriteEnd();                  // end drawing sprites

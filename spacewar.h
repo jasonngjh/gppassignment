@@ -35,7 +35,7 @@ private:
 	Wall wall4;
 	Image zombie;
 	Bullet bullet;
-
+	RECT walla; 
 public:
     // Constructor
     Spacewar();
