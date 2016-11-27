@@ -75,7 +75,7 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship"));
 
 	//zombie
-	if (!zombie.initialize(graphics, ZOMBIE_WIDTH, ZOMBIE_HEIGHT, ZOMBIE_COLS, &zombieTexture))
+	if (!zombie.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
 
 	if (!bullet.initialize(this, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
@@ -91,11 +91,8 @@ void Spacewar::initialize(HWND hwnd)
 	ship.setY(GAME_HEIGHT / 4);
 	ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	ship.setFrameDelay(SHIP_ANIMATION_DELAY);
+
 	//ship.setDegrees(45.0f);                             // angle of ship
-	zombie.setX(GAME_WIDTH / 4);              // start above and left of planet
-	zombie.setY(GAME_HEIGHT / 4);
-	zombie.setFrames(ZOMBIE_START_FRAME, ZOMBIE_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
-	zombie.setFrameDelay(ZOMBIE_ANIMATION_DELAY);
 	//bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
 	//bullet.setY(GAME_HEIGHT / 4);
 
@@ -208,7 +205,7 @@ void Spacewar::update()
 	if (bullet.getDegrees() == 0) //down
 		bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);*/
 
-	if (zombie.getX() > ship.getX())
+	/*if (zombie.getX() > ship.getX())
 		zombie.setX(zombie.getX() - frameTime * ZOMBIE_SPEED);
 
 	if (zombie.getX() < ship.getX())
@@ -218,10 +215,10 @@ void Spacewar::update()
 		zombie.setY(zombie.getY() - frameTime * ZOMBIE_SPEED);
 
 	if (zombie.getY() < ship.getY())
-		zombie.setY(zombie.getY() + frameTime * ZOMBIE_SPEED);
+		zombie.setY(zombie.getY() + frameTime * ZOMBIE_SPEED);*/
 
 	//ship.update(frameTime);
-	zombie.update(frameTime);
+	zombie.update(ship,frameTime);
 
 	//code to check
 	//if bullet active

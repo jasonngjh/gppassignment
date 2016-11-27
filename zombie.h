@@ -25,8 +25,8 @@ public:
 	Zombie();
 		
 	// inherited member functions
-	void update(float frameTime);
-	void movement();
+	void spawn();
+	void update(Image player,float frameTime);
 	
 };
 
