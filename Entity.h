@@ -43,6 +43,7 @@ protected:
 	HRESULT hr;             // standard return type
 	bool    active;         // only active entities may collide
 	bool    rotatedBoxReady;    // true when rotated collision box is ready
+	int movementSpeed;
 
 	// --- The following functions are protected because they are not intended to be
 	// --- called from outside the class.
