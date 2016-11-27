@@ -22,7 +22,7 @@ Entity::Entity() : Image()
 	deltaV.y = 0.0;
 	active = true;                  // the entity is active
 	rotatedBoxReady = false;
-	collisionType = entityNS::CIRCLE;
+	collisionType = entityNS::BOX;
 	health = 100;
 	//gravity = entityNS::GRAVITY;
 }
@@ -58,11 +58,11 @@ void Entity::activate()
 //=============================================================================
 void Entity::update(float frameTime)
 {
-	velocity += deltaV;
-	deltaV.x = 0;
-	deltaV.y = 0;
+	//velocity += deltaV;
+	//deltaV.x = 0;
+	//deltaV.y = 0;
 	Image::update(frameTime);
-	rotatedBoxReady = false;    // for rotatedBox collision detection
+	//rotatedBoxReady = false;    // for rotatedBox collision detection
 }
 
 //=============================================================================

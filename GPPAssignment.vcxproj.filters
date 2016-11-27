@@ -51,6 +51,9 @@
     <ClInclude Include="wall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="textureManager.cpp">
@@ -81,6 +84,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="wall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

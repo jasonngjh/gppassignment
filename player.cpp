@@ -109,6 +109,8 @@ void Player::update(float frameTime)
 		//cant move while shooting/shooting has delay
 		//PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_ASYNC);
 
+		//bullet.create(this)
+
 	}
 
 
