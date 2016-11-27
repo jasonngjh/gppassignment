@@ -35,11 +35,8 @@ public:
 	// inherited member functions
 	void update(float frameTime);
 
-<<<<<<< HEAD
 	void create(Image player, float degree);
-=======
 	void create(Image player);
->>>>>>> refs/remotes/origin/master
 
 		
 };

@@ -7,10 +7,7 @@
 #include "textureManager.h"
 #include "image.h"
 #include "bullet.h"
-<<<<<<< HEAD
-=======
 #include "wall.h"
->>>>>>> refs/remotes/origin/master
 
 //=============================================================================
 // Create game class

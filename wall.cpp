@@ -14,11 +14,9 @@ Wall::Wall() : Entity()
 	//spriteData.y = WallNS::Y;
 	radius = WallNS::COLLISION_RADIUS;
 	mass = WallNS::MASS;
-<<<<<<< HEAD
 	//startFrame = WallNS::START_FRAME;    // first frame of ship animation
 	//endFrame = WallNS::END_FRAME;      // last frame of ship animation
 	setCurrentFrame(startFrame);
-=======
 	edge.left =1;
 	edge.top = 1;
 	edge.right=WallNS::WIDTH;
@@ -28,5 +26,4 @@ Wall::Wall() : Entity()
 	//endFrame = WallNS::END_FRAME;      // last frame of ship animation
 	setCurrentFrame(startFrame);
 	collisionType = entityNS::BOX;
->>>>>>> refs/remotes/origin/master
 }
