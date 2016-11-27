@@ -34,7 +34,7 @@ Bullet::Bullet() : Entity()
 // typically called once per frame
 // frameTime is used to regulate the speed of movement and animation
 //=============================================================================
-void Bullet::create(Image player)
+void Bullet::create(Image player, float degree)
 {
 	Bullet::setDegrees(player.getDegrees());
 	Bullet::setX(player.getCenterX());

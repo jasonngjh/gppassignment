@@ -172,7 +172,8 @@ void Spacewar::update()
 	}
 		//add bullet to bullet array
 		
-		bullet.create(ship);
+		if (!bullet.getActive())
+			bullet.create(ship, ship.getDegrees());
 
 		
 

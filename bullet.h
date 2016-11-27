@@ -36,7 +36,6 @@ public:
 	void update(float frameTime);
 
 	void create(Image player, float degree);
-	void create(Image player);
 
 		
 };
