@@ -23,6 +23,7 @@ Player::Player () : Entity()
 	endFrame = PlayerNS::SHIP_END_FRAME;      // last frame of ship animation
     currentFrame = startFrame;
 	radius = 1;
+	health = 100;
     collisionType = entityNS::CIRCLE;
 }
 
@@ -44,11 +45,13 @@ void Player::update(float frameTime)
     {
         // position at right screen edge
 		spriteData.x = GAME_WIDTH - PlayerNS::WIDTH*getScale();
+		if (velocity.x > 0)
         velocity.x = -velocity.x;               // reverse X direction
     } 
     else if (spriteData.x < 0)                  // else if hit left screen edge
     {
         spriteData.x = 0;                       // position at left screen edge
+		if (velocity.x < 0)
         velocity.x = -velocity.x;               // reverse X direction
     }
     // if hit bottom screen edge
@@ -56,11 +59,14 @@ void Player::update(float frameTime)
     {
         // position at bottom screen edge
 		spriteData.y = GAME_HEIGHT - PlayerNS::HEIGHT*getScale();
+		if (velocity.y > 0)
+
         velocity.y = -velocity.y;               // reverse Y direction
     }
     else if (spriteData.y < 0)                  // else if hit top screen edge
     {
         spriteData.y = 0;                       // position at top screen edge
+		if (velocity.y < 0)
         velocity.y = -velocity.y;               // reverse Y direction
     }
 

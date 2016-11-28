@@ -10,10 +10,10 @@
 //=============================================================================
 Wall::Wall() : Entity()
 {
-	spriteData.x = WallNS::X;              // location on screen
-	spriteData.y = WallNS::Y;
-	//spriteData.width = WallNS::WIDTH;          
-	//spriteData.height = WallNS::HEIGHT;
+	spriteData.x =X;              // location on screen
+	spriteData.y =Y;
+	spriteData.width=WIDTH;          
+	spriteData.height=HEIGHT;
 	//mass = WallNS::MASS;
 	//edge.top = WallNS::X;
 	//edge.left = WallNS::Y;
@@ -25,9 +25,14 @@ Wall::Wall() : Entity()
 	//spriteData.rect.right = WallNS::WIDTH;
 	//startFrame = WallNS::START_FRAME;    // first frame of ship animation
 	//endFrame = WallNS::END_FRAME;      // last frame of ship animation
-	RECT a = { WallNS::X, WallNS::Y, WallNS::WIDTH, WallNS::HEIGHT };
-	edge = a;
+
+	//edge = rect;
+	//edge = { X, Y, WIDTH, HEIGHT };
+	edge.left = X;
+	edge.top = Y;
+	edge.right = WIDTH;
+	edge.bottom = HEIGHT;
 	setActive(true);
 	setCurrentFrame(startFrame);
-	collisionType = entityNS::ROTATED_BOX;
+	collisionType = entityNS::BOX;
 }

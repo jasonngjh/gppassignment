@@ -59,6 +59,7 @@ const char WALL2_IMAGE[] = "pictures\\wall2.png";//Top wall
 const char WALL3_IMAGE[] = "pictures\\wall1.png";//Right wall
 const char WALL4_IMAGE[] = "pictures\\wall2.png";//Bottomwall
 const char BULLET_IMAGE[] = "pictures\\bullet.png";//bullet
+const char HEART_IMAGE[] = "pictures\\pixelheart.png";//lifeup
 
 const int  SHIP_START_FRAME = 0;         // starting frame of ship animation
 const int  SHIP_END_FRAME = 3;           // last frame of ship animation

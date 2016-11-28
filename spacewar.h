@@ -8,6 +8,7 @@
 #include "image.h"
 #include "bullet.h"
 #include "wall.h"
+#include "heart.h"
 
 //=============================================================================
 // Create game class
@@ -26,6 +27,7 @@ private:
 	TextureManager wall4Texture;		//wall Texture
 	TextureManager zombieTexture;
 	TextureManager bulletTexture;
+	TextureManager heartTexture;
 	Image   planet;                 // planet image
 	Image   nebula;                 // nebula image
 	Player ship;						//ship image
@@ -35,7 +37,7 @@ private:
 	Wall wall4;
 	Image zombie;
 	Bullet bullet;
-	RECT walla; 
+	Heart heart;
 public:
     // Constructor
     Spacewar();

@@ -11,10 +11,10 @@
 Entity::Entity() : Image()
 {
 	radius = 10.0;
-	edge.left = 0;
-	edge.top = 0;
-	edge.right = 30;
-	edge.bottom = 600;
+	edge.left = -1;
+	edge.top = -1;
+	edge.right = 1;
+	edge.bottom = 1;
 	mass = 1.0;
 	velocity.x = 0.0;
 	velocity.y = 0.0;
