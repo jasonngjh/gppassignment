@@ -35,7 +35,7 @@ public:
 	// inherited member functions
 	void update(float frameTime);
 
-	void create(Image player);
+	void create(Image player, float degree);
 
 		
 };

@@ -1,5 +1,6 @@
 #include "zombie.h"
 #include "player.h"
+#include <stdlib.h>
 
 //=============================================================================
 // default constructor
@@ -23,16 +24,40 @@ Zombie::Zombie() : Entity()
 }
 
 //=============================================================================
+// spawn
+// typically called once per frame
+// frameTime is used to regulate the speed of movement and animation
+//=============================================================================
+void Zombie::spawn()
+{
+	int randomX, randomY;
+	randomX = rand() % GAME_WIDTH + 1;
+	randomY = rand() % GAME_HEIGHT + 1;
+
+	Zombie::setX(randomX);
+	Zombie::setY(randomY);
+	Zombie::setFrames(ZOMBIE_START_FRAME, ZOMBIE_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
+	Zombie::setFrameDelay(ZOMBIE_ANIMATION_DELAY);
+}
+
+//=============================================================================
 // update
 // typically called once per frame
 // frameTime is used to regulate the speed of movement and animation
 //=============================================================================
-void Zombie::update(float frameTime){
+void Zombie::update(Image player,float frameTime){
 	Entity::update(frameTime);
 
-}
+	if (spriteData.x > player.getX())
+		spriteData.x = Zombie::getX() - frameTime * ZOMBIE_SPEED;
 
-void Zombie::movement(){
-	int zombieX = spriteData.x;
+	if (spriteData.x < player.getX())
+		spriteData.x = Zombie::getX() + frameTime * ZOMBIE_SPEED;
+
+	if (spriteData.y > player.getY())
+		spriteData.y = Zombie::getY() - frameTime * ZOMBIE_SPEED;
+
+	if (spriteData.y < player.getY())
+		spriteData.y = Zombie::getY() + frameTime * ZOMBIE_SPEED;
 
 }
