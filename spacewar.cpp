@@ -98,11 +98,6 @@ void Spacewar::initialize(HWND hwnd)
 	ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	ship.setFrameDelay(SHIP_ANIMATION_DELAY);
 
-	//ship.setDegrees(45.0f);                             // angle of ship
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/wex2
 	//ship.setVelocity(VECTOR2(PlayerNS::SPEED, -PlayerNS::SPEED)); // VECTOR2(X, Y)
 
 	//ship.setDegrees(45.0f);     \                       // angle of ship
@@ -110,11 +105,6 @@ void Spacewar::initialize(HWND hwnd)
 	zombie.setY(GAME_HEIGHT / 4);
 	zombie.setFrames(ZOMBIE_START_FRAME, ZOMBIE_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	zombie.setFrameDelay(ZOMBIE_ANIMATION_DELAY);
-
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/wex2
 	//bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
 	//bullet.setY(GAME_HEIGHT / 4);
 
@@ -209,11 +199,6 @@ void Spacewar::update()
 	else
 	if (bullet.getDegrees() == 0) //down
 		bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);*/
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/wex2
-
 	/*if (zombie.getX() > ship.getX())
 =======
 	
@@ -231,17 +216,11 @@ void Spacewar::update()
 		zombie.setY(zombie.getY() + frameTime * ZOMBIE_SPEED);*/
 
 	//ship.update(frameTime);
-<<<<<<< HEAD
-	zombie.update(ship,frameTime);
-	zombie2.update(ship, frameTime);
-=======
-
 	zombie.update(ship,frameTime);
 	zombie2.update(ship, frameTime);
 
-
-	zombie.update(frameTime);
->>>>>>> refs/remotes/origin/wex2
+	zombie.update(ship,frameTime);
+	zombie2.update(ship, frameTime);
 	wall1.update(frameTime);
 //	heart.update(frameTime);
 	//VECTOR2 collisionVector2;
@@ -253,10 +232,6 @@ void Spacewar::update()
 			zombie.setVisible(false);
 		}
 	}*/
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/wex2
 	//code to check
 	//if bullet active
 	//PEW PEW!
