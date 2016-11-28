@@ -36,9 +36,13 @@ class Heart : public Entity
 public:
 	// constructor
 	Heart();
-
+	~Heart(){}
 	// inherited member functions
 	void update(float frameTime);
+	//void disposeObject()
+	//{
+	//	delete this;
+	//}
 };
 #endif
 

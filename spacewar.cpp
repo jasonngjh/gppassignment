@@ -242,66 +242,22 @@ void Spacewar::ai()
 //=============================================================================
 void Spacewar::collisions()
 {
-	//VECTOR2 collisionVector;
-	//// if collision between ship and planet
-	//if (ship.collidesWith(wall1, collisionVector))
-	//{
-	//	// bounce off planet
 
-	//	ship.bounce(collisionVector, wall1);
-	//	zombie.setVisible(false);
-	//	//ship1.damage(PLANET);
-	//}
-	//else if (ship.collidesWith(wall2, collisionVector))
-	//{
-	//	// bounce off planet
-
-	//	ship.bounce(collisionVector, wall2);
-	//	zombie.setVisible(false);
-	//	//ship1.damage(PLANET);
-	//}
-	//else if (ship.collidesWith(wall3, collisionVector))
-	//{
-	//	// bounce off planet
-	//	ship.bounce(collisionVector, wall3);
-	//	zombie.setVisible(false);
-	//	//ship1.damage(PLANET);
-	//}
-	//else if (ship.collidesWith(wall4, collisionVector))
-	//{
-	//	// bounce off planet
-
-	//	ship.bounce(collisionVector, wall4);
-	//	zombie.setVisible(false);
-	//	//ship1.damage(PLANET);
-	//}
-
-	//else (zombie.setVisible(true));
 	VECTOR2 collisionVector;
 	// if collision between ship and planet
 	if (bullet.collidesWith(zombie, collisionVector))
 	{
 		// bounce off planet
 		zombie.setVisible(false);
-		bullet.setActive(false);
+		//bullet.setActive(false);
 		//ship1.damage(PLANET);
 	}
-	//if (ship2.collidesWith(planet, collisionVector))
-	//{
-	//	// bounce off planet
-	//	ship2.bounce(collisionVector, planet);
-	//	ship2.damage(PLANET);
-	//}
-	//// if collision between ships
-	//if (ship1.collidesWith(ship2, collisionVector))
-	//{
-	//	// bounce off ship
-	//	ship1.bounce(collisionVector, ship2);
-	//	ship1.damage(SHIP);
-	//	// change the direction of the collisionVector for ship2
-	//	ship2.bounce(collisionVector*-1, ship1);
-	//	ship2.damage(SHIP);
-	//}
+	if (ship.collidesWith(heart, collisionVector))
+	{
+		heart.setVisible(false);
+		//heart.delete();
+		
+	}
 }
 
 //=============================================================================
