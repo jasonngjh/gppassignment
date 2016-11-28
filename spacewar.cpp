@@ -83,11 +83,9 @@ void Spacewar::initialize(HWND hwnd)
 
 	if (!bullet.initialize(this, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
-	/*if (!heart.initialize(this, 0,0,0, &bulletTexture))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));*/
-	/*wall1.setX(1);
-	wall1.setY(1);*/
-	//wall1.setSpriteDataRect(wall1.getEdge());
+	if (!heart.initialize(this, 0,0,0, &heartTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
+
 	wall3.setX(770);
 	wall4.setY(570);
 	ship.setX(GAME_WIDTH / 4);              // start above and left of planet
@@ -217,7 +215,7 @@ void Spacewar::update()
 	zombie.update(ship,frameTime);
 	zombie2.update(ship, frameTime);
 	wall1.update(frameTime);
-//	heart.update(frameTime);
+	heart.update(frameTime);
 	//VECTOR2 collisionVector2;
 	//if (wall1.getActive())
 	/*{
@@ -323,7 +321,7 @@ void Spacewar::render()
 	zombie.draw();
 	zombie2.draw();
 	bullet.draw();
-	//heart.draw();
+	heart.draw();
 	graphics->spriteEnd();                  // end drawing sprites
 
 }

@@ -8,7 +8,7 @@
 #include "image.h"
 #include "bullet.h"
 #include "zombie.h"
-#include "zombie.h"
+#include "heart.h"
 
 //=============================================================================
 // Create game class
@@ -39,7 +39,7 @@ private:
 	Zombie zombie2;
 	Zombie zombieArray[5];
 	Bullet bullet;
-//	Heart heart;
+	Heart heart;
 public:
     // Constructor
     Spacewar();
