@@ -18,6 +18,7 @@ namespace BulletNS
 	const float BULLET_ANIMATION_DELAY = 0.05f;
 	const int BULLET_SPEED = 500;
 	const bool isActive = true; //when created a bullet is active
+	
 
 	//bullet
 	const int BULLET_COLS = 2;

@@ -78,10 +78,14 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship"));
 
 	//zombie
+<<<<<<< HEAD
 	if (!zombie.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
 	
 	if (!zombie2.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
+=======
+	if (!zombie.initialize(this, ZOMBIE_WIDTH, ZOMBIE_HEIGHT, ZOMBIE_COLS, &zombieTexture))
+>>>>>>> refs/remotes/origin/jack-bullet
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
 
 	if (!bullet.initialize(this, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
@@ -181,6 +185,8 @@ void Spacewar::update()
 
 	}//cant move while shooting/shooting has delay
 
+	bullet.update(frameTime);
+
 	if (bullet.getActive())
 	{
 		
@@ -249,6 +255,7 @@ void Spacewar::ai()
 //=============================================================================
 void Spacewar::collisions()
 {
+<<<<<<< HEAD
 	//VECTOR2 collisionVector;
 	//// if collision between ship and planet
 	//if (ship.collidesWith(wall1, collisionVector))
@@ -284,6 +291,17 @@ void Spacewar::collisions()
 	//}
 
 	//else (zombie.setVisible(true));
+=======
+	VECTOR2 collisionVector;
+	// if collision between ship and planet
+	if (bullet.collidesWith(zombie, collisionVector))
+	{
+		// bounce off planet
+		zombie.setVisible(false);
+		bullet.setActive(false);
+		//ship1.damage(PLANET);
+	}
+>>>>>>> refs/remotes/origin/jack-bullet
 	//if (ship2.collidesWith(planet, collisionVector))
 	//{
 	//	// bounce off planet

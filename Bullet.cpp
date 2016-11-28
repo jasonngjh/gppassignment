@@ -25,7 +25,7 @@ Bullet::Bullet() : Entity()
 	endFrame = BulletNS::BULLET_END_FRAME;      // last frame of ship animation
 	currentFrame = startFrame;
 	radius = BulletNS::WIDTH / 2.0;
-	collisionType = entityNS::ROTATED_BOX;
+	collisionType = entityNS::BOX;
 	active = false;
 }
 
@@ -62,52 +62,53 @@ void Bullet::create(Image player, float degree)
 void Bullet::update(float frameTime)
 {
 	if (active)
+	{
 		visible = true;
+		Entity::update(frameTime);
 
-	Entity::update(frameTime);
+		if (Bullet::getDegrees() == 270) //right
+		{
+			spriteData.x += frameTime * movementSpeed;
+		}
 
-	if (Bullet::getDegrees() == 270) //right
-	{
-		spriteData.x += frameTime * movementSpeed;
+
+		if (Bullet::getDegrees() == 90) //left
+			spriteData.x -= frameTime * movementSpeed;
+
+		if (Bullet::getDegrees() == 180) //up
+			spriteData.y -= frameTime * movementSpeed;
+
+		if (Bullet::getDegrees() == 0) //down
+			spriteData.y += frameTime * movementSpeed;
+		Entity::update(frameTime);
+		//spriteData.angle += frameTime * PlayerNS::ROTATION_RATE;  // rotate the ship
+
+		//spriteData.angle = Bullet::getDegrees(); //somehow, this makes bullet start at player center instead of forward of player (maybe bullet is indeed travelling BUT???)
+
+
+
+		// disappear off walls
+		// if hit right screen edge
+		if (spriteData.x > GAME_WIDTH - BulletNS::WIDTH*getScale())
+		{
+			active = false;
+		}
+		else if (spriteData.x <= 0)                  // else if hit left screen edge
+		{
+			active = false;
+		}
+		// if hit bottom screen edge
+		if (spriteData.y > GAME_HEIGHT - BulletNS::HEIGHT*getScale())
+		{
+			active = false;
+		}
+		else if (spriteData.y <= 0)                  // else if hit top screen edge
+		{
+			active = false;
+		}
 	}
 
-
-	if (Bullet::getDegrees() == 90) //left
-		spriteData.x -= frameTime * movementSpeed;
-
-	if (Bullet::getDegrees() == 180) //up
-		spriteData.y -= frameTime * movementSpeed;
-
-	if (Bullet::getDegrees() == 0) //down
-		spriteData.y += frameTime * movementSpeed;
-	Entity::update(frameTime);
-	//spriteData.angle += frameTime * PlayerNS::ROTATION_RATE;  // rotate the ship
-	
-	//spriteData.angle = Bullet::getDegrees(); //somehow, this makes bullet start at player center instead of forward of player (maybe bullet is indeed travelling BUT???)
-
-	
-
-	// disappear off walls
-	// if hit right screen edge
-	if (spriteData.x > GAME_WIDTH - BulletNS::WIDTH*getScale())
-	{
-		active = false;
-	}
-	else if (spriteData.x <= 0)                  // else if hit left screen edge
-	{
-		active = false;
-	}
-	// if hit bottom screen edge
-	if (spriteData.y > GAME_HEIGHT - BulletNS::HEIGHT*getScale())
-	{
-		active = false;
-	}
-	else if (spriteData.y <= 0)                  // else if hit top screen edge
-	{
-		active = false;
-	}
-
-	if (!active)
+	else
 		visible = false;
 
 }

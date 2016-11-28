@@ -7,8 +7,13 @@
 #include "textureManager.h"
 #include "image.h"
 #include "bullet.h"
+<<<<<<< HEAD
 #include "zombie.h"
 
+=======
+#include "wall.h"
+#include "zombie.h"
+>>>>>>> refs/remotes/origin/jack-bullet
 
 //=============================================================================
 // Create game class
@@ -31,6 +36,7 @@ private:
 	Image   planet;                 // planet image
 	Image   nebula;                 // nebula image
 	Player ship;						//ship image
+<<<<<<< HEAD
 	Image wall1;
 	Image wall2;
 	Image wall3;
@@ -38,6 +44,13 @@ private:
 	Zombie zombie;
 	Zombie zombie2;
 	Zombie zombieArray[5];
+=======
+	Wall wall1;
+	Wall wall2;
+	Wall wall3;
+	Wall wall4;
+	Zombie zombie;
+>>>>>>> refs/remotes/origin/jack-bullet
 	Bullet bullet;
 //	Heart heart;
 public:
