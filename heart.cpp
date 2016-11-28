@@ -36,7 +36,5 @@ void Heart::update(float frameTime)
 {
 	Entity::update(frameTime);
 	//spriteData.angle += frameTime * PlayerNS::ROTATION_RATE;  // rotate the ship
-	spriteData.x += frameTime * velocity.x;     // move ship along X 
-	spriteData.y += frameTime * velocity.y;     // move ship along Y
 
 }
