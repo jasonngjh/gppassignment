@@ -7,12 +7,8 @@
 #include "textureManager.h"
 #include "image.h"
 #include "bullet.h"
-#include "wall.h"
-<<<<<<< HEAD
 #include "zombie.h"
-=======
-#include "heart.h"
->>>>>>> refs/remotes/origin/wex
+
 
 //=============================================================================
 // Create game class
@@ -35,15 +31,15 @@ private:
 	Image   planet;                 // planet image
 	Image   nebula;                 // nebula image
 	Player ship;						//ship image
-	Wall wall1;
-	Wall wall2;
-	Wall wall3;
-	Wall wall4;
+	Image wall1;
+	Image wall2;
+	Image wall3;
+	Image wall4;
 	Zombie zombie;
 	Zombie zombie2;
 	Zombie zombieArray[5];
 	Bullet bullet;
-	Heart heart;
+//	Heart heart;
 public:
     // Constructor
     Spacewar();
