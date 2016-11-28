@@ -54,7 +54,11 @@
     <ClInclude Include="bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="zombie.h">
+=======
     <ClInclude Include="heart.h">
+>>>>>>> refs/remotes/origin/wex
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -92,7 +96,11 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="zombie.cpp">
+=======
     <ClCompile Include="heart.cpp">
+>>>>>>> refs/remotes/origin/wex
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

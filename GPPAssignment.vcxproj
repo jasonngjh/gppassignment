@@ -89,6 +89,7 @@
     <ClInclude Include="spacewar.h" />
     <ClInclude Include="textureManager.h" />
     <ClInclude Include="wall.h" />
+    <ClInclude Include="zombie.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
@@ -103,6 +104,7 @@
     <ClCompile Include="textureManager.cpp" />
     <ClCompile Include="wall.cpp" />
     <ClCompile Include="winmain.cpp" />
+    <ClCompile Include="zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Desktop\wall.png" />
