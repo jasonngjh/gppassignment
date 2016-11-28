@@ -4,6 +4,7 @@
 // Chapter 6 ship.cpp v1.0
 
 #include "player.h"
+#include "bullet.h"
 
 //=============================================================================
 // default constructor
@@ -98,27 +99,21 @@ void Player::update(float frameTime)
 
 	if (input->isKeyDown(PLAYER_FIRE_KEY))
 	{
-
-		//create Bullet at player X and Y
-		//might have to code this outside of Player 
-
-		/*bullet.setDegrees(ship.getDegrees());
-		bullet.setX(ship.getCenterX());
-		bullet.setY(ship.getCenterY());
-
-		if ((bullet.getX() < GAME_WIDTH) || (bullet.getY() < GAME_HEIGHT))
-		{
-			bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
-
-		}*/
-
-		//cant move while shooting/shooting has delay
-		//PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_ASYNC);
-
-		//bullet.create(this)
-
+		shoot();
 	}
 
+}
+
+//=============================================================================
+// shoot
+// event called when player presses fire button (default = space)
+//=============================================================================
+void Player::shoot()
+{
 
 
+
+
+	//if (!bullet.getActive())
+	//	bullet.create(ship, ship.getDegrees());
 }

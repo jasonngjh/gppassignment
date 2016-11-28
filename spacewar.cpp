@@ -169,6 +169,8 @@ void Spacewar::update()
 	if (input->isKeyDown(PLAYER_FIRE_KEY))
 	{
 
+		//ship.shoot(); (method kept noted until multiple bullet is completed)
+
 		//create Bullet at player X and Y
 		//add bullet to bullet array (for multiple bullets)
 
@@ -178,13 +180,6 @@ void Spacewar::update()
 	}//cant move while shooting/shooting has delay
 
 	bullet.update(frameTime);
-
-	if (bullet.getActive())
-	{
-		
-		//bullet.setDegrees(ship.getDegrees());
-		bullet.update(frameTime);
-	}
 
 	/*if (bullet.getDegrees() == 270) //right
 		bullet.setX(bullet.getX() + frameTime * BULLET_SPEED);

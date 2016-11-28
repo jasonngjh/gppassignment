@@ -9,6 +9,7 @@
 
 #include "entity.h"
 #include "constants.h"
+#include "bullet.h"
 
 namespace PlayerNS
 {
@@ -39,6 +40,7 @@ public:
 
 	// inherited member functions
 	void update(float frameTime);
+	void shoot();
 };
 #endif
 
