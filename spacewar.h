@@ -8,6 +8,7 @@
 #include "image.h"
 #include "bullet.h"
 #include "wall.h"
+#include "zombie.h"
 
 //=============================================================================
 // Create game class
@@ -33,7 +34,9 @@ private:
 	Wall wall2;
 	Wall wall3;
 	Wall wall4;
-	Image zombie;
+	Zombie zombie;
+	Zombie zombie2;
+	Zombie zombieArray[5];
 	Bullet bullet;
 
 public:
