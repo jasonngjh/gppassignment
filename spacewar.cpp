@@ -1,5 +1,6 @@
 
 #include "spaceWar.h"
+#include "Entity.h"
 
 //=============================================================================
 // Constructor
@@ -49,6 +50,8 @@ void Spacewar::initialize(HWND hwnd)
 	//bullet texture
 	if (!bulletTexture.initialize(graphics, BULLET_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet texture"));
+	if (!heartTexture.initialize(graphics, HEART_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet texture"));
 
 	// nebula
 	if (!nebula.initialize(graphics, 0, 0, 0, &nebulaTexture))
@@ -62,15 +65,15 @@ void Spacewar::initialize(HWND hwnd)
 	//planet.setY(GAME_HEIGHT*0.5f - planet.getHeight()*0.5f);
 
 	// wall
-	if (!wall1.initialize(this, WallNS::WIDTH, WallNS::HEIGHT, WallNS::TEXTURE_COLS, &wall1Texture))
+	if (!wall1.initialize(this, 0,0, 0, &wall1Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
-	if (!wall2.initialize(this, WallNS::WIDTH, WallNS::HEIGHT, WallNS::TEXTURE_COLS, &wall2Texture))
+	if (!wall2.initialize(this, 0,0, 0, &wall2Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
-	if (!wall3.initialize(this, WallNS::WIDTH, WallNS::HEIGHT, WallNS::TEXTURE_COLS, &wall3Texture))
+	if (!wall3.initialize(this,0,0,0, &wall3Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
-	if (!wall4.initialize(this, WallNS::WIDTH, WallNS::HEIGHT, WallNS::TEXTURE_COLS, &wall4Texture))
+	if (!wall4.initialize(this, 0,0,0, &wall4Texture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall"));
-	//ship
+	////ship
 	if (!ship.initialize(this,PlayerNS::WIDTH, PlayerNS::HEIGHT, PlayerNS::TEXTURE_COLS, &shipTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship"));
 
@@ -83,19 +86,30 @@ void Spacewar::initialize(HWND hwnd)
 
 	if (!bullet.initialize(this, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
-
-	wall1.setX(1);
-	wall1.setY(1);
-	//wall2.setY();
-	//wall2.setScale(1.035f);
+	if (!heart.initialize(this, 0,0,0, &bulletTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
+	/*wall1.setX(1);
+	wall1.setY(1);*/
+	//wall1.setSpriteDataRect(wall1.getEdge());
 	wall3.setX(770);
 	wall4.setY(570);
 	ship.setX(GAME_WIDTH / 4);              // start above and left of planet
 	ship.setY(GAME_HEIGHT / 4);
 	ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	ship.setFrameDelay(SHIP_ANIMATION_DELAY);
+<<<<<<< HEAD
 
 	//ship.setDegrees(45.0f);                             // angle of ship
+=======
+	//ship.setVelocity(VECTOR2(PlayerNS::SPEED, -PlayerNS::SPEED)); // VECTOR2(X, Y)
+
+	//ship.setDegrees(45.0f);     \                       // angle of ship
+	zombie.setX(GAME_WIDTH / 4);              // start above and left of planet
+	zombie.setY(GAME_HEIGHT / 4);
+	zombie.setFrames(ZOMBIE_START_FRAME, ZOMBIE_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
+	zombie.setFrameDelay(ZOMBIE_ANIMATION_DELAY);
+
+>>>>>>> refs/remotes/origin/wex
 	//bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
 	//bullet.setY(GAME_HEIGHT / 4);
 
@@ -107,6 +121,7 @@ void Spacewar::initialize(HWND hwnd)
 //=============================================================================
 void Spacewar::update()
 {
+	
 	ship.update(frameTime);
 	// rotate ship
 	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
@@ -189,8 +204,13 @@ void Spacewar::update()
 	else
 	if (bullet.getDegrees() == 0) //down
 		bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);*/
+<<<<<<< HEAD
 
 	/*if (zombie.getX() > ship.getX())
+=======
+	
+	if (zombie.getX() > ship.getX())
+>>>>>>> refs/remotes/origin/wex
 		zombie.setX(zombie.getX() - frameTime * ZOMBIE_SPEED);
 
 	if (zombie.getX() < ship.getX())
@@ -203,9 +223,24 @@ void Spacewar::update()
 		zombie.setY(zombie.getY() + frameTime * ZOMBIE_SPEED);*/
 
 	//ship.update(frameTime);
+<<<<<<< HEAD
 	zombie.update(ship,frameTime);
 	zombie2.update(ship, frameTime);
 
+=======
+	zombie.update(frameTime);
+	wall1.update(frameTime);
+	heart.update(frameTime);
+	//VECTOR2 collisionVector2;
+	//if (wall1.getActive())
+	/*{
+		if (ship.collidesWith(wall1, collisionVector2))
+		{
+			ship.bounce(collisionVector2, wall1);
+			zombie.setVisible(false);
+		}
+	}*/
+>>>>>>> refs/remotes/origin/wex
 	//code to check
 	//if bullet active
 	//PEW PEW!
@@ -228,9 +263,36 @@ void Spacewar::collisions()
 	if (ship.collidesWith(wall1, collisionVector))
 	{
 		// bounce off planet
+
 		ship.bounce(collisionVector, wall1);
+		zombie.setVisible(false);
 		//ship1.damage(PLANET);
 	}
+	else if (ship.collidesWith(wall2, collisionVector))
+	{
+		// bounce off planet
+
+		ship.bounce(collisionVector, wall2);
+		zombie.setVisible(false);
+		//ship1.damage(PLANET);
+	}
+	else if (ship.collidesWith(wall3, collisionVector))
+	{
+		// bounce off planet
+		ship.bounce(collisionVector, wall3);
+		zombie.setVisible(false);
+		//ship1.damage(PLANET);
+	}
+	else if (ship.collidesWith(wall4, collisionVector))
+	{
+		// bounce off planet
+
+		ship.bounce(collisionVector, wall4);
+		zombie.setVisible(false);
+		//ship1.damage(PLANET);
+	}
+
+	else (zombie.setVisible(true));
 	//if (ship2.collidesWith(planet, collisionVector))
 	//{
 	//	// bounce off planet
@@ -254,7 +316,7 @@ void Spacewar::collisions()
 //=============================================================================
 void Spacewar::render()
 {
-
+	
 	graphics->spriteBegin();                // begin drawing sprites
 
 	nebula.draw();                          // add the orion nebula to the scene
@@ -266,6 +328,7 @@ void Spacewar::render()
 	wall4.draw();
 	zombie.draw();
 	bullet.draw();
+	heart.draw();
 	graphics->spriteEnd();                  // end drawing sprites
 
 }

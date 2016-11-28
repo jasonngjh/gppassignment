@@ -228,7 +228,7 @@ void Graphics::drawSprite(const SpriteData &spriteData, COLOR_ARGB color)
 
 	// Find center of sprite
 	D3DXVECTOR2 spriteCenter = D3DXVECTOR2((float)(spriteData.width / 2 * spriteData.scale),
-		(float)(spriteData.height / 2 * spriteData.scale));
+		(float)(spriteData.height / 2   * spriteData.scale));
 	// Screen position of the sprite
 	D3DXVECTOR2 translate = D3DXVECTOR2((float)spriteData.x, (float)spriteData.y);
 	// Scaling X,Y
