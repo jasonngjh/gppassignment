@@ -77,6 +77,9 @@ void Spacewar::initialize(HWND hwnd)
 	//zombie
 	if (!zombie.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
+	
+	if (!zombie2.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
 
 	if (!bullet.initialize(this, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
@@ -219,6 +222,7 @@ void Spacewar::update()
 
 	//ship.update(frameTime);
 	zombie.update(ship,frameTime);
+	zombie2.update(ship, frameTime);
 
 	//code to check
 	//if bullet active

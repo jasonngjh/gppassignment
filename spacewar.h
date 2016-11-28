@@ -35,6 +35,8 @@ private:
 	Wall wall3;
 	Wall wall4;
 	Zombie zombie;
+	Zombie zombie2;
+	Zombie zombieArray[5];
 	Bullet bullet;
 
 public:
