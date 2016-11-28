@@ -169,30 +169,12 @@ void Spacewar::update()
 		if (!bullet.getActive())
 			bullet.create(ship, ship.getDegrees());
 
-	}
-		//add bullet to bullet array
-		
-		if (!bullet.getActive())
-			bullet.create(ship, ship.getDegrees());
-
-		
-
-		/*bullet.setDegrees(ship.getDegrees());
-		bullet.setX(ship.getCenterX());
-		bullet.setY(ship.getCenterY());*/
-
-		//cant move while shooting/shooting has delay
-		
-
-	if (bullet.getActive())
-	{
-		bullet.update(frameTime);
-	}
+	}//cant move while shooting/shooting has delay
 
 	if (bullet.getActive())
 	{
 		
-		bullet.setDegrees(ship.getDegrees());
+		//bullet.setDegrees(ship.getDegrees());
 		bullet.update(frameTime);
 	}
 
