@@ -83,7 +83,7 @@ void Spacewar::initialize(HWND hwnd)
 
 	if (!bullet.initialize(this, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
-	if (!heart.initialize(this, 0,0,0, &bulletTexture))
+	if (!heart.initialize(this, 0,0,0, &heartTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
 	/*wall1.setX(1);
 	wall1.setY(1);*/
@@ -280,7 +280,11 @@ void Spacewar::collisions()
 		zombie.setVisible(false);
 		//ship1.damage(PLANET);
 	}
+	if (ship.collidesWith(heart, collisionVector))
+	{
 
+
+	}
 	else (zombie.setVisible(true));
 	//if (ship2.collidesWith(planet, collisionVector))
 	//{
