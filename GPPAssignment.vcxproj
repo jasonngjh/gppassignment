@@ -87,10 +87,6 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="spacewar.h" />
     <ClInclude Include="textureManager.h" />
-<<<<<<< HEAD
-=======
-    <ClInclude Include="wall.h" />
->>>>>>> refs/remotes/origin/jack-bullet
     <ClInclude Include="zombie.h" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +99,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="spacewar.cpp" />
     <ClCompile Include="textureManager.cpp" />
+    <ClCompile Include="wall.cpp" />
     <ClCompile Include="winmain.cpp" />
     <ClCompile Include="zombie.cpp" />
   </ItemGroup>
