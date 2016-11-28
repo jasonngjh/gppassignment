@@ -99,7 +99,6 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="spacewar.cpp" />
     <ClCompile Include="textureManager.cpp" />
-    <ClCompile Include="wall.cpp" />
     <ClCompile Include="winmain.cpp" />
     <ClCompile Include="zombie.cpp" />
   </ItemGroup>

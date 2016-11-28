@@ -78,14 +78,7 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship"));
 
 	//zombie
-<<<<<<< HEAD
 	if (!zombie.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
-	
-	if (!zombie2.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
-=======
-	if (!zombie.initialize(this, ZOMBIE_WIDTH, ZOMBIE_HEIGHT, ZOMBIE_COLS, &zombieTexture))
->>>>>>> refs/remotes/origin/jack-bullet
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
 
 	if (!bullet.initialize(this, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
@@ -105,12 +98,11 @@ void Spacewar::initialize(HWND hwnd)
 	//ship.setVelocity(VECTOR2(PlayerNS::SPEED, -PlayerNS::SPEED)); // VECTOR2(X, Y)
 
 	//ship.setDegrees(45.0f);     \                       // angle of ship
-	zombie.setX(GAME_WIDTH / 4);              // start above and left of planet
-	zombie.setY(GAME_HEIGHT / 4);
-	zombie.setFrames(ZOMBIE_START_FRAME, ZOMBIE_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
-	zombie.setFrameDelay(ZOMBIE_ANIMATION_DELAY);
 	//bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
 	//bullet.setY(GAME_HEIGHT / 4);
+
+	zombie.spawn();
+	zombie2.spawn();
 
     return;
 }
@@ -224,9 +216,6 @@ void Spacewar::update()
 	//ship.update(frameTime);
 	zombie.update(ship,frameTime);
 	zombie2.update(ship, frameTime);
-
-	zombie.update(ship,frameTime);
-	zombie2.update(ship, frameTime);
 	wall1.update(frameTime);
 //	heart.update(frameTime);
 	//VECTOR2 collisionVector2;
@@ -255,7 +244,6 @@ void Spacewar::ai()
 //=============================================================================
 void Spacewar::collisions()
 {
-<<<<<<< HEAD
 	//VECTOR2 collisionVector;
 	//// if collision between ship and planet
 	//if (ship.collidesWith(wall1, collisionVector))
@@ -291,7 +279,6 @@ void Spacewar::collisions()
 	//}
 
 	//else (zombie.setVisible(true));
-=======
 	VECTOR2 collisionVector;
 	// if collision between ship and planet
 	if (bullet.collidesWith(zombie, collisionVector))
@@ -301,7 +288,6 @@ void Spacewar::collisions()
 		bullet.setActive(false);
 		//ship1.damage(PLANET);
 	}
->>>>>>> refs/remotes/origin/jack-bullet
 	//if (ship2.collidesWith(planet, collisionVector))
 	//{
 	//	// bounce off planet
@@ -324,8 +310,7 @@ void Spacewar::collisions()
 // Render game items
 //=============================================================================
 void Spacewar::render()
-{
-	
+{	
 	graphics->spriteBegin();                // begin drawing sprites
 
 	nebula.draw();                          // add the orion nebula to the scene
@@ -336,6 +321,7 @@ void Spacewar::render()
 	wall3.draw();
 	wall4.draw();
 	zombie.draw();
+	zombie2.draw();
 	bullet.draw();
 	//heart.draw();
 	graphics->spriteEnd();                  // end drawing sprites

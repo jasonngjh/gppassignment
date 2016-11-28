@@ -8,7 +8,6 @@
 #include "image.h"
 #include "bullet.h"
 #include "zombie.h"
-#include "wall.h"
 #include "zombie.h"
 
 //=============================================================================
@@ -39,10 +38,6 @@ private:
 	Zombie zombie;
 	Zombie zombie2;
 	Zombie zombieArray[5];
-	Wall wall1;
-	Wall wall2;
-	Wall wall3;
-	Wall wall4;
 	Bullet bullet;
 //	Heart heart;
 public:

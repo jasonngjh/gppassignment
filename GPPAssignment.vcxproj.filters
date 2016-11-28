@@ -34,9 +34,6 @@
     <ClCompile Include="zombie.cpp">
       <Filter>CPP Files</Filter>
     </ClCompile>
-    <ClCompile Include="wall.cpp">
-      <Filter>CPP Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\GitHubSyncTesting.h" />
