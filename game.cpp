@@ -109,7 +109,7 @@ void Game::initialize(HWND hw)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing high resolution timer"));
 
     QueryPerformanceCounter(&timeStart);        // get starting time
-
+	
     initialized = true;
 }
 
@@ -170,8 +170,7 @@ void Game::run(HWND hwnd)
 {
     if(graphics == NULL)            // if graphics not initialized
         return;
-
-    // calculate elapsed time of last frame, save in frameTime
+	    // calculate elapsed time of last frame, save in frameTime
     QueryPerformanceCounter(&timeEnd);
     frameTime = (float)(timeEnd.QuadPart - timeStart.QuadPart ) / 
                 (float)timerFreq.QuadPart;
@@ -194,6 +193,7 @@ void Game::run(HWND hwnd)
         frameTime = MAX_FRAME_TIME; // limit maximum frameTime
 
     timeStart = timeEnd;
+
 
     // update(), ai(), and collisions() are pure virtual functions.
     // These functions must be provided in the class that inherits from Game.
@@ -235,4 +235,13 @@ void Game::deleteAll()
     SAFE_DELETE(graphics);
     SAFE_DELETE(input);
     initialized = false;
+}
+
+void Game::update()
+{
+	LARGE_INTEGER i;
+	QueryPerformanceCounter(&i);
+	
+	elapsedGameTime = (float)(i.QuadPart - start) / (float)timerFreq.QuadPart;
+	start = i.QuadPart;
 }

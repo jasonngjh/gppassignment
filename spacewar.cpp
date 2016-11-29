@@ -1,6 +1,9 @@
 
 #include "spaceWar.h"
 #include "Entity.h"
+#include <chrono>
+#include <thread>
+#include <functional>
 
 //=============================================================================
 // Constructor
@@ -76,7 +79,6 @@ void Spacewar::initialize(HWND hwnd)
 	////ship
 	if (!ship.initialize(this,PlayerNS::WIDTH, PlayerNS::HEIGHT, PlayerNS::TEXTURE_COLS, &shipTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship"));
-
 	//zombie
 	if (!zombie.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
@@ -108,123 +110,115 @@ void Spacewar::initialize(HWND hwnd)
 //=============================================================================
 // Update all game items
 //=============================================================================
-void Spacewar::update()
-{
-	
-	ship.update(frameTime);
-	// rotate ship
-	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
-	// make ship smaller
-	//ship.setScale(ship.getScale() - frameTime * SCALE_RATE);
-	// move ship right
-	/*ship.setX(ship.getX() + frameTime * SHIP_SPEED);
-	if (ship.getX() > GAME_WIDTH)               // if off screen right
-	{
-		ship.setX((float)-ship.getWidth());     // position off screen left
-		ship.setScale(SHIP_SCALE);              // set to starting size
-	}*/
+   void Spacewar::update()
+   {
+	   ship.update(frameTime);
+	   // rotate ship
+	   //ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
+	   // make ship smaller
+	   //ship.setScale(ship.getScale() - frameTime * SCALE_RATE);
+	   // move ship right
+	   /*ship.setX(ship.getX() + frameTime * SHIP_SPEED);
+	   if (ship.getX() > GAME_WIDTH)               // if off screen right
+	   {
+	   ship.setX((float)-ship.getWidth());     // position off screen left
+	   ship.setScale(SHIP_SCALE);              // set to starting size
+	   }*/
 
-	//CONTROLS
+	   //CONTROLS
 
-	//maybe put if key on, ship stop moving
+	   //maybe put if key on, ship stop moving
 
 
-	if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
-	{
-		ship.setDegrees(270.0f);
+	   if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
+	   {
+		   ship.setDegrees(270.0f);
 
-		ship.setX(ship.getX() + frameTime * SHIP_SPEED);
-		if (ship.getX() > GAME_WIDTH)               // if off screen right
-			ship.setX((float)-ship.getWidth());  // position off screen left
-	}
-	if (input->isKeyDown(SHIP_LEFT_KEY))             // if move left
-	{
+		   ship.setX(ship.getX() + frameTime * SHIP_SPEED);
+		   if (ship.getX() > GAME_WIDTH)               // if off screen right
+			   ship.setX((float)-ship.getWidth());  // position off screen left
+	   }
+	   if (input->isKeyDown(SHIP_LEFT_KEY))             // if move left
+	   {
 
-		ship.setDegrees(90);
+		   ship.setDegrees(90);
 
-		ship.setX(ship.getX() - frameTime * SHIP_SPEED);
-		if (ship.getX() < -ship.getWidth())         // if off screen left
-			ship.setX((float)GAME_WIDTH);      // position off screen right
-	}
-	if (input->isKeyDown(SHIP_UP_KEY))               // if move up
-	{
-		ship.setDegrees(180);
+		   ship.setX(ship.getX() - frameTime * SHIP_SPEED);
+		   if (ship.getX() < -ship.getWidth())         // if off screen left
+			   ship.setX((float)GAME_WIDTH);      // position off screen right
+	   }
+	   if (input->isKeyDown(SHIP_UP_KEY))               // if move up
+	   {
+		   ship.setDegrees(180);
 
-		ship.setY(ship.getY() - frameTime * SHIP_SPEED);
-		if (ship.getY() < -ship.getHeight())        // if off screen top
-			ship.setY((float)GAME_HEIGHT);     // position off screen bottom
-	}
+		   ship.setY(ship.getY() - frameTime * SHIP_SPEED);
+		   if (ship.getY() < -ship.getHeight())        // if off screen top
+			   ship.setY((float)GAME_HEIGHT);     // position off screen bottom
+	   }
 
-	if (input->isKeyDown(SHIP_DOWN_KEY))             // if move down
-	{
-		ship.setDegrees(0);
+	   if (input->isKeyDown(SHIP_DOWN_KEY))             // if move down
+	   {
+		   ship.setDegrees(0);
 
-		ship.setY(ship.getY() + frameTime * SHIP_SPEED);
-		if (ship.getY() > GAME_HEIGHT)              // if off screen bottom
-			ship.setY((float)-ship.getHeight());    // position off screen top
-	}
+		   ship.setY(ship.getY() + frameTime * SHIP_SPEED);
+		   if (ship.getY() > GAME_HEIGHT)              // if off screen bottom
+			   ship.setY((float)-ship.getHeight());    // position off screen top
+	   }
 
-	if (input->isKeyDown(PLAYER_FIRE_KEY))
-	{
+	   if (input->isKeyDown(PLAYER_FIRE_KEY))
+	   {
 
-		//create Bullet at player X and Y
-		//add bullet to bullet array (for multiple bullets)
+		   //create Bullet at player X and Y
+		   //add bullet to bullet array (for multiple bullets)
 
-		if (!bullet.getActive())
-			bullet.create(ship, ship.getDegrees());
+		   if (!bullet.getActive())
+			   bullet.create(ship, ship.getDegrees());
 
-	}//cant move while shooting/shooting has delay
+	   }//cant move while shooting/shooting has delay
 
-	bullet.update(frameTime);
+	   bullet.update(frameTime);
 
-	if (bullet.getActive())
-	{
-		
-		//bullet.setDegrees(ship.getDegrees());
-		bullet.update(frameTime);
-	}
+	   if (bullet.getActive())
+	   {
 
-	/*if (bullet.getDegrees() == 270) //right
-		bullet.setX(bullet.getX() + frameTime * BULLET_SPEED);
-	else
-	if (bullet.getDegrees() == 90) //left
-		bullet.setX(bullet.getX() - frameTime * BULLET_SPEED);
-	else
-	if (bullet.getDegrees() == 180) //up
-		bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
-	else
-	if (bullet.getDegrees() == 0) //down
-		bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);*/
-	/*if (zombie.getX() > ship.getX())
-=======
-	
-	if (zombie.getX() > ship.getX())
->>>>>>> refs/remotes/origin/wex
-		zombie.setX(zombie.getX() - frameTime * ZOMBIE_SPEED);
+		   //bullet.setDegrees(ship.getDegrees());
+		   bullet.update(frameTime);
+	   }
 
-	if (zombie.getX() < ship.getX())
-		zombie.setX(zombie.getX() + frameTime * ZOMBIE_SPEED);
+	   /*if (bullet.getDegrees() == 270) //right
+		   bullet.setX(bullet.getX() + frameTime * BULLET_SPEED);
+		   else
+		   if (bullet.getDegrees() == 90) //left
+		   bullet.setX(bullet.getX() - frameTime * BULLET_SPEED);
+		   else
+		   if (bullet.getDegrees() == 180) //up
+		   bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
+		   else
+		   if (bullet.getDegrees() == 0) //down
+		   bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);*/
+	   /*if (zombie.getX() > ship.getX())
+   =======
 
-	if (zombie.getY() > ship.getY())
-		zombie.setY(zombie.getY() - frameTime * ZOMBIE_SPEED);
+   if (zombie.getX() > ship.getX())
+   >>>>>>> refs/remotes/origin/wex
+   zombie.setX(zombie.getX() - frameTime * ZOMBIE_SPEED);
 
-	if (zombie.getY() < ship.getY())
-		zombie.setY(zombie.getY() + frameTime * ZOMBIE_SPEED);*/
+   if (zombie.getX() < ship.getX())
+   zombie.setX(zombie.getX() + frameTime * ZOMBIE_SPEED);
 
-	//ship.update(frameTime);
-	zombie.update(ship,frameTime);
-	zombie2.update(ship, frameTime);
-	wall1.update(frameTime);
-	heart.update(frameTime);
-	//VECTOR2 collisionVector2;
-	//if (wall1.getActive())
-	/*{
-		if (ship.collidesWith(wall1, collisionVector2))
-		{
-			ship.bounce(collisionVector2, wall1);
-			zombie.setVisible(false);
-		}
-	}*/
+   if (zombie.getY() > ship.getY())
+   zombie.setY(zombie.getY() - frameTime * ZOMBIE_SPEED);
+
+   if (zombie.getY() < ship.getY())
+   zombie.setY(zombie.getY() + frameTime * ZOMBIE_SPEED);*/
+
+	   //ship.update(frameTime);
+	   zombie.update(ship, frameTime);
+	   zombie2.update(ship, frameTime);
+	   wall1.update(frameTime);
+
+	   
+   
 	//code to check
 	//if bullet active
 	//PEW PEW!
@@ -249,15 +243,28 @@ void Spacewar::collisions()
 	{
 		// bounce off planet
 		zombie.setVisible(false);
+		zombie.setActive(false);
 		//bullet.setActive(false);
 		//ship1.damage(PLANET);
+		heart.setX(zombie.getX());
+		heart.setY(zombie.getY());
+		zombie.setX(rand() % GAME_WIDTH-30+30);
+		zombie.setY(rand() % GAME_HEIGHT-30 + 30);
+		graphics->spriteBegin();
+		heart.draw();
+		zombie.draw();
+		graphics->spriteEnd();
+		heart.setVisible(true);
+		heart.setActive(true);
+		zombie.setVisible(true);
+		zombie.setActive(true);
 	}
 	if (ship.collidesWith(heart, collisionVector))
 	{
 		heart.setVisible(false);
-		//heart.delete();
-		
+		heart.setActive(false);
 	}
+	
 }
 
 //=============================================================================

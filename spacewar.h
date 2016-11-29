@@ -9,6 +9,10 @@
 #include "bullet.h"
 #include "zombie.h"
 #include "heart.h"
+#include <windows.h>
+#include <conio.h>
+#include <functional>
+#include <chrono>
 
 //=============================================================================
 // Create game class
@@ -40,6 +44,8 @@ private:
 	Zombie zombieArray[5];
 	Bullet bullet;
 	Heart heart;
+	int err, a, m, s;
+
 public:
     // Constructor
     Spacewar();
@@ -52,6 +58,7 @@ public:
     void update();      // must override pure virtual from Game
     void ai();          // "
     void collisions();  // "
+	void timer_start(std::function<void(void)> func, unsigned int interval);
     void render();      // "
     void releaseAll();
     void resetAll();

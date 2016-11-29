@@ -9,6 +9,8 @@
 #include "input.h"
 #include "constants.h"
 #include "gameError.h"
+#include <functional>
+#include <chrono>
 
 class Game
 {
@@ -26,7 +28,8 @@ protected:
     DWORD   sleepTime;          // number of milli-seconds to sleep between frames
     bool    paused;             // true if game is paused
     bool    initialized;
-
+	float elapsedGameTime;
+	LONGLONG start;
 public:
     // Constructor
     Game();
@@ -81,7 +84,7 @@ public:
 
     // Check for collisions.
     virtual void collisions() = 0;
-
+	//virtual void timer_start() = 0;
     // Render graphics.
     // Call graphics->spriteBegin();
     //   draw sprites
