@@ -50,7 +50,6 @@ void Bullet::create(Image player, float degree)
 	active = true;
 
 	PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_ASYNC);
-
 }
 
 //=============================================================================

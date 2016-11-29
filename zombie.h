@@ -27,7 +27,7 @@ public:
 	// inherited member functions
 	void spawn();
 	void update(Image player,float frameTime);
-	
+	void destroy();
 };
 
 #endif

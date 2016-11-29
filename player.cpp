@@ -41,31 +41,31 @@ void Player::update(float frameTime)
 
     // Bounce off walls
     // if hit right screen edge
-	if (spriteData.x > GAME_WIDTH - PlayerNS::WIDTH*getScale())
+	if (spriteData.x > GAME_WIDTH-30 - PlayerNS::WIDTH*getScale())
     {
         // position at right screen edge
-		spriteData.x = GAME_WIDTH - PlayerNS::WIDTH*getScale();
+		spriteData.x = GAME_WIDTH-30 - PlayerNS::WIDTH*getScale();
 		if (velocity.x > 0)
         velocity.x = -velocity.x;               // reverse X direction
     } 
-    else if (spriteData.x < 0)                  // else if hit left screen edge
+    else if (spriteData.x < 30)                  // else if hit left screen edge
     {
-        spriteData.x = 0;                       // position at left screen edge
+        spriteData.x = 30;                       // position at left screen edge
 		if (velocity.x < 0)
         velocity.x = -velocity.x;               // reverse X direction
     }
     // if hit bottom screen edge
-	if (spriteData.y > GAME_HEIGHT - PlayerNS::HEIGHT*getScale())
+	if (spriteData.y > GAME_HEIGHT-30 - PlayerNS::HEIGHT*getScale())
     {
         // position at bottom screen edge
-		spriteData.y = GAME_HEIGHT - PlayerNS::HEIGHT*getScale();
+		spriteData.y = GAME_HEIGHT-30 - PlayerNS::HEIGHT*getScale();
 		if (velocity.y > 0)
 
         velocity.y = -velocity.y;               // reverse Y direction
     }
-    else if (spriteData.y < 0)                  // else if hit top screen edge
+    else if (spriteData.y < 30)                  // else if hit top screen edge
     {
-        spriteData.y = 0;                       // position at top screen edge
+        spriteData.y = 30;                       // position at top screen edge
 		if (velocity.y < 0)
         velocity.y = -velocity.y;               // reverse Y direction
     }

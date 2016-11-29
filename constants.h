@@ -73,6 +73,7 @@ const int  BULLET_END_FRAME = 1;           // last frame of ship animation
 const float BULLET_ANIMATION_DELAY = 0.05f;
 const int BULLET_SPEED = 5000;
 
+
 //MAYBE WE CAN MAKE IF HEALTH IS LOW, PLAYER BLINKS FASTER
 
 const int  SHIP_COLS = 2;                // ship texture has 2 columns
