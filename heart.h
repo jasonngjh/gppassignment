@@ -39,6 +39,12 @@ public:
 	~Heart(){}
 	// inherited member functions
 	void update(float frameTime);
+	void remove()
+	{
+		spriteData.x = 0;
+		spriteData.y = 0;
+		
+	}
 	//void disposeObject()
 	//{
 	//	delete this;

@@ -44,7 +44,7 @@ private:
 	Zombie zombieArray[5];
 	Bullet bullet;
 	Heart heart;
-	int err, a, m, s;
+	int k;
 
 public:
     // Constructor

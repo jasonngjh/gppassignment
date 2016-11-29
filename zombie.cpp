@@ -61,3 +61,7 @@ void Zombie::update(Image player,float frameTime){
 		spriteData.y = Zombie::getY() + frameTime * ZOMBIE_SPEED;
 
 }
+void Zombie::destroy()
+{
+	delete this;
+}

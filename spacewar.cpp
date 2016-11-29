@@ -216,9 +216,16 @@ void Spacewar::initialize(HWND hwnd)
 	   zombie.update(ship, frameTime);
 	   zombie2.update(ship, frameTime);
 	   wall1.update(frameTime);
-
-	   
-   
+	   /*if (rand() % 4 + 0==1)
+	   {
+		   heart.setActive(true);
+		   heart.setVisible(true);
+	   }
+	   else{
+		   heart.setActive(false);
+		   heart.setVisible(false);
+	   }
+	   heart.update(frameTime);*/
 	//code to check
 	//if bullet active
 	//PEW PEW!
@@ -236,26 +243,42 @@ void Spacewar::ai()
 //=============================================================================
 void Spacewar::collisions()
 {
-
+	
 	VECTOR2 collisionVector;
+	
 	// if collision between ship and planet
 	if (bullet.collidesWith(zombie, collisionVector))
 	{
 		// bounce off planet
+		k = (rand() % 4 + 0) % 3;
 		zombie.setVisible(false);
 		zombie.setActive(false);
 		//bullet.setActive(false);
 		//ship1.damage(PLANET);
-		heart.setX(zombie.getX());
-		heart.setY(zombie.getY());
-		zombie.setX(rand() % GAME_WIDTH-30+30);
-		zombie.setY(rand() % GAME_HEIGHT-30 + 30);
+		if (!heart.getActive() == true)
+		{
+			heart.setX(zombie.getX());
+			heart.setY(zombie.getY());
+		}
+		zombie.setX(rand() % GAME_WIDTH - 30 + 30);
+		zombie.setY(rand() % GAME_HEIGHT - 30 + 30);
 		graphics->spriteBegin();
-		heart.draw();
+		if (heart.getActive() == false)
+		{
+			heart.draw();
+		}
 		zombie.draw();
 		graphics->spriteEnd();
-		heart.setVisible(true);
-		heart.setActive(true);
+		if (k == 1)
+		{
+			heart.setVisible(true);
+			heart.setActive(true);
+		}
+		else 
+		{
+			heart.setVisible(false);
+			heart.setActive(false);
+		}
 		zombie.setVisible(true);
 		zombie.setActive(true);
 	}
@@ -264,6 +287,8 @@ void Spacewar::collisions()
 		heart.setVisible(false);
 		heart.setActive(false);
 	}
+
+	
 	
 }
 
