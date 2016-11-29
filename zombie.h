@@ -28,6 +28,7 @@ public:
 	void spawn();
 	void update(Image player,float frameTime);
 	void destroy();
+
 };
 
 #endif

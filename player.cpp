@@ -99,29 +99,7 @@ void Player::update(float frameTime)
 
 	if (input->isKeyDown(PLAYER_FIRE_KEY))
 	{
-		shoot();
+		Player::isFiring = true;
 	}
 
-}
-
-//=============================================================================
-// shoot
-// event called when player presses fire button (default = space)
-// creates a bullet object
-// give bullet a set angle and make it travel 
-// sends it to spacewar.cpp
-// from spacewar cpp, updates
-//=============================================================================
-Bullet Player::shoot()
-{
-
-	Bullet bullet;
-	
-
-
-
-
-
-	//if (!bullet.getActive())
-	//	bullet.create(ship, ship.getDegrees());
 }

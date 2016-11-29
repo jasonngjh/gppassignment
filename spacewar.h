@@ -13,6 +13,7 @@
 #include <conio.h>
 #include <functional>
 #include <chrono>
+#include <list>
 
 //=============================================================================
 // Create game class
@@ -33,6 +34,7 @@ private:
 	TextureManager heartTexture;
 	Image   nebula;                 // nebula image
 	Player ship;						//ship image
+	Player player;			
 	Image wall1;
 	Image wall2;
 	Image wall3;
@@ -40,8 +42,9 @@ private:
 	Zombie zombie;
 	Zombie zombie2;
 	Zombie zombieArray[5];
-	Bullet bullet;
+	Bullet bullet; //default bullet
 	Heart heart;
+	Bullet bulletList[10]; //array of bullets, at most ten (intended magazine size) <<< not actually meant to hold bullets, used for multiple bullet physics
 	int k;
 
 public:

@@ -27,20 +27,27 @@ namespace PlayerNS
 	const int   SHIP_START_FRAME = 0;       // ship starts at frame 0
 	const int   SHIP_END_FRAME = 3;         // ship animation frames 0,1,2,3
 	const float SHIP_ANIMATION_DELAY = 0.2f; // time between frames
-	
+
 
 }
 
 // inherits from Entity class
 class Player : public Entity
 {
+
+protected:
+	bool isFiring;		//state if player is shooting 
+
 public:
 	// constructor
 	Player();
 
 	// inherited member functions
 	void update(float frameTime);
-	Bullet shoot();
+
+	void setFiringState(bool firingState){ isFiring = firingState; }
+	bool getFiringState(){ return isFiring; }
+
 };
 #endif
 
