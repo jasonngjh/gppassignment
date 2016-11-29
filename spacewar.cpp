@@ -23,13 +23,10 @@ Spacewar::~Spacewar()
 void Spacewar::initialize(HWND hwnd)
 {
     Game::initialize(hwnd); // throws GameError
+
 	// nebula texture
 	if (!nebulaTexture.initialize(graphics, NEBULA_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
-
-	// planet texture
-	if (!planetTexture.initialize(graphics, PLANET_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet texture"));
 
 	if (!wall1Texture.initialize(graphics, WALL1_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall texture"));
@@ -56,13 +53,6 @@ void Spacewar::initialize(HWND hwnd)
 	// nebula
 	if (!nebula.initialize(graphics, 0, 0, 0, &nebulaTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula"));
-
-	// planet
-	if (!planet.initialize(graphics, 0, 0, 0, &planetTexture))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet"));
-	// place planet in center of screen
-	//planet.setX(GAME_WIDTH*0.5f - planet.getWidth()*0.5f);
-	//planet.setY(GAME_HEIGHT*0.5f - planet.getHeight()*0.5f);
 
 	// wall
 	if (!wall1.initialize(graphics, 0,0, 0, &wall1Texture))
@@ -329,7 +319,6 @@ void Spacewar::render()
 //=============================================================================
 void Spacewar::releaseAll()
 {
-	planetTexture.onLostDevice();
 	nebulaTexture.onLostDevice();
 	zombieTexture.onLostDevice();
 	bulletTexture.onLostDevice();
@@ -344,7 +333,6 @@ void Spacewar::releaseAll()
 void Spacewar::resetAll()
 {
 	nebulaTexture.onResetDevice();
-	planetTexture.onResetDevice();
 	zombieTexture.onResetDevice();
 	bulletTexture.onResetDevice();
     Game::resetAll();

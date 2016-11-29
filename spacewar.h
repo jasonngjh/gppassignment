@@ -19,7 +19,6 @@ private:
     // variables
 	// game items
 	TextureManager nebulaTexture;   // nebula texture
-	TextureManager planetTexture;   // planet texture
 	TextureManager shipTexture;		//ship texture
 	TextureManager wall1Texture;		//wall Texture
 	TextureManager wall2Texture;		//wall Texture
@@ -28,7 +27,6 @@ private:
 	TextureManager zombieTexture;
 	TextureManager bulletTexture;
 	TextureManager heartTexture;
-	Image   planet;                 // planet image
 	Image   nebula;                 // nebula image
 	Player ship;						//ship image
 	Image wall1;

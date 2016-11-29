@@ -107,9 +107,17 @@ void Player::update(float frameTime)
 //=============================================================================
 // shoot
 // event called when player presses fire button (default = space)
+// creates a bullet object
+// give bullet a set angle and make it travel 
+// sends it to spacewar.cpp
+// from spacewar cpp, updates
 //=============================================================================
-void Player::shoot()
+Bullet Player::shoot()
 {
+
+	Bullet bullet;
+	
+
 
 
 
