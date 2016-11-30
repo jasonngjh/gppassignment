@@ -165,21 +165,20 @@ void Spacewar::initialize(HWND hwnd)
 
 	   if (input->isKeyDown(PLAYER_FIRE_KEY))
 	   {
-
-		   //create Bullet at player X and Y
-		   //add bullet to bullet array (for multiple bullets)
-
 		   if (!bullet.getActive())
 			   bullet.create(ship, ship.getDegrees());
 
-	   }//cant move while shooting/shooting has delay
-
-	  //bullet.update(frameTime);
-
-	   if (bullet.getActive())
-	   {
-		   bullet.update(frameTime);
+		   //for multiple bullets
+		   //create new bullet
+		   //add new bullet to array
+		   //set bullet to active (maybe do in bullet.cpp)
+		   //update all other functions to work with dynamic bullet array
+		   //projected problem: array cannot refresh after X amount of times, maybe use a recurring array, allowing fired bullets in an array to 'refire'
 	   }
+
+
+	   bullet.update(frameTime);
+
 
 	   if (fmod(getFrameCountTime(), getSpawnTime()) == 0) //primitive timer
 	   {
