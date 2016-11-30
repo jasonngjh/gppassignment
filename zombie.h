@@ -20,6 +20,8 @@ namespace ZombieNS{
 
 class Zombie : public Entity{
 
+
+
 public:
 	//constructor
 	Zombie();
@@ -28,6 +30,8 @@ public:
 	void spawn();
 	void update(Image player,float frameTime);
 	void destroy();
+
+	
 
 };
 

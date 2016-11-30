@@ -1,5 +1,5 @@
 
-#include "spaceWar.h"
+#include "spacewar.h"
 #include "Entity.h"
 #include <chrono>
 #include <thread>
@@ -29,11 +29,6 @@ void Spacewar::initialize(HWND hwnd)
 	// nebula texture
 	if (!nebulaTexture.initialize(graphics, NEBULA_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
-
-	// planet texture
-	if (!planetTexture.initialize(graphics, PLANET_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet texture"));
-
 	if (!wall1Texture.initialize(graphics, WALL1_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall texture"));
 	if (!wall2Texture.initialize(graphics, WALL2_IMAGE))
@@ -59,10 +54,6 @@ void Spacewar::initialize(HWND hwnd)
 	// nebula
 	if (!nebula.initialize(graphics, 0, 0, 0, &nebulaTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula"));
-
-	// planet
-	if (!planet.initialize(graphics, 0, 0, 0, &planetTexture))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet"));
 	// place planet in center of screen
 	//planet.setX(GAME_WIDTH*0.5f - planet.getWidth()*0.5f);
 	//planet.setY(GAME_HEIGHT*0.5f - planet.getHeight()*0.5f);
@@ -80,8 +71,8 @@ void Spacewar::initialize(HWND hwnd)
 	if (!ship.initialize(this,PlayerNS::WIDTH, PlayerNS::HEIGHT, PlayerNS::TEXTURE_COLS, &shipTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship"));
 	//zombie
-	if (!zombie.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
+	/*if (!zombie.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));*/
 
 	if (!bullet.initialize(this, BULLET_WIDTH, BULLET_HEIGHT, BULLET_COLS, &bulletTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet"));
@@ -95,14 +86,18 @@ void Spacewar::initialize(HWND hwnd)
 	ship.setFrames(SHIP_START_FRAME, SHIP_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	ship.setFrameDelay(SHIP_ANIMATION_DELAY);
 
+	setFrameCountTime(0);
+	setSpawnTime(200); //zombie spawn time set to every 20 frame time
+
 	//ship.setVelocity(VECTOR2(PlayerNS::SPEED, -PlayerNS::SPEED)); // VECTOR2(X, Y)
 
 	//ship.setDegrees(45.0f);     \                       // angle of ship
 	//bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
 	//bullet.setY(GAME_HEIGHT / 4);
 
-	zombie.spawn();
-	zombie2.spawn();
+	setMaxZombieCount(sizeof(zombieArray)/sizeof(*zombieArray)); //matches max zombie count to size of zombie array to prevent crashing
+	setZombieCount(0);
+	//zombie.spawn();
 
     return;
 }
@@ -112,6 +107,9 @@ void Spacewar::initialize(HWND hwnd)
 //=============================================================================
    void Spacewar::update()
    {
+	   
+	   setFrameCountTime(getFrameCountTime() + 1);
+
 	   ship.update(frameTime);
 	   // rotate ship
 	   //ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
@@ -176,61 +174,57 @@ void Spacewar::initialize(HWND hwnd)
 
 	   }//cant move while shooting/shooting has delay
 
-	   bullet.update(frameTime);
+	  //bullet.update(frameTime);
 
 	   if (bullet.getActive())
 	   {
-
-		   //bullet.setDegrees(ship.getDegrees());
 		   bullet.update(frameTime);
 	   }
 
-	   /*if (bullet.getDegrees() == 270) //right
-		   bullet.setX(bullet.getX() + frameTime * BULLET_SPEED);
-		   else
-		   if (bullet.getDegrees() == 90) //left
-		   bullet.setX(bullet.getX() - frameTime * BULLET_SPEED);
-		   else
-		   if (bullet.getDegrees() == 180) //up
-		   bullet.setY(bullet.getY() - frameTime * BULLET_SPEED);
-		   else
-		   if (bullet.getDegrees() == 0) //down
-		   bullet.setY(bullet.getY() + frameTime * BULLET_SPEED);*/
-	   /*if (zombie.getX() > ship.getX())
-   =======
+	   if (fmod(getFrameCountTime(), getSpawnTime()) == 0) //primitive timer
+	   {
 
-   if (zombie.getX() > ship.getX())
-   >>>>>>> refs/remotes/origin/wex
-   zombie.setX(zombie.getX() - frameTime * ZOMBIE_SPEED);
+		   // check if current amount of zombie is less than maximum allowed amount
+		   //if true, create new zombie
 
-   if (zombie.getX() < ship.getX())
-   zombie.setX(zombie.getX() + frameTime * ZOMBIE_SPEED);
+		   if (getZombieCount() < getMaxZombieCount())
+		   {
 
-   if (zombie.getY() > ship.getY())
-   zombie.setY(zombie.getY() - frameTime * ZOMBIE_SPEED);
+			   setZombieCount(getZombieCount() + 1);
+			   zombieArray[getZombieCount() - 1] = spawnZombie();
 
-   if (zombie.getY() < ship.getY())
-   zombie.setY(zombie.getY() + frameTime * ZOMBIE_SPEED);*/
+			   zombieArray[getZombieCount() - 1].spawn();
+			   
+			   //zombieArray[getZombieCount() - 1].
+		   }
+		   
+	   }
 
 	   //ship.update(frameTime);
-	   zombie.update(ship, frameTime);
-	   zombie2.update(ship, frameTime);
-	   wall1.update(frameTime);
-	   /*if (rand() % 4 + 0==1)
+	   //zombie.update(ship, frameTime);
+
+	   if (getZombieCount() > 0)
 	   {
-		   heart.setActive(true);
-		   heart.setVisible(true);
+		   //endlessly loop update for each zombie until no more zombies
+
+		   for (int i = 0; i < getZombieCount(); i++)
+		   {
+			   zombieArray[i].update(ship, frameTime);
+		   }
 	   }
-	   else{
-		   heart.setActive(false);
-		   heart.setVisible(false);
+
+	   //check if zombie array is empty, refresh (set to change)
+	   if (getZombieCount() == 0)
+	   {
+		   //make array empty or find a way to remove dead zombies from array
+		   //
 	   }
-	   heart.update(frameTime);*/
-	//code to check
-	//if bullet active
-	//PEW PEW!
+
+	   wall1.update(frameTime);
 
 }
+
+
 
 //=============================================================================
 // Artificial Intelligence
@@ -246,42 +240,50 @@ void Spacewar::collisions()
 	
 	VECTOR2 collisionVector;
 	
-	// if collision between ship and planet
-	if (bullet.collidesWith(zombie, collisionVector))
+	for (int i = 0; i < getZombieCount(); i++)
 	{
-		// bounce off planet
-		k = (rand() % 4 + 0) % 3;
-		zombie.setVisible(false);
-		zombie.setActive(false);
-		//bullet.setActive(false);
-		//ship1.damage(PLANET);
-		if (!heart.getActive() == true)
+		//Zombie zombie = zombieArray[i];
+		// if collision between bullet and zombies
+		if (bullet.collidesWith(zombieArray[i], collisionVector))
 		{
-			heart.setX(zombie.getX());
-			heart.setY(zombie.getY());
+			k = (rand() % 4 + 0) % 3;
+			zombieArray[i].setVisible(false);
+			zombieArray[i].setActive(false);
+
+			if (!heart.getActive() == true)
+			{
+				heart.setX(zombieArray[i].getX());
+				heart.setY(zombieArray[i].getY());
+			}
+			graphics->spriteBegin();
+			if (heart.getActive() == false)
+			{
+				heart.draw();
+			}
+			
+			graphics->spriteEnd();
+			if (k == 1)
+			{
+				heart.setVisible(true);
+				heart.setActive(true);
+			}
+			else
+			{
+				heart.setVisible(false);
+				heart.setActive(false);
+			}
+
+			bullet.setActive(false);
+
+			//setZombieCount(getZombieCount() - 1); //somehow makes one bullet kill two zombies lol
+			//zombieArray[i].destroy(); <<crashes the thing lol
+
 		}
-		zombie.setX(rand() % GAME_WIDTH - 30 + 30);
-		zombie.setY(rand() % GAME_HEIGHT - 30 + 30);
-		graphics->spriteBegin();
-		if (heart.getActive() == false)
-		{
-			heart.draw();
-		}
-		zombie.draw();
-		graphics->spriteEnd();
-		if (k == 1)
-		{
-			heart.setVisible(true);
-			heart.setActive(true);
-		}
-		else 
-		{
-			heart.setVisible(false);
-			heart.setActive(false);
-		}
-		zombie.setVisible(true);
-		zombie.setActive(true);
+
+
 	}
+
+	
 	if (ship.collidesWith(heart, collisionVector))
 	{
 		heart.setVisible(false);
@@ -290,6 +292,24 @@ void Spacewar::collisions()
 
 	
 	
+}
+
+//=============================================================================
+// Spawn zombies (constantly called every x seconds)
+//=======================================================
+Zombie Spacewar::spawnZombie()
+{
+
+	//behavior for zombie spawn
+	
+	Zombie new_zombie;
+
+	new_zombie.spawn();
+
+	if (!new_zombie.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
+
+	return new_zombie;
 }
 
 //=============================================================================
@@ -306,10 +326,16 @@ void Spacewar::render()
 	wall2.draw();
 	wall3.draw();
 	wall4.draw();
-	zombie.draw();
-	zombie2.draw();
+	//zombie.draw();
+	//zombie2.draw();
 	bullet.draw();
 	heart.draw();
+
+	for (int i = 0; i < getZombieCount(); i++)
+	{
+		zombieArray[i].draw();
+	}
+
 	graphics->spriteEnd();                  // end drawing sprites
 
 }
@@ -320,7 +346,6 @@ void Spacewar::render()
 //=============================================================================
 void Spacewar::releaseAll()
 {
-	planetTexture.onLostDevice();
 	nebulaTexture.onLostDevice();
 	zombieTexture.onLostDevice();
 	bulletTexture.onLostDevice();
@@ -335,7 +360,6 @@ void Spacewar::releaseAll()
 void Spacewar::resetAll()
 {
 	nebulaTexture.onResetDevice();
-	planetTexture.onResetDevice();
 	zombieTexture.onResetDevice();
 	bulletTexture.onResetDevice();
     Game::resetAll();

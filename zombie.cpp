@@ -36,6 +36,9 @@ void Zombie::spawn()
 
 	Zombie::setX(randomX);
 	Zombie::setY(randomY);
+
+	Zombie::setActive(true);
+
 	Zombie::setFrames(ZOMBIE_START_FRAME, ZOMBIE_END_FRAME);   // animation frames ship.setCurrentFrame(SHIP_START_FRAME);             // starting frame
 	Zombie::setFrameDelay(ZOMBIE_ANIMATION_DELAY);
 }

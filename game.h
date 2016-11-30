@@ -84,6 +84,10 @@ public:
 
     // Check for collisions.
     virtual void collisions() = 0;
+
+	//spawn and create a new zombie
+	//virtual void spawnZombie() = 0;
+
 	//virtual void timer_start() = 0;
     // Render graphics.
     // Call graphics->spriteBegin();

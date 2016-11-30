@@ -202,6 +202,7 @@ void Game::run(HWND hwnd)
         update();                   // update all game items
         ai();                       // artificial intelligence
         collisions();               // handle collisions
+		//spawnZombie();				//spawns zombie
         input->vibrateControllers(frameTime); // handle controller vibration
     }
     renderGame();                   // draw all game items

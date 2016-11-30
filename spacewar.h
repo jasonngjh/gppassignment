@@ -41,15 +41,24 @@ private:
 	Image wall4;
 	Zombie zombie;
 	Zombie zombie2;
+
 	Zombie zombieArray[5];
+	int maxZombieCount; //amt of zombies allowed to exist (should be equal to zombieArray's size)
+	int zombieCount; //amt of zombies currently alive (should be less or equal to maxZombieCount)
+	
+
 	Bullet bullet; //default bullet
 	Heart heart;
 	Bullet bulletList[10]; //array of bullets, at most ten (intended magazine size) <<< not actually meant to hold bullets, used for multiple bullet physics
 	int k;
+	float zombieSpawnTime;
+	float frameCountTime;
 
 public:
     // Constructor
     Spacewar();
+
+	
 
     // Destructor
     virtual ~Spacewar();
@@ -60,9 +69,24 @@ public:
     void ai();          // "
     void collisions();  // "
 	void timer_start(std::function<void(void)> func, unsigned int interval);
+	Zombie spawnZombie();
     void render();      // "
     void releaseAll();
     void resetAll();
+	void checkFrameTime(int value);
+
+	float getSpawnTime() { return zombieSpawnTime; }
+	void setSpawnTime(float time) { zombieSpawnTime = time; }
+
+	float getFrameCountTime() { return frameCountTime; }
+	void setFrameCountTime(float time) { frameCountTime = time; }
+
+	int getZombieCount() { return zombieCount; }
+	void setZombieCount(int amt) { zombieCount = amt; }
+
+	int getMaxZombieCount() { return maxZombieCount; }
+	void setMaxZombieCount(int amt) { maxZombieCount = amt; }
+
 };
 
 #endif
