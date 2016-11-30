@@ -22,9 +22,6 @@
     <ClCompile Include="player.cpp">
       <Filter>CPP Files</Filter>
     </ClCompile>
-    <ClCompile Include="spacewar.cpp">
-      <Filter>CPP Files</Filter>
-    </ClCompile>
     <ClCompile Include="textureManager.cpp">
       <Filter>CPP Files</Filter>
     </ClCompile>
@@ -35,6 +32,9 @@
       <Filter>CPP Files</Filter>
     </ClCompile>
     <ClCompile Include="heart.cpp">
+      <Filter>CPP Files</Filter>
+    </ClCompile>
+    <ClCompile Include="spacewar.cpp">
       <Filter>CPP Files</Filter>
     </ClCompile>
   </ItemGroup>
