@@ -14,6 +14,8 @@
 #include <functional>
 #include <chrono>
 #include <list>
+#include <thread>
+
 
 //=============================================================================
 // Create game class
@@ -74,6 +76,7 @@ public:
     void releaseAll();
     void resetAll();
 	void checkFrameTime(int value);
+	void playBGM();
 
 	float getSpawnTime() { return zombieSpawnTime; }
 	void setSpawnTime(float time) { zombieSpawnTime = time; }

@@ -26,9 +26,22 @@ Spacewar::~Spacewar()
 void Spacewar::initialize(HWND hwnd)
 {
     Game::initialize(hwnd); // throws GameError
-	// nebula texture
-	if (!nebulaTexture.initialize(graphics, NEBULA_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
+
+	std::thread t(&Spacewar::playBGM, this);
+
+	int i = rand() % 2;
+	switch (i)
+	{
+		case 0: // nebula texture
+			if (!nebulaTexture.initialize(graphics, GRASS_IMAGE))
+				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
+			break;
+		case 1: //nebula texture
+			if (!nebulaTexture.initialize(graphics, NEBULA_IMAGE))
+				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
+			break;
+	}
+
 	if (!wall1Texture.initialize(graphics, WALL1_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall texture"));
 	if (!wall2Texture.initialize(graphics, WALL2_IMAGE))
@@ -98,7 +111,7 @@ void Spacewar::initialize(HWND hwnd)
 	setMaxZombieCount(sizeof(zombieArray)/sizeof(*zombieArray)); //matches max zombie count to size of zombie array to prevent crashing
 	setZombieCount(0);
 	//zombie.spawn();
-
+	t.join();
     return;
 }
 
@@ -364,4 +377,12 @@ void Spacewar::resetAll()
 	bulletTexture.onResetDevice();
     Game::resetAll();
     return;
+}
+//=============================================================================
+// play the background music
+//	using thread
+//=============================================================================
+void Spacewar::playBGM()
+{
+	PlaySound(TEXT("background.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 }

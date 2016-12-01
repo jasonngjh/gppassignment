@@ -51,6 +51,7 @@ const UCHAR PLAYER_FIRE_KEY = VK_SPACE;
 
 // graphic images (names kept the same as of gameEngine)
 const char NEBULA_IMAGE[] = "pictures\\lol.png";  // ORIGINAL PHOTO
+const char GRASS_IMAGE[] = "pictures\\background2.png"; //picture of grass
 const char PLANET_IMAGE[] = "pictures\\planet.png"; // picture of planet
 const char SHIP_IMAGE[] = "pictures\\player.png";   // player
 const char ENEMY_ZOMBIE_IMAGE[] = "pictures\\zombie.png"; //enemy zombie
