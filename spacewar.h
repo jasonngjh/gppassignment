@@ -79,11 +79,8 @@ public:
     void releaseAll();
     void resetAll();
 	void checkFrameTime(int value);
-<<<<<<< HEAD
 	int fr;
-=======
 	void playBGM();
->>>>>>> refs/remotes/origin/jason
 
 	float getSpawnTime() { return zombieSpawnTime; }
 	void setSpawnTime(float time) { zombieSpawnTime = time; }

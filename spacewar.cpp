@@ -125,11 +125,8 @@ void Spacewar::initialize(HWND hwnd)
 	setMaxZombieCount(sizeof(zombieArray)/sizeof(*zombieArray)); //matches max zombie count to size of zombie array to prevent crashing
 	setZombieCount(0);
 	//zombie.spawn();
-<<<<<<< HEAD
 	int fr = 0;
-=======
 	t.join();
->>>>>>> refs/remotes/origin/jason
     return;
 }
 
