@@ -425,7 +425,7 @@ void Spacewar::timer_start()
 	while (loop){
 		setSecondsPassed((clock() - timer) / CLOCKS_PER_SEC);  //convert computer timer to real life seconds
 
-		if ((fmod(getSecondsPassed(),getSpawnTime()))==0){ 
+		if ((fmod(getSecondsPassed()+1,3))==0){ 
 			// check if current amount of zombie is less than maximum allowed amount
 			//if true, create new zombie
 			if (getZombieCount() < getMaxZombieCount())
