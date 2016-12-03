@@ -73,7 +73,7 @@ public:
     void update();      // must override pure virtual from Game
     void ai();          // "
     void collisions();  // "
-	void timer_start(std::function<void(void)> func, unsigned int interval);
+	void timer_start();
 	Zombie spawnZombie();
     void render();      // "
     void releaseAll();
