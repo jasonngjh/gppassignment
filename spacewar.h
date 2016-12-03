@@ -34,6 +34,7 @@ private:
 	TextureManager zombieTexture;
 	TextureManager bulletTexture;
 	TextureManager heartTexture;
+	TextureManager lifebarTexture;
 	Image   nebula;                 // nebula image
 	Player ship;						//ship image
 	Player player;			
@@ -43,6 +44,7 @@ private:
 	Image wall4;
 	Zombie zombie;
 	Zombie zombie2;
+	Image lifebar;
 
 	Zombie zombieArray[5];
 	int maxZombieCount; //amt of zombies allowed to exist (should be equal to zombieArray's size)
@@ -51,6 +53,7 @@ private:
 
 	Bullet bullet; //default bullet
 	Heart heart;
+	Heart heart2;
 	Bullet bulletList[10]; //array of bullets, at most ten (intended magazine size) <<< not actually meant to hold bullets, used for multiple bullet physics
 	int k;
 	float zombieSpawnTime;
@@ -76,6 +79,7 @@ public:
     void releaseAll();
     void resetAll();
 	void checkFrameTime(int value);
+	int fr;
 	void playBGM();
 
 	float getSpawnTime() { return zombieSpawnTime; }
