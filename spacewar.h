@@ -12,9 +12,8 @@
 #include <windows.h>
 #include <conio.h>
 #include <functional>
-#include <chrono>
+#include <ctime>
 #include <list>
-#include <thread>
 
 
 //=============================================================================
@@ -60,6 +59,7 @@ private:
 	float frameCountTime;
 
 public:
+	double secondsPassed;
     // Constructor
     Spacewar();
 

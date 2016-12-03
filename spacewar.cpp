@@ -204,8 +204,7 @@ void Spacewar::update()
 	//ship.update(frameTime);
 	//zombie.update(ship, frameTime);
 
-	std::thread t(&Spacewar::timer_start,this);
-	
+	std::async(&Spacewar::timer_start,this);
 
 	if (getZombieCount() > 0)
 	{
@@ -224,8 +223,6 @@ void Spacewar::update()
 		//
 	}
 	// wall1.update(frameTime);
-	t.join();
-
 }
 
 
@@ -338,11 +335,8 @@ void Spacewar::collisions()
 //=======================================================
 Zombie Spacewar::spawnZombie()
 {
-
 	//behavior for zombie spawn
-	
 	Zombie new_zombie;
-
 	new_zombie.spawn();
 
 	if (!new_zombie.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
@@ -427,16 +421,24 @@ void Spacewar::playBGM()
 //=============================================================================
 void Spacewar::timer_start()
 {
-	// check if current amount of zombie is less than maximum allowed amount
-	//if true, create new zombie
+	//create timer
+	clock_t timer = clock();//start timer
 
-	if (getZombieCount() < getMaxZombieCount())
-	{
-		setZombieCount(getZombieCount() + 1);
-		zombieArray[getZombieCount() - 1] = spawnZombie();
+	bool loop = true;
+	while (loop){
+		secondsPassed = (clock() - timer) / CLOCKS_PER_SEC;
 
-		std::thread t(&Zombie::spawn,zombieArray[getZombieCount() - 1]);
-		t.join();
+		if (fmod(secondsPassed, 2 == 0)){
+			// check if current amount of zombie is less than maximum allowed amount
+			//if true, create new zombie
+			if (getZombieCount() < getMaxZombieCount())
+			{
+				setZombieCount(getZombieCount() + 1);
+				zombieArray[getZombieCount() - 1] = spawnZombie();
+
+				std::thread t(&Zombie::spawn, zombieArray[getZombieCount() - 1]);
+				t.join();
+			}
+		}
 	}
-
 }
