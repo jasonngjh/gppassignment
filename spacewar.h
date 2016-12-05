@@ -81,6 +81,7 @@ public:
     void resetAll();
 	void checkFrameTime(int value);
 	int fr;
+	void checkVulnerable();
 	void playBGM();
 
 	float getSpawnTime() { return zombieSpawnTime; }

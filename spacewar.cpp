@@ -1,4 +1,3 @@
-
 #include "spacewar.h"
 #include "Entity.h"
 #include <chrono>
@@ -116,7 +115,6 @@ void Spacewar::initialize(HWND hwnd)
 
 	setMaxZombieCount(sizeof(zombieArray)/sizeof(*zombieArray)); //matches max zombie count to size of zombie array to prevent crashing
 	setZombieCount(0);
-	//zombie.spawn();
 	int fr = 0;
 	std::async(&Spacewar::timer_start, this); //run timer thread while main loop is contiuing
 	t.join();
@@ -132,6 +130,7 @@ void Spacewar::update()
 	setFrameCountTime(getFrameCountTime() + 1);
 
 	ship.update(frameTime);
+
 	// rotate ship
 	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
 	// make ship smaller
@@ -244,7 +243,16 @@ void Spacewar::collisions()
 	{
 		if (ship.collidesWith(zombieArray[i], collisionVector))
 		{
-			ship.setHealth(ship.getHealth() - 20);
+			zombieArray[i].setVisible(false);
+			zombieArray[i].setActive(false);
+
+			if (ship.getPlayerVulnerable() == false){
+				ship.setHealth(ship.getHealth() - 20);
+				ship.setPlayerVulnerable(true);
+
+				std::async(&Spacewar::checkVulnerable,this); //run asychronous thread to check if the player is vulnerable
+			}
+
 			if (ship.getHealth() < 0)
 				ship.setHealth(0);
 			
@@ -326,7 +334,6 @@ void Spacewar::collisions()
 	}
 	//player.update(frameTime);
 
-	
 }
 
 //=============================================================================
@@ -423,18 +430,36 @@ void Spacewar::timer_start()
 
 	bool loop = true;
 	while (loop){
-		setSecondsPassed((clock() - timer) / CLOCKS_PER_SEC);  //convert computer timer to real life seconds
+		setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
 
-		if ((fmod(getSecondsPassed()+1,3))==0){ 
+		if ((fmod(getSecondsPassed() + 1, 3)) == 0){
 			// check if current amount of zombie is less than maximum allowed amount
 			//if true, create new zombie
+			Sleep(10);
 			if (getZombieCount() < getMaxZombieCount())
 			{
 				setZombieCount(getZombieCount() + 1);
 				zombieArray[getZombieCount() - 1] = spawnZombie();
 
-				std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
+				zombieArray[getZombieCount() - 1].spawn();
+
+				//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
 			}
+		}
+	}
+}
+//=============================================================================
+// check vulnerability of the player after colliding with zombie
+//	set the vulnerable to off after x seconds
+//=============================================================================
+void Spacewar::checkVulnerable()
+{
+	bool loop = true;
+	while (loop){
+		if (ship.getPlayerVulnerable() == true){
+			Sleep(3000);
+			ship.setPlayerVulnerable(false);
+			loop = false;
 		}
 	}
 }

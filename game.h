@@ -12,6 +12,7 @@
 #include <functional>
 #include <chrono>
 
+
 class Game
 {
 protected:
@@ -30,6 +31,7 @@ protected:
     bool    initialized;
 	float elapsedGameTime;
 	LONGLONG start;
+
 public:
     // Constructor
     Game();
