@@ -114,4 +114,7 @@
       <UniqueIdentifier>{6f3789ff-6d9d-4a33-8f1b-17265ca42da3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="background.wav" />
+  </ItemGroup>
 </Project>

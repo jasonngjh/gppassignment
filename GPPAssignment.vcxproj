@@ -113,6 +113,9 @@
     <Image Include="pictures\ship2.png" />
     <Image Include="pictures\ship_wow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="background.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
