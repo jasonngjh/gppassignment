@@ -87,7 +87,9 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="spacewar.h" />
+    <ClInclude Include="textDX.h" />
     <ClInclude Include="textureManager.h" />
+    <ClInclude Include="threeCsDX.h" />
     <ClInclude Include="zombie.h" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +102,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="spacewar.cpp" />
+    <ClCompile Include="textDX.cpp" />
     <ClCompile Include="textureManager.cpp" />
     <ClCompile Include="winmain.cpp" />
     <ClCompile Include="zombie.cpp" />
