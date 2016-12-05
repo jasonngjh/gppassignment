@@ -55,6 +55,7 @@ private:
 	Heart heart;
 	Heart heart2;
 	Bullet bulletList[10];//array of bullets, at most ten (intended magazine size) <<< not actually meant to hold bullets, used for multiple bullet physics
+	
 	int k;
 	float zombieSpawnTime;
 	float frameCountTime;
@@ -97,6 +98,9 @@ public:
 
 	double getSecondsPassed() { return secondsPassed; }
 	void setSecondsPassed(double seconds) { secondsPassed = seconds; }
+
+
+
 };
 
 #endif

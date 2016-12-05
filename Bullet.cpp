@@ -84,8 +84,6 @@ void Bullet::update(float frameTime)
 
 		//spriteData.angle = Bullet::getDegrees(); //somehow, this makes bullet start at player center instead of forward of player (maybe bullet is indeed travelling BUT???)
 
-
-
 		// disappear off walls
 		// if hit right screen edge
 		if (spriteData.x > GAME_WIDTH - BulletNS::WIDTH*getScale())

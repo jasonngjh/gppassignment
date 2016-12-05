@@ -132,64 +132,44 @@ void Spacewar::initialize(HWND hwnd)
 
 //=============================================================================
 // Update all game items
+// Calls each game item's own update functions
 //=============================================================================
-
 void Spacewar::update()
 {
 	
 	setFrameCountTime(getFrameCountTime() + 1);
-	ship.update(frameTime);
-	// rotate ship
-	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
-	// make ship smaller
-	//ship.setScale(ship.getScale() - frameTime * SCALE_RATE);
-	// move ship right
-	/*ship.setX(ship.getX() + frameTime * SHIP_SPEED);
-	if (ship.getX() > GAME_WIDTH)               // if off screen right
-	{
-	ship.setX((float)-ship.getWidth());     // position off screen left
-	ship.setScale(SHIP_SCALE);              // set to starting size
-	}*/
+	ship.update(frameTime); //ship movement is done here
 
-	//CONTROLS
-
-	//maybe put if key on, ship stop moving
-
-
-	if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
+	/*if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
 	{
 		ship.setDegrees(270.0f);
 
 		ship.setX(ship.getX() + frameTime * SHIP_SPEED);
-		if (ship.getX() > GAME_WIDTH)               // if off screen right
-			ship.setX((float)-ship.getWidth());  // position off screen left
+
 	}
+
 	if (input->isKeyDown(SHIP_LEFT_KEY))             // if move left
 	{
 
 		ship.setDegrees(90);
 
 		ship.setX(ship.getX() - frameTime * SHIP_SPEED);
-		if (ship.getX() < -ship.getWidth())         // if off screen left
-			ship.setX((float)GAME_WIDTH);      // position off screen right
+
 	}
 	if (input->isKeyDown(SHIP_UP_KEY))               // if move up
 	{
 		ship.setDegrees(180);
 
 		ship.setY(ship.getY() - frameTime * SHIP_SPEED);
-		if (ship.getY() < -ship.getHeight())        // if off screen top
-			ship.setY((float)GAME_HEIGHT);     // position off screen bottom
+
 	}
 
 	if (input->isKeyDown(SHIP_DOWN_KEY))             // if move down
 	{
-		ship.setDegrees(0);
+		//ship.setDegrees(0);
 
-		ship.setY(ship.getY() + frameTime * SHIP_SPEED);
-		if (ship.getY() > GAME_HEIGHT)              // if off screen bottom
-			ship.setY((float)-ship.getHeight());    // position off screen top
-	}
+		//ship.setY(ship.getY() + frameTime * SHIP_SPEED);
+	}*/
 
 	if (input->isKeyDown(PLAYER_FIRE_KEY))
 	{
@@ -202,20 +182,13 @@ void Spacewar::update()
 
 	}//cant move while shooting/shooting has delay
 
-	//bullet.update(frameTime);
+	//update for bullet
+	bullet.update(frameTime);
 
-	if (bullet.getActive())
-	{
-		bullet.update(frameTime);
-	}
-
-	//ship.update(frameTime);
-	//zombie.update(ship, frameTime);
-
+	//update for zombies
 	if (getZombieCount() > 0)
 	{
 		//endlessly loop update for each zombie until no more zombies
-
 		for (int i = 0; i < getZombieCount(); i++)
 		{
 			zombieArray[i].update(ship, frameTime);
@@ -338,7 +311,7 @@ void Spacewar::collisions()
 
 //=============================================================================
 // Spawn zombies (constantly called every x seconds)
-//=======================================================
+//=============================================================================
 Zombie Spacewar::spawnZombie()
 {
 	//behavior for zombie spawn
@@ -350,6 +323,11 @@ Zombie Spacewar::spawnZombie()
 
 	return new_zombie;
 }
+
+//=============================================================================
+// Fire Bullet
+//=============================================================================
+
 
 //=============================================================================
 // Render game items

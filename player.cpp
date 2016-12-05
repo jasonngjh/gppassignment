@@ -26,6 +26,7 @@ Player::Player () : Entity()
 	radius = 1;
 	health = 100;
     collisionType = entityNS::CIRCLE;
+	movementSpeed = SHIP_SPEED;
 }
 
 //=============================================================================
@@ -36,12 +37,10 @@ Player::Player () : Entity()
 void Player::update(float frameTime)
 {
     Entity::update(frameTime);
-	//spriteData.angle += frameTime * PlayerNS::ROTATION_RATE;  // rotate the ship
-    spriteData.x += frameTime * velocity.x;     // move ship along X 
-    spriteData.y += frameTime * velocity.y;     // move ship along Y
 
-    // Bounce off walls
-    // if hit right screen edge
+    //spriteData.x += frameTime * velocity.x;     // move ship along X 
+    //spriteData.y += frameTime * velocity.y;     // move ship along Y
+
 	if (spriteData.x > GAME_WIDTH-30 - PlayerNS::WIDTH*getScale())
     {
         // position at right screen edge
@@ -73,33 +72,33 @@ void Player::update(float frameTime)
 
 	if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
 	{
-		spriteData.angle = 270;
+		spriteData.angle = 270.0f;
+		Entity::setDegrees(270.0f);
 
-		spriteData.x += frameTime * velocity.x;
+		spriteData.x += frameTime * movementSpeed;
 	}
 	if (input->isKeyDown(SHIP_LEFT_KEY))             // if move left
 	{
-		spriteData.angle = 90;
+		spriteData.angle = 90.0f;
+		Entity::setDegrees(90.0f);
 
-		spriteData.x -= frameTime * velocity.x;
+		spriteData.x -= frameTime * movementSpeed;
 	}
 	if (input->isKeyDown(SHIP_UP_KEY))               // if move up
 	{
-		spriteData.angle = 180;
+		spriteData.angle = 180.0f;
+		Entity::setDegrees(180.0f);
 
-		spriteData.y += frameTime * velocity.y;
+		spriteData.y -= frameTime * movementSpeed;
 	}
 
 	if (input->isKeyDown(SHIP_DOWN_KEY))             // if move down
 	{
 		spriteData.angle = 0;
+		Entity::setDegrees(0);
 
-		spriteData.y -= frameTime * velocity.y;
-	}
+		spriteData.y += frameTime * movementSpeed;
 
-	if (input->isKeyDown(PLAYER_FIRE_KEY))
-	{
-		Player::isFiring = true;
 	}
 
 }
