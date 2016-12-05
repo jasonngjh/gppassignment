@@ -12,8 +12,10 @@
 #include <windows.h>
 #include <conio.h>
 #include <functional>
-#include <chrono>
+#include <ctime>
 #include <list>
+#include <future>
+
 
 //=============================================================================
 // Create game class
@@ -32,6 +34,7 @@ private:
 	TextureManager zombieTexture;
 	TextureManager bulletTexture;
 	TextureManager heartTexture;
+	TextureManager lifebarTexture;
 	Image   nebula;                 // nebula image
 	Player ship;						//ship image
 	Player player;			
@@ -41,20 +44,23 @@ private:
 	Image wall4;
 	Zombie zombie;
 	Zombie zombie2;
+	Image lifebar;
 
-	Zombie zombieArray[5];
+	Zombie zombieArray[10];
 	int maxZombieCount; //amt of zombies allowed to exist (should be equal to zombieArray's size)
 	int zombieCount; //amt of zombies currently alive (should be less or equal to maxZombieCount)
 	
 
 	Bullet bullet; //default bullet
 	Heart heart;
+	Heart heart2;
 	Bullet bulletList[10]; //array of bullets, at most ten (intended magazine size) <<< not actually meant to hold bullets, used for multiple bullet physics
 	int k;
 	float zombieSpawnTime;
 	float frameCountTime;
 
 public:
+	double secondsPassed;
     // Constructor
     Spacewar();
 
@@ -68,12 +74,14 @@ public:
     void update();      // must override pure virtual from Game
     void ai();          // "
     void collisions();  // "
-	void timer_start(std::function<void(void)> func, unsigned int interval);
+	void timer_start();
 	Zombie spawnZombie();
     void render();      // "
     void releaseAll();
     void resetAll();
 	void checkFrameTime(int value);
+	int fr;
+	void playBGM();
 
 	float getSpawnTime() { return zombieSpawnTime; }
 	void setSpawnTime(float time) { zombieSpawnTime = time; }
@@ -87,6 +95,8 @@ public:
 	int getMaxZombieCount() { return maxZombieCount; }
 	void setMaxZombieCount(int amt) { maxZombieCount = amt; }
 
+	double getSecondsPassed() { return secondsPassed; }
+	void setSecondsPassed(double seconds) { secondsPassed = seconds; }
 };
 
 #endif

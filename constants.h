@@ -51,6 +51,7 @@ const UCHAR PLAYER_FIRE_KEY = VK_SPACE;
 
 // graphic images (names kept the same as of gameEngine)
 const char NEBULA_IMAGE[] = "pictures\\lol.png";  // ORIGINAL PHOTO
+const char GRASS_IMAGE[] = "pictures\\background2.png"; //picture of grass
 const char PLANET_IMAGE[] = "pictures\\planet.png"; // picture of planet
 const char SHIP_IMAGE[] = "pictures\\player.png";   // player
 const char ENEMY_ZOMBIE_IMAGE[] = "pictures\\zombie.png"; //enemy zombie
@@ -60,7 +61,10 @@ const char WALL3_IMAGE[] = "pictures\\wall1.png";//Right wall
 const char WALL4_IMAGE[] = "pictures\\wall2.png";//Bottomwall
 const char BULLET_IMAGE[] = "pictures\\bullet.png";//bullet
 const char HEART_IMAGE[] = "pictures\\pixelheart.png";//lifeup
+const char LIFEBAR_IMAGE[] = "pictures\\lifebar.png";//lifebar
 
+const int LIFEBAR_START_FRAME = 0;
+const int LIFEBAR_END_FRAME = 4;
 const int  SHIP_START_FRAME = 0;         // starting frame of ship animation
 const int  SHIP_END_FRAME = 3;           // last frame of ship animation
 const float SHIP_ANIMATION_DELAY = 0.2f; // time between frames of ship animation original is 0.2f
@@ -75,7 +79,10 @@ const int BULLET_SPEED = 5000;
 
 
 //MAYBE WE CAN MAKE IF HEALTH IS LOW, PLAYER BLINKS FASTER
-
+const int  LIFEBAR_COLS = 1;
+const int  LIFEBAR_WIDTH = 200;
+const int  LIFEBAR_HEIGHT = 27;
+const float LIFEBAR_SCALE = 1.1f;
 const int  SHIP_COLS = 2;                // ship texture has 2 columns
 const int  SHIP_WIDTH = 32;              // width of ship image
 const int  SHIP_HEIGHT = 32;             // height of ship image
