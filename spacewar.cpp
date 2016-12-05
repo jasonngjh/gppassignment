@@ -95,17 +95,13 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Heart"));
 	if (!dxFont.initialize(graphics, gameNS::POINT_SIZE, true, false, gameNS::FONT))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
-	std::clock_t start;
-	start = std::clock();
-	
-
-<<<<<<< HEAD
 	if (!blood.initialize(graphics, 0, 0, 0, &bloodTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game"));
 
-=======
+	std::clock_t start;
+	start = std::clock();
+
 	fpsOn = true;
->>>>>>> origin/master
 	lifebar.setX(3);
 	lifebar.setY(0);
 	lifebar.setFrames(0, 4);
@@ -145,10 +141,6 @@ void Spacewar::initialize(HWND hwnd)
 
 void Spacewar::update()
 {
-<<<<<<< HEAD
-=======
-	
->>>>>>> origin/master
 	setFrameCountTime(getFrameCountTime() + 1);
 	ship.update(frameTime);
 
@@ -263,7 +255,6 @@ void Spacewar::collisions()
 	{
 		if (ship.collidesWith(zombieArray[i], collisionVector))
 		{
-<<<<<<< HEAD
 			std::async(&Spacewar::displayBlood, this); //display blood when collide with zombie
 			zombieArray[i].setVisible(false);
 			zombieArray[i].setActive(false);
@@ -277,25 +268,18 @@ void Spacewar::collisions()
 
 			if (ship.getHealth() < 0)
 				ship.setHealth(0);
-=======
->>>>>>> origin/master
-			
-			ship.setHealth(ship.getHealth() - 20);
-				if (ship.getHealth() < 0)
-					ship.setHealth(0);
-
-				if (ship.getHealth() == 100)
-					lifebar.setCurrentFrame(0);
-				if (ship.getHealth() == 80)
-					lifebar.setCurrentFrame(1);
-				if (ship.getHealth() == 60)
-					lifebar.setCurrentFrame(2);
-				if (ship.getHealth() == 40)
-					lifebar.setCurrentFrame(3);
-				if (ship.getHealth() == 20)
-					lifebar.setCurrentFrame(4);
-				if (ship.getHealth() == 0)
-					lifebar.setVisible(false); //GAME SUPPOSED TO END HERE
+			if (ship.getHealth() == 100)
+				lifebar.setCurrentFrame(0);
+			if (ship.getHealth() == 80)
+				lifebar.setCurrentFrame(1);
+			if (ship.getHealth() == 60)
+				lifebar.setCurrentFrame(2);
+			if (ship.getHealth() == 40)
+				lifebar.setCurrentFrame(3);
+			if (ship.getHealth() == 20)
+				lifebar.setCurrentFrame(4);
+			if (ship.getHealth() == 0)
+				lifebar.setVisible(false); //GAME SUPPOSED TO END HERE
 		}
 	//Zombie zombie = zombieArray[i];
 	// if collision between bullet and zombies
@@ -460,28 +444,21 @@ void Spacewar::timer_start()
 
 	bool loop = true;
 	while (loop){
-<<<<<<< HEAD
 		setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
 
 		if ((fmod(getSecondsPassed() + 1, 3)) == 0){
-=======
-		 setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
-		if ((fmod(getSecondsPassed()+1,3))==0){ 
->>>>>>> origin/master
-			// check if current amount of zombie is less than maximum allowed amount
-			//if true, create new zombie
-			Sleep(10);
-			if (getZombieCount() < getMaxZombieCount())
-			{
-				setZombieCount(getZombieCount() + 1);
-				zombieArray[getZombieCount() - 1] = spawnZombie();
-
-<<<<<<< HEAD
-				zombieArray[getZombieCount() - 1].spawn();
-
-=======
->>>>>>> origin/master
-				//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
+			setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
+			if ((fmod(getSecondsPassed() + 1, 3)) == 0){
+				// check if current amount of zombie is less than maximum allowed amount
+				//if true, create new zombie
+				Sleep(10);
+				if (getZombieCount() < getMaxZombieCount())
+				{
+					setZombieCount(getZombieCount() + 1);
+					zombieArray[getZombieCount() - 1] = spawnZombie();
+					zombieArray[getZombieCount() - 1].spawn();
+					//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
+				}
 			}
 		}
 	}
