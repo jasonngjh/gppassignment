@@ -35,6 +35,7 @@ private:
 	TextureManager bulletTexture;
 	TextureManager heartTexture;
 	TextureManager lifebarTexture;
+	TextureManager bloodTexture;
 	Image   nebula;                 // nebula image
 	Player ship;						//ship image
 	Player player;			
@@ -45,6 +46,7 @@ private:
 	Zombie zombie;
 	Zombie zombie2;
 	Image lifebar;
+	Image blood;
 
 	Zombie zombieArray[10];
 	int maxZombieCount; //amt of zombies allowed to exist (should be equal to zombieArray's size)
@@ -81,7 +83,9 @@ public:
     void resetAll();
 	void checkFrameTime(int value);
 	int fr;
+	void checkVulnerable();
 	void playBGM();
+	void displayBlood();
 
 	float getSpawnTime() { return zombieSpawnTime; }
 	void setSpawnTime(float time) { zombieSpawnTime = time; }

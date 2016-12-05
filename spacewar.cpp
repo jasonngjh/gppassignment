@@ -1,4 +1,3 @@
-
 #include "spacewar.h"
 #include "Entity.h"
 #include <chrono>
@@ -60,6 +59,10 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet texture"));
 	if (!heartTexture.initialize(graphics, HEART_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet texture"));
+
+	if (!bloodTexture.initialize(graphics, BLOOD_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initiazing blood textyre"));
+
 	// nebula
 	if (!nebula.initialize(graphics, 0, 0, 0, &nebulaTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula"));
@@ -90,6 +93,9 @@ void Spacewar::initialize(HWND hwnd)
 	if (!lifebar.initialize(graphics, LIFEBAR_WIDTH, LIFEBAR_HEIGHT, 0, &lifebarTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Heart"));
 
+	if (!blood.initialize(graphics, 0, 0, 0, &bloodTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game"));
+
 	lifebar.setX(3);
 	lifebar.setY(0);
 	lifebar.setFrames(0, 4);
@@ -107,6 +113,7 @@ void Spacewar::initialize(HWND hwnd)
 	ship.setHealth(100);
 	ship.setActive(true);
 	setSpawnTime(200); //zombie spawn time set to every 20 frame time
+	blood.setVisible(false);
 
 	//ship.setVelocity(VECTOR2(PlayerNS::SPEED, -PlayerNS::SPEED)); // VECTOR2(X, Y)
 
@@ -116,7 +123,6 @@ void Spacewar::initialize(HWND hwnd)
 
 	setMaxZombieCount(sizeof(zombieArray)/sizeof(*zombieArray)); //matches max zombie count to size of zombie array to prevent crashing
 	setZombieCount(0);
-	//zombie.spawn();
 	int fr = 0;
 	std::async(&Spacewar::timer_start, this); //run timer thread while main loop is contiuing
 	t.join();
@@ -128,10 +134,10 @@ void Spacewar::initialize(HWND hwnd)
 //=============================================================================
 void Spacewar::update()
 {
-
 	setFrameCountTime(getFrameCountTime() + 1);
 
 	ship.update(frameTime);
+
 	// rotate ship
 	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
 	// make ship smaller
@@ -244,7 +250,17 @@ void Spacewar::collisions()
 	{
 		if (ship.collidesWith(zombieArray[i], collisionVector))
 		{
-			ship.setHealth(ship.getHealth() - 20);
+			std::async(&Spacewar::displayBlood, this); //display blood when collide with zombie
+			zombieArray[i].setVisible(false);
+			zombieArray[i].setActive(false);
+
+			if (ship.getPlayerVulnerable() == false){
+				ship.setHealth(ship.getHealth() - 20);
+				ship.setPlayerVulnerable(true);
+
+				std::async(&Spacewar::checkVulnerable,this); //run asychronous thread to check if the player is vulnerable
+			}
+
 			if (ship.getHealth() < 0)
 				ship.setHealth(0);
 			
@@ -326,7 +342,6 @@ void Spacewar::collisions()
 	}
 	//player.update(frameTime);
 
-	
 }
 
 //=============================================================================
@@ -362,6 +377,7 @@ void Spacewar::render()
 	heart.draw();
 	lifebar.draw();
 	bullet.draw();
+	blood.draw();
 	for (int i = 0; i < getZombieCount(); i++)
 	{
 		zombieArray[i].draw();
@@ -388,6 +404,7 @@ void Spacewar::releaseAll()
 	nebulaTexture.onLostDevice();
 	zombieTexture.onLostDevice();
 	bulletTexture.onLostDevice();
+	bloodTexture.onLostDevice();
     Game::releaseAll();
     return;
 }
@@ -401,6 +418,7 @@ void Spacewar::resetAll()
 	nebulaTexture.onResetDevice();
 	zombieTexture.onResetDevice();
 	bulletTexture.onResetDevice();
+	bloodTexture.onResetDevice();
     Game::resetAll();
     return;
 }
@@ -423,18 +441,45 @@ void Spacewar::timer_start()
 
 	bool loop = true;
 	while (loop){
-		setSecondsPassed((clock() - timer) / CLOCKS_PER_SEC);  //convert computer timer to real life seconds
+		setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
 
-		if ((fmod(getSecondsPassed()+1,3))==0){ 
+		if ((fmod(getSecondsPassed() + 1, 3)) == 0){
 			// check if current amount of zombie is less than maximum allowed amount
 			//if true, create new zombie
+			Sleep(10);
 			if (getZombieCount() < getMaxZombieCount())
 			{
 				setZombieCount(getZombieCount() + 1);
 				zombieArray[getZombieCount() - 1] = spawnZombie();
 
-				std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
+				zombieArray[getZombieCount() - 1].spawn();
+
+				//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
 			}
 		}
 	}
+}
+//=============================================================================
+// check vulnerability of the player after colliding with zombie
+//	set the vulnerable to off after x seconds
+//=============================================================================
+void Spacewar::checkVulnerable()
+{
+	bool loop = true;
+	while (loop){
+		if (ship.getPlayerVulnerable() == true){
+			Sleep(3000);
+			ship.setPlayerVulnerable(false);
+			loop = false;
+		}
+	}
+}
+//=============================================================================
+// display blood when collide with zombie
+//=============================================================================
+void Spacewar::displayBlood()
+{
+	blood.setVisible(true);
+	Sleep(2000);
+	blood.setVisible(false);
 }
