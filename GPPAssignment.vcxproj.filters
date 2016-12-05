@@ -37,6 +37,9 @@
     <ClCompile Include="spacewar.cpp">
       <Filter>CPP Files</Filter>
     </ClCompile>
+    <ClCompile Include="textDX.cpp">
+      <Filter>CPP Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Jack%27s Computer\Source\Repos\gppassignment\GitHubSyncTesting.h" />
@@ -77,6 +80,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="heart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="textDX.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="threeCsDX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

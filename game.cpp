@@ -103,6 +103,7 @@ void Game::initialize(HWND hw)
 
     // initialize input, do not capture mouse
     input->initialize(hwnd, false);             // throws GameError
+	// init sound system
 
     // attempt to set up high resolution timer
     if(QueryPerformanceFrequency(&timerFreq) == false)
