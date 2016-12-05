@@ -12,9 +12,9 @@
 #include <windows.h>
 #include <conio.h>
 #include <functional>
-#include <chrono>
+#include <ctime>
 #include <list>
-#include <thread>
+#include <future>
 
 
 //=============================================================================
@@ -46,7 +46,7 @@ private:
 	Zombie zombie2;
 	Image lifebar;
 
-	Zombie zombieArray[5];
+	Zombie zombieArray[10];
 	int maxZombieCount; //amt of zombies allowed to exist (should be equal to zombieArray's size)
 	int zombieCount; //amt of zombies currently alive (should be less or equal to maxZombieCount)
 	
@@ -60,6 +60,7 @@ private:
 	float frameCountTime;
 
 public:
+	double secondsPassed;
     // Constructor
     Spacewar();
 
@@ -73,7 +74,7 @@ public:
     void update();      // must override pure virtual from Game
     void ai();          // "
     void collisions();  // "
-	void timer_start(std::function<void(void)> func, unsigned int interval);
+	void timer_start();
 	Zombie spawnZombie();
     void render();      // "
     void releaseAll();
@@ -94,6 +95,8 @@ public:
 	int getMaxZombieCount() { return maxZombieCount; }
 	void setMaxZombieCount(int amt) { maxZombieCount = amt; }
 
+	double getSecondsPassed() { return secondsPassed; }
+	void setSecondsPassed(double seconds) { secondsPassed = seconds; }
 };
 
 #endif
