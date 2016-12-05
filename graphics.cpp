@@ -88,7 +88,97 @@ void Graphics::initialize(HWND hw, int w, int h, bool full)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error creating Direct3D sprite"));
 
 }
+HRESULT Graphics::loadTexture(const char *filename, COLOR_ARGB transcolor,
+	UINT &width, UINT &height, LP_TEXTURE &texture)
+{
+	// The struct for reading file info
+	D3DXIMAGE_INFO info;
+	result = E_FAIL;
 
+	try{
+		if (filename == NULL)
+		{
+			texture = NULL;
+			return D3DERR_INVALIDCALL;
+		}
+
+		// Get width and height from file
+		result = D3DXGetImageInfoFromFile(filename, &info);
+		if (result != D3D_OK)
+			return result;
+		width = info.Width;
+		height = info.Height;
+
+		// Create the new texture by loading from file
+		result = D3DXCreateTextureFromFileEx(
+			device3d,           //3D device
+			filename,           //image filename
+			info.Width,         //texture width
+			info.Height,        //texture height
+			1,                  //mip-map levels (1 for no chain)
+			0,                  //usage
+			D3DFMT_UNKNOWN,     //surface format (default)
+			D3DPOOL_DEFAULT,    //memory class for the texture
+			D3DX_DEFAULT,       //image filter
+			D3DX_DEFAULT,       //mip filter
+			transcolor,         //color key for transparency
+			&info,              //bitmap file info (from loaded file)
+			NULL,               //color palette
+			&texture);         //destination texture
+
+	}
+	catch (...)
+	{
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in Graphics::loadTexture"));
+	}
+	return result;
+}
+
+HRESULT Graphics::loadTextureSystemMem(const char *filename, COLOR_ARGB transcolor,
+	UINT &width, UINT &height, LP_TEXTURE &texture)
+{
+	// The struct for reading bitmap file info
+	D3DXIMAGE_INFO info;
+	result = E_FAIL;        // Standard Windows return value
+
+	try{
+		if (filename == NULL)
+		{
+			texture = NULL;
+			return D3DERR_INVALIDCALL;
+		}
+
+		// Get width and height from bitmap file
+		result = D3DXGetImageInfoFromFile(filename, &info);
+		if (result != D3D_OK)
+			return result;
+		width = info.Width;
+		height = info.Height;
+
+		// Create the new texture by loading a bitmap image file
+		result = D3DXCreateTextureFromFileEx(
+			device3d,           //3D device
+			filename,           //bitmap filename
+			info.Width,         //bitmap image width
+			info.Height,        //bitmap image height
+			1,                  //mip-map levels (1 for no chain)
+			0,                  //usage
+			D3DFMT_UNKNOWN,     //surface format (default)
+			D3DPOOL_SYSTEMMEM,  //systemmem is lockable
+			D3DX_DEFAULT,       //image filter
+			D3DX_DEFAULT,       //mip filter
+			transcolor,         //color key for transparency
+			&info,              //bitmap file info (from loaded file)
+			NULL,               //color palette
+			&texture);         //destination texture
+
+	}
+	catch (...)
+	{
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in Graphics::loadTexture"));
+	}
+	return result;
+}
 //=============================================================================
 // Initialize D3D presentation parameters
 //=============================================================================
@@ -114,6 +204,47 @@ void Graphics::initD3Dpp()
                 "Error initializing D3D presentation parameters"));
 
     }
+}
+HRESULT Graphics::createVertexBuffer(VertexC verts[], UINT size, LP_VERTEXBUFFER &vertexBuffer)
+{
+	// Standard Windows return value
+	HRESULT result = E_FAIL;
+
+	// Create a vertex buffer
+	result = device3d->CreateVertexBuffer(size, D3DUSAGE_WRITEONLY, D3DFVF_VERTEX,
+		D3DPOOL_DEFAULT, &vertexBuffer, NULL);
+	if (FAILED(result))
+		return result;
+
+	void *ptr;
+	// must lock buffer before data can be transferred in
+	result = vertexBuffer->Lock(0, size, (void**)&ptr, 0);
+	if (FAILED(result))
+		return result;
+	memcpy(ptr, verts, size);   // copy vertex data into buffer
+	vertexBuffer->Unlock();     // unlock buffer
+
+	return result;
+}
+bool Graphics::drawQuad(LP_VERTEXBUFFER vertexBuffer)
+{
+	HRESULT result = E_FAIL;    // standard Windows return value
+
+	if (vertexBuffer == NULL)
+		return false;
+
+	device3d->SetRenderState(D3DRS_ALPHABLENDENABLE, true); // enable alpha blend
+
+	device3d->SetStreamSource(0, vertexBuffer, 0, sizeof(VertexC));
+	device3d->SetFVF(D3DFVF_VERTEX);
+	result = device3d->DrawPrimitive(D3DPT_TRIANGLEFAN, 0, 2);
+
+	device3d->SetRenderState(D3DRS_ALPHABLENDENABLE, false); // alpha blend off
+
+	if (FAILED(result))
+		return false;
+
+	return true;
 }
 
 //=============================================================================
@@ -175,51 +306,51 @@ HRESULT Graphics::reset()
     return result;
 }
 
-HRESULT Graphics::loadTexture(const char *filename, COLOR_ARGB transcolor,
-	UINT &width, UINT &height, LP_TEXTURE &texture)
-{
-	// The struct for reading file info
-	D3DXIMAGE_INFO info;
-	result = E_FAIL;
-
-	try{
-		if (filename == NULL)
-		{
-			texture = NULL;
-			return D3DERR_INVALIDCALL;
-		}
-
-		// Get width and height from file
-		result = D3DXGetImageInfoFromFile(filename, &info);
-		if (result != D3D_OK)
-			return result;
-		width = info.Width;
-		height = info.Height;
-
-		// Create the new texture by loading from file
-		result = D3DXCreateTextureFromFileEx(
-			device3d,           //3D device
-			filename,           //image filename
-			info.Width,         //texture width
-			info.Height,        //texture height
-			1,                  //mip-map levels (1 for no chain)
-			0,                  //usage
-			D3DFMT_UNKNOWN,     //surface format (default)
-			D3DPOOL_DEFAULT,    //memory class for the texture
-			D3DX_DEFAULT,       //image filter
-			D3DX_DEFAULT,       //mip filter
-			transcolor,         //color key for transparency
-			&info,              //bitmap file info (from loaded file)
-			NULL,               //color palette
-			&texture);         //destination texture
-
-	}
-	catch (...)
-	{
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in Graphics::loadTexture"));
-	}
-	return result;
-}
+//HRESULT Graphics::loadTexture(const char *filename, COLOR_ARGB transcolor,
+//	UINT &width, UINT &height, LP_TEXTURE &texture)
+//{
+//	// The struct for reading file info
+//	D3DXIMAGE_INFO info;
+//	result = E_FAIL;
+//
+//	try{
+//		if (filename == NULL)
+//		{
+//			texture = NULL;
+//			return D3DERR_INVALIDCALL;
+//		}
+//
+//		// Get width and height from file
+//		result = D3DXGetImageInfoFromFile(filename, &info);
+//		if (result != D3D_OK)
+//			return result;
+//		width = info.Width;
+//		height = info.Height;
+//
+//		// Create the new texture by loading from file
+//		result = D3DXCreateTextureFromFileEx(
+//			device3d,           //3D device
+//			filename,           //image filename
+//			info.Width,         //texture width
+//			info.Height,        //texture height
+//			1,                  //mip-map levels (1 for no chain)
+//			0,                  //usage
+//			D3DFMT_UNKNOWN,     //surface format (default)
+//			D3DPOOL_DEFAULT,    //memory class for the texture
+//			D3DX_DEFAULT,       //image filter
+//			D3DX_DEFAULT,       //mip filter
+//			transcolor,         //color key for transparency
+//			&info,              //bitmap file info (from loaded file)
+//			NULL,               //color palette
+//			&texture);         //destination texture
+//
+//	}
+//	catch (...)
+//	{
+//		throw(GameError(gameErrorNS::FATAL_ERROR, "Error in Graphics::loadTexture"));
+//	}
+//	return result;
+//}
 
 void Graphics::drawSprite(const SpriteData &spriteData, COLOR_ARGB color)
 {

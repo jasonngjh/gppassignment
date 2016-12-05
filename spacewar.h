@@ -56,7 +56,7 @@ private:
 	Bullet bullet; //default bullet
 	Heart heart;
 	Heart heart2;
-	Bullet bulletList[10]; //array of bullets, at most ten (intended magazine size) <<< not actually meant to hold bullets, used for multiple bullet physics
+	Bullet bulletList[10];//array of bullets, at most ten (intended magazine size) <<< not actually meant to hold bullets, used for multiple bullet physics
 	int k;
 	float zombieSpawnTime;
 	float frameCountTime;

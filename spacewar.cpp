@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 #include <functional>
+#include "threeCsDX.h"
 
 //=============================================================================
 // Constructor
@@ -92,10 +93,19 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Heart"));
 	if (!lifebar.initialize(graphics, LIFEBAR_WIDTH, LIFEBAR_HEIGHT, 0, &lifebarTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Heart"));
+	if (!dxFont.initialize(graphics, gameNS::POINT_SIZE, true, false, gameNS::FONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
+	std::clock_t start;
+	start = std::clock();
+	
 
+<<<<<<< HEAD
 	if (!blood.initialize(graphics, 0, 0, 0, &bloodTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game"));
 
+=======
+	fpsOn = true;
+>>>>>>> origin/master
 	lifebar.setX(3);
 	lifebar.setY(0);
 	lifebar.setFrames(0, 4);
@@ -132,10 +142,14 @@ void Spacewar::initialize(HWND hwnd)
 //=============================================================================
 // Update all game items
 //=============================================================================
+
 void Spacewar::update()
 {
+<<<<<<< HEAD
+=======
+	
+>>>>>>> origin/master
 	setFrameCountTime(getFrameCountTime() + 1);
-
 	ship.update(frameTime);
 
 	// rotate ship
@@ -245,11 +259,11 @@ void Spacewar::collisions()
 {
 
 	VECTOR2 collisionVector;
-
 	for (int i = 0; i < getZombieCount(); i++)
 	{
 		if (ship.collidesWith(zombieArray[i], collisionVector))
 		{
+<<<<<<< HEAD
 			std::async(&Spacewar::displayBlood, this); //display blood when collide with zombie
 			zombieArray[i].setVisible(false);
 			zombieArray[i].setActive(false);
@@ -263,25 +277,31 @@ void Spacewar::collisions()
 
 			if (ship.getHealth() < 0)
 				ship.setHealth(0);
+=======
+>>>>>>> origin/master
 			
-			if (ship.getHealth() == 100)
-				lifebar.setCurrentFrame(0);
-			if (ship.getHealth() == 80)
-				lifebar.setCurrentFrame(1);
-			if (ship.getHealth() == 60)
-				lifebar.setCurrentFrame(2);
-			if (ship.getHealth() == 40)
-				lifebar.setCurrentFrame(3);
-			if (ship.getHealth() == 20)
-			lifebar.setCurrentFrame(4);
-			if (ship.getHealth() == 0)
-				lifebar.setVisible(false); //GAME SUPPOSED TO END HERE
+			ship.setHealth(ship.getHealth() - 20);
+				if (ship.getHealth() < 0)
+					ship.setHealth(0);
+
+				if (ship.getHealth() == 100)
+					lifebar.setCurrentFrame(0);
+				if (ship.getHealth() == 80)
+					lifebar.setCurrentFrame(1);
+				if (ship.getHealth() == 60)
+					lifebar.setCurrentFrame(2);
+				if (ship.getHealth() == 40)
+					lifebar.setCurrentFrame(3);
+				if (ship.getHealth() == 20)
+					lifebar.setCurrentFrame(4);
+				if (ship.getHealth() == 0)
+					lifebar.setVisible(false); //GAME SUPPOSED TO END HERE
 		}
 	//Zombie zombie = zombieArray[i];
 	// if collision between bullet and zombies
 	if (bullet.collidesWith(zombieArray[i], collisionVector))
 	{
-		k = 1;//(rand() % 4 + 0) % 3;
+		k = (rand() % 4 + 0) % 3;
 		zombieArray[i].setVisible(false);
 		zombieArray[i].setActive(false);
 		heart2.setX(zombieArray[i].getX());
@@ -364,9 +384,10 @@ Zombie Spacewar::spawnZombie()
 //=============================================================================
 void Spacewar::render()
 {	
-	
+	dxFont.setFontColor(graphicsNS::WHITE);
 	graphics->spriteBegin();                // begin drawing sprites
-
+	const int BUF_SIZE = 25;
+	static char buffer[BUF_SIZE];
 	nebula.draw();                          // add the orion nebula to the scene
 	//planet.draw();                          // add the planet to the scene
 	ship.draw();
@@ -382,15 +403,13 @@ void Spacewar::render()
 	{
 		zombieArray[i].draw();
 	}
-	//while (i < 5)
-	//{
-	//	zombieArray[i].draw();
-	//	i++;
-	//	if (i > getZombieCount())
-	//	{
-	//		i = 0;
-	//	}
-	//}
+	if (fpsOn)           // if fps display requested
+	{
+		// convert fps to Cstring
+		_snprintf_s(buffer, BUF_SIZE, "Seconds Passed: %d ",(int)getSecondsPassed());
+		dxFont.print(buffer, GAME_WIDTH - 300, GAME_HEIGHT - 25);
+	}
+
 	graphics->spriteEnd();                  // end drawing sprites
 
 }
@@ -441,9 +460,14 @@ void Spacewar::timer_start()
 
 	bool loop = true;
 	while (loop){
+<<<<<<< HEAD
 		setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
 
 		if ((fmod(getSecondsPassed() + 1, 3)) == 0){
+=======
+		 setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
+		if ((fmod(getSecondsPassed()+1,3))==0){ 
+>>>>>>> origin/master
 			// check if current amount of zombie is less than maximum allowed amount
 			//if true, create new zombie
 			Sleep(10);
@@ -452,8 +476,11 @@ void Spacewar::timer_start()
 				setZombieCount(getZombieCount() + 1);
 				zombieArray[getZombieCount() - 1] = spawnZombie();
 
+<<<<<<< HEAD
 				zombieArray[getZombieCount() - 1].spawn();
 
+=======
+>>>>>>> origin/master
 				//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
 			}
 		}
