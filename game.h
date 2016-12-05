@@ -11,6 +11,15 @@
 #include "gameError.h"
 #include <functional>
 #include <chrono>
+#include "textDX.h"
+
+
+namespace gameNS
+{
+	const char FONT[] = "Courier New";  // font
+	const int POINT_SIZE = 30;          // point size
+	const COLOR_ARGB FONT_COLOR = SETCOLOR_ARGB(255, 255, 15, 15);    // white
+}
 
 
 class Game
@@ -26,6 +35,8 @@ protected:
     LARGE_INTEGER timerFreq;    // Performance Counter frequency
     float   frameTime;          // time required for last frame 
     float   fps;                // frames per second
+	bool	fpsOn;
+	TextDX  dxFont;                 // DirectX font for fps
     DWORD   sleepTime;          // number of milli-seconds to sleep between frames
     bool    paused;             // true if game is paused
     bool    initialized;

@@ -16,11 +16,14 @@
 #include "gameError.h"
 
 // DirectX pointer types
-#define LP_TEXTURE  LPDIRECT3DTEXTURE9
-#define LP_SPRITE   LPD3DXSPRITE
 #define LP_3DDEVICE LPDIRECT3DDEVICE9
 #define LP_3D       LPDIRECT3D9
 #define VECTOR2     D3DXVECTOR2
+#define LP_TEXTURE  LPDIRECT3DTEXTURE9
+#define LP_SPRITE   LPD3DXSPRITE
+#define LP_VERTEXBUFFER LPDIRECT3DVERTEXBUFFER9
+#define LP_DXFONT   LPD3DXFONT
+#define D3DFVF_VERTEX (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
 
 // Color defines
 #define COLOR_ARGB DWORD
@@ -73,6 +76,12 @@ struct SpriteData
 	bool        flipHorizontal; // true to flip sprite horizontally (mirror)
 	bool        flipVertical;   // true to flip sprite vertically
 };
+struct VertexC              // Vertex with Color
+{
+	float x, y, z;          // vertex location
+	float rhw;              // reciprocal homogeneous W (set to 1)
+	unsigned long color;    // vertex color
+};
 
 class Graphics
 {
@@ -113,14 +122,19 @@ public:
 	//      height = height in pixels
 	//      fullscreen = true for full screen, false for window
 	void    initialize(HWND hw, int width, int height, bool fullscreen);
-
 	// Load the texture into default D3D memory (normal texture use)
 	// For internal engine use only. Use the TextureManager class to load game textures.
 	// Pre: filename = name of texture file.
 	//      transcolor = transparent color
 	// Post: width and height = size of texture
 	//       texture points to texture
+	HRESULT createVertexBuffer(VertexC verts[], UINT size, LP_VERTEXBUFFER &vertexBuffer);
+
+	bool    drawQuad(LP_VERTEXBUFFER vertexBuffer);
+
 	HRESULT loadTexture(const char * filename, COLOR_ARGB transcolor, UINT &width, UINT &height, LP_TEXTURE &texture);
+
+	HRESULT loadTextureSystemMem(const char *filename, COLOR_ARGB transcolor, UINT &width, UINT &height, LP_TEXTURE &texture);
 
 	// Display the offscreen backbuffer to the screen.
 	HRESULT showBackbuffer();
