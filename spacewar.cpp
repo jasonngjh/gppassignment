@@ -181,19 +181,9 @@ void Spacewar::update()
 
 	//maybe put if key on, ship stop moving
 
-<<<<<<< HEAD
 	ship.update(frameTime); //ship movement is done here
 
 	/*if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
-=======
-	if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
->>>>>>> refs/remotes/origin/wexner1
-	{
-		ship.setDegrees(270.0f);
-
-		ship.setX(ship.getX() + frameTime * SHIP_SPEED);
-
-	}
 
 	if (input->isKeyDown(SHIP_LEFT_KEY))             // if move left
 	{
