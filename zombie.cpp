@@ -64,6 +64,10 @@ void Zombie::update(Image player,float frameTime){
 	if (spriteData.y < player.getY())
 		spriteData.y = Zombie::getY() + frameTime * ZOMBIE_SPEED;
 
+	/*double x = player.getCenterX() - Zombie::getCenterX();
+	double y = player.getCenterY() - Zombie::getCenterY();
+	spriteData.angle = atan2(x,y);*/
+
 }
 void Zombie::destroy()
 {

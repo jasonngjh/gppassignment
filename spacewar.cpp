@@ -29,6 +29,7 @@ void Spacewar::initialize(HWND hwnd)
     Game::initialize(hwnd); // throws GameError
 
 	std::thread t(&Spacewar::playBGM, this);
+	t.join();
 
 	srand(time(NULL));
 	switch (rand()%2)
@@ -134,18 +135,16 @@ void Spacewar::initialize(HWND hwnd)
 	setZombieCount(0);
 	int fr = 0;
 	std::async(&Spacewar::timer_start, this); //run timer thread while main loop is contiuing
-	t.join();
     return;
 }
 
 //=============================================================================
 // Update all game items
+// Calls each game item's own update functions
 //=============================================================================
-
 void Spacewar::update()
 {
 	setFrameCountTime(getFrameCountTime() + 1);
-	ship.update(frameTime);
 	if (bullet.getX() > GAME_WIDTH - 30)
 	{
 		// position at right screen edge
@@ -181,40 +180,32 @@ void Spacewar::update()
 
 	//maybe put if key on, ship stop moving
 
-	if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
-	{
-		ship.setDegrees(270.0f);
+	ship.update(frameTime); //ship movement is done here
 
-		ship.setX(ship.getX() + frameTime * SHIP_SPEED);
-		if (ship.getX() > GAME_WIDTH)               // if off screen right
-			ship.setX((float)-ship.getWidth());  // position off screen left
-	}
+	/*if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
+
 	if (input->isKeyDown(SHIP_LEFT_KEY))             // if move left
 	{
 
 		ship.setDegrees(90);
 
 		ship.setX(ship.getX() - frameTime * SHIP_SPEED);
-		if (ship.getX() < -ship.getWidth())         // if off screen left
-			ship.setX((float)GAME_WIDTH);      // position off screen right
+
 	}
 	if (input->isKeyDown(SHIP_UP_KEY))               // if move up
 	{
 		ship.setDegrees(180);
 
 		ship.setY(ship.getY() - frameTime * SHIP_SPEED);
-		if (ship.getY() < -ship.getHeight())        // if off screen top
-			ship.setY((float)GAME_HEIGHT);     // position off screen bottom
+
 	}
 
 	if (input->isKeyDown(SHIP_DOWN_KEY))             // if move down
 	{
-		ship.setDegrees(0);
+		//ship.setDegrees(0);
 
-		ship.setY(ship.getY() + frameTime * SHIP_SPEED);
-		if (ship.getY() > GAME_HEIGHT)              // if off screen bottom
-			ship.setY((float)-ship.getHeight());    // position off screen top
-	}
+		//ship.setY(ship.getY() + frameTime * SHIP_SPEED);
+	}*/
 
 	if (input->isKeyDown(PLAYER_FIRE_KEY))
 	{
@@ -227,20 +218,13 @@ void Spacewar::update()
 
 	}//cant move while shooting/shooting has delay
 
-	//bullet.update(frameTime);
+	//update for bullet
+	bullet.update(frameTime);
 
-	if (bullet.getActive())
-	{
-		bullet.update(frameTime);
-	}
-
-	//ship.update(frameTime);
-	//zombie.update(ship, frameTime);
-
+	//update for zombies
 	if (getZombieCount() > 0)
 	{
 		//endlessly loop update for each zombie until no more zombies
-
 		for (int i = 0; i < getZombieCount(); i++)
 		{
 			zombieArray[i].update(ship, frameTime);
@@ -276,6 +260,7 @@ void Spacewar::collisions()
 		if (ship.collidesWith(zombieArray[i], collisionVector))
 		{
 			std::async(&Spacewar::displayBlood, this); //display blood when collide with zombie
+			mciSendString("play player_injured.wav", NULL, 0, NULL);
 			zombieArray[i].setVisible(false);
 			zombieArray[i].setActive(false);
 
@@ -310,6 +295,7 @@ void Spacewar::collisions()
 		k = (rand() % 4 + 0) % 3;
 		zombieArray[i].setVisible(false);
 		zombieArray[i].setActive(false);
+		mciSendString("play zombie_death.wav",NULL,0,NULL);
 		heart2.setX(zombieArray[i].getX());
 		heart2.setY(zombieArray[i].getY());
 		if (!heart.getActive() == true)
@@ -319,7 +305,6 @@ void Spacewar::collisions()
 		}
 		graphics->spriteBegin();
 		if (heart.getActive() == false)
-
 		{
 			heart.draw();
 		}
@@ -363,16 +348,17 @@ void Spacewar::collisions()
 		}
 		//else if (ship.getHealth() == 0)
 			//
-			//lifebar.setVisible(false);  NOT SUPPOSED TO BE HERE. GAME ENDING SCREEN.
-			
+			//lifebar.setVisible(false);  NOT SUPPOSED TO BE HERE. GAME ENDING SCREEN.	
 	}
+
+	
 	//player.update(frameTime);
 
 }
 
 //=============================================================================
 // Spawn zombies (constantly called every x seconds)
-//=======================================================
+//=============================================================================
 Zombie Spacewar::spawnZombie()
 {
 	//behavior for zombie spawn
@@ -384,6 +370,11 @@ Zombie Spacewar::spawnZombie()
 
 	return new_zombie;
 }
+
+//=============================================================================
+// Fire Bullet
+//=============================================================================
+
 
 //=============================================================================
 // Render game items
@@ -468,20 +459,19 @@ void Spacewar::timer_start()
 	while (loop){
 		setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
 
-		if ((fmod(getSecondsPassed() + 1, 3)) == 0){
-			setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
-			if ((fmod(getSecondsPassed() + 1, 3)) == 0){
-				// check if current amount of zombie is less than maximum allowed amount
-				//if true, create new zombie
-				Sleep(10);
-				if (getZombieCount() < getMaxZombieCount())
-				{
-					setZombieCount(getZombieCount() + 1);
-					zombieArray[getZombieCount() - 1] = spawnZombie();
-					zombieArray[getZombieCount() - 1].spawn();
-					//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
-				}
+		if ((fmod(getSecondsPassed(), 3)) == 0){
+			// check if current amount of zombie is less than maximum allowed amount
+			//if true, create new zombie
+			Sleep(10);
+			if (getZombieCount() < getMaxZombieCount())
+			{
+				mciSendString("play zombie_comehere.wav", NULL, 0,NULL);
+				setZombieCount(getZombieCount() + 1);
+				zombieArray[getZombieCount() - 1] = spawnZombie();
+				zombieArray[getZombieCount() - 1].spawn();
+				//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
 			}
+			
 		}
 	}
 }
@@ -506,6 +496,6 @@ void Spacewar::checkVulnerable()
 void Spacewar::displayBlood()
 {
 	blood.setVisible(true);
-	Sleep(2000);
+	Sleep(3000);
 	blood.setVisible(false);
 }
