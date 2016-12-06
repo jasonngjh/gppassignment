@@ -5,6 +5,8 @@
 
 #include "bullet.h"
 #include "player.h"
+#include <thread>
+
 
 //=============================================================================
 // default constructor
@@ -49,7 +51,19 @@ void Bullet::create(Image player, float degree)
 
 	active = true;
 
-	PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_ASYNC|SND_NOSTOP);
+	std::thread c(&Bullet::playFireSound, this);
+
+	//mciSendString("play 9_mm_gunshot-mike-koenig-123.wav", NULL, 0, NULL);
+
+
+	c.detach(); //doesn't crash but doesn't play the sound
+	
+}
+
+void Bullet::playFireSound()
+{
+	mciSendString("play 9_mm_gunshot-mike-koenig-123.wav", NULL, 0, NULL);
+	//PlaySound(TEXT("9_mm_gunshot-mike-koenig-123.wav"), NULL, SND_ASYNC | SND_NOSTOP);
 }
 
 //=============================================================================
@@ -83,8 +97,6 @@ void Bullet::update(float frameTime)
 		//spriteData.angle += frameTime * PlayerNS::ROTATION_RATE;  // rotate the ship
 
 		//spriteData.angle = Bullet::getDegrees(); //somehow, this makes bullet start at player center instead of forward of player (maybe bullet is indeed travelling BUT???)
-
-
 
 		// disappear off walls
 		// if hit right screen edge

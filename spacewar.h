@@ -57,9 +57,12 @@ private:
 	Heart heart;
 	Heart heart2;
 	Bullet bulletList[10];//array of bullets, at most ten (intended magazine size) <<< not actually meant to hold bullets, used for multiple bullet physics
+	
 	int k;
 	float zombieSpawnTime;
 	float frameCountTime;
+	float score;
+	int rng;
 
 public:
 	double secondsPassed;
@@ -83,6 +86,7 @@ public:
     void resetAll();
 	void checkFrameTime(int value);
 	int fr;
+	void setBackgroundRNG(int value);
 	void checkVulnerable();
 	void playBGM();
 	void displayBlood();
@@ -96,11 +100,16 @@ public:
 	int getZombieCount() { return zombieCount; }
 	void setZombieCount(int amt) { zombieCount = amt; }
 
+	float getScore(){ return score; }
+	void setScore(int sc){ score += sc; }
 	int getMaxZombieCount() { return maxZombieCount; }
 	void setMaxZombieCount(int amt) { maxZombieCount = amt; }
 
 	double getSecondsPassed() { return secondsPassed; }
 	void setSecondsPassed(double seconds) { secondsPassed = seconds; }
+
+
+
 };
 
 #endif

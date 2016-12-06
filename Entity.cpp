@@ -24,6 +24,7 @@ Entity::Entity() : Image()
 	rotatedBoxReady = false;
 	collisionType = entityNS::BOX;
 	health = 100;
+	score = 0;
 	//gravity = entityNS::GRAVITY;
 }
 

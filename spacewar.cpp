@@ -19,6 +19,7 @@ Spacewar::~Spacewar()
     releaseAll();           // call onLostDevice() for every graphics item
 }
 
+
 //=============================================================================
 // Initializes the game
 // Throws GameError on error
@@ -30,8 +31,8 @@ void Spacewar::initialize(HWND hwnd)
 	std::thread t(&Spacewar::playBGM, this);
 	t.join();
 
-	int i = rand() % 2;
-	switch (i)
+	srand(time(NULL));
+	switch (rand()%2)
 	{
 		case 0: // nebula texture
 			if (!nebulaTexture.initialize(graphics, GRASS_IMAGE))
@@ -96,6 +97,8 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Heart"));
 	if (!dxFont.initialize(graphics, gameNS::POINT_SIZE, true, false, gameNS::FONT))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
+	if (!dxFontScore.initialize(graphics, gameNS::POINT_SIZE, true, false, gameNS::FONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
 	if (!blood.initialize(graphics, 0, 0, 0, &bloodTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game"));
 
@@ -137,13 +140,31 @@ void Spacewar::initialize(HWND hwnd)
 
 //=============================================================================
 // Update all game items
+// Calls each game item's own update functions
 //=============================================================================
-
 void Spacewar::update()
 {
 	setFrameCountTime(getFrameCountTime() + 1);
 	ship.update(frameTime);
-
+	if (bullet.getX() > GAME_WIDTH - 30)
+	{
+		// position at right screen edge
+		bullet.setVisible(false);
+	              // reverse X direction
+	}
+	else if (bullet.getX() < 30)                  // else if hit left screen edge
+	{
+		bullet.setVisible(false);
+	}
+	// if hit bottom screen edge
+	if (bullet.getY() > GAME_HEIGHT - 30)
+	{
+		bullet.setVisible(false);
+	}
+	else if (bullet.getY() < 30)                  // else if hit top screen edge
+	{
+		bullet.setVisible(false);             // reverse Y direction
+	}
 	// rotate ship
 	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
 	// make ship smaller
@@ -160,41 +181,32 @@ void Spacewar::update()
 
 	//maybe put if key on, ship stop moving
 
+	ship.update(frameTime); //ship movement is done here
 
-	if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
-	{
-		ship.setDegrees(270.0f);
+	/*if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
 
-		ship.setX(ship.getX() + frameTime * SHIP_SPEED);
-		if (ship.getX() > GAME_WIDTH)               // if off screen right
-			ship.setX((float)-ship.getWidth());  // position off screen left
-	}
 	if (input->isKeyDown(SHIP_LEFT_KEY))             // if move left
 	{
 
 		ship.setDegrees(90);
 
 		ship.setX(ship.getX() - frameTime * SHIP_SPEED);
-		if (ship.getX() < -ship.getWidth())         // if off screen left
-			ship.setX((float)GAME_WIDTH);      // position off screen right
+
 	}
 	if (input->isKeyDown(SHIP_UP_KEY))               // if move up
 	{
 		ship.setDegrees(180);
 
 		ship.setY(ship.getY() - frameTime * SHIP_SPEED);
-		if (ship.getY() < -ship.getHeight())        // if off screen top
-			ship.setY((float)GAME_HEIGHT);     // position off screen bottom
+
 	}
 
 	if (input->isKeyDown(SHIP_DOWN_KEY))             // if move down
 	{
-		ship.setDegrees(0);
+		//ship.setDegrees(0);
 
-		ship.setY(ship.getY() + frameTime * SHIP_SPEED);
-		if (ship.getY() > GAME_HEIGHT)              // if off screen bottom
-			ship.setY((float)-ship.getHeight());    // position off screen top
-	}
+		//ship.setY(ship.getY() + frameTime * SHIP_SPEED);
+	}*/
 
 	if (input->isKeyDown(PLAYER_FIRE_KEY))
 	{
@@ -207,20 +219,13 @@ void Spacewar::update()
 
 	}//cant move while shooting/shooting has delay
 
-	//bullet.update(frameTime);
+	//update for bullet
+	bullet.update(frameTime);
 
-	if (bullet.getActive())
-	{
-		bullet.update(frameTime);
-	}
-
-	//ship.update(frameTime);
-	//zombie.update(ship, frameTime);
-
+	//update for zombies
 	if (getZombieCount() > 0)
 	{
 		//endlessly loop update for each zombie until no more zombies
-
 		for (int i = 0; i < getZombieCount(); i++)
 		{
 			zombieArray[i].update(ship, frameTime);
@@ -286,6 +291,8 @@ void Spacewar::collisions()
 	// if collision between bullet and zombies
 	if (bullet.collidesWith(zombieArray[i], collisionVector))
 	{
+		bullet.setVisible(false);
+		setScore(zombie.getScore());
 		k = (rand() % 4 + 0) % 3;
 		zombieArray[i].setVisible(false);
 		zombieArray[i].setActive(false);
@@ -320,9 +327,9 @@ void Spacewar::collisions()
 		//zombieArray[i].destroy(); <<crashes the thing lol
 		}
 	}
-
 	if (ship.collidesWith(heart, collisionVector))
 	{
+		setScore(heart.getScore());
 		lifebar.setVisible(true);
 		heart.setVisible(false);
 		heart.setActive(false);
@@ -352,7 +359,7 @@ void Spacewar::collisions()
 
 //=============================================================================
 // Spawn zombies (constantly called every x seconds)
-//=======================================================
+//=============================================================================
 Zombie Spacewar::spawnZombie()
 {
 	//behavior for zombie spawn
@@ -366,11 +373,17 @@ Zombie Spacewar::spawnZombie()
 }
 
 //=============================================================================
+// Fire Bullet
+//=============================================================================
+
+
+//=============================================================================
 // Render game items
 //=============================================================================
 void Spacewar::render()
 {	
 	dxFont.setFontColor(graphicsNS::WHITE);
+	dxFontScore.setFontColor(graphicsNS::WHITE);
 	graphics->spriteBegin();                // begin drawing sprites
 	const int BUF_SIZE = 25;
 	static char buffer[BUF_SIZE];
@@ -389,12 +402,11 @@ void Spacewar::render()
 	{
 		zombieArray[i].draw();
 	}
-	if (fpsOn)           // if fps display requested
-	{
-		// convert fps to Cstring
+		_snprintf_s(buffer, BUF_SIZE, "Score: %d ", (int)getScore());
+		dxFontScore.print(buffer, GAME_WIDTH - 300, 1);
 		_snprintf_s(buffer, BUF_SIZE, "Seconds Passed: %d ",(int)getSecondsPassed());
 		dxFont.print(buffer, GAME_WIDTH - 300, GAME_HEIGHT - 25);
-	}
+
 
 	graphics->spriteEnd();                  // end drawing sprites
 
