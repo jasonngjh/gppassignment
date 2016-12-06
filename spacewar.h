@@ -61,6 +61,7 @@ private:
 	float zombieSpawnTime;
 	float frameCountTime;
 	float score;
+	int rng;
 
 public:
 	double secondsPassed;
@@ -84,6 +85,7 @@ public:
     void resetAll();
 	void checkFrameTime(int value);
 	int fr;
+	void setBackgroundRNG(int value);
 	void checkVulnerable();
 	void playBGM();
 	void displayBlood();

@@ -19,6 +19,7 @@ Spacewar::~Spacewar()
     releaseAll();           // call onLostDevice() for every graphics item
 }
 
+
 //=============================================================================
 // Initializes the game
 // Throws GameError on error
@@ -29,8 +30,8 @@ void Spacewar::initialize(HWND hwnd)
 
 	std::thread t(&Spacewar::playBGM, this);
 
-	int i = rand() % 2;
-	switch (i)
+	srand(time(NULL));
+	switch (rand()%2)
 	{
 		case 0: // nebula texture
 			if (!nebulaTexture.initialize(graphics, GRASS_IMAGE))
@@ -145,7 +146,25 @@ void Spacewar::update()
 {
 	setFrameCountTime(getFrameCountTime() + 1);
 	ship.update(frameTime);
-
+	if (bullet.getX() > GAME_WIDTH - 30)
+	{
+		// position at right screen edge
+		bullet.setVisible(false);
+	              // reverse X direction
+	}
+	else if (bullet.getX() < 30)                  // else if hit left screen edge
+	{
+		bullet.setVisible(false);
+	}
+	// if hit bottom screen edge
+	if (bullet.getY() > GAME_HEIGHT - 30)
+	{
+		bullet.setVisible(false);
+	}
+	else if (bullet.getY() < 30)                  // else if hit top screen edge
+	{
+		bullet.setVisible(false);             // reverse Y direction
+	}
 	// rotate ship
 	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
 	// make ship smaller
@@ -161,7 +180,6 @@ void Spacewar::update()
 	//CONTROLS
 
 	//maybe put if key on, ship stop moving
-
 
 	if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
 	{
@@ -287,6 +305,7 @@ void Spacewar::collisions()
 	// if collision between bullet and zombies
 	if (bullet.collidesWith(zombieArray[i], collisionVector))
 	{
+		bullet.setVisible(false);
 		setScore(zombie.getScore());
 		k = (rand() % 4 + 0) % 3;
 		zombieArray[i].setVisible(false);
@@ -322,7 +341,6 @@ void Spacewar::collisions()
 		//zombieArray[i].destroy(); <<crashes the thing lol
 		}
 	}
-
 	if (ship.collidesWith(heart, collisionVector))
 	{
 		setScore(heart.getScore());
