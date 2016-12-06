@@ -131,7 +131,7 @@ void Spacewar::initialize(HWND hwnd)
 	//bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
 	//bullet.setY(GAME_HEIGHT / 4);
 
-	setMaxZombieCount(sizeof(zombieArray)/sizeof(*zombieArray)); //matches max zombie count to size of zombie array to prevent crashing
+	setMaxZombieCount(30); //matches max zombie count to size of zombie array to prevent crashing
 	setZombieCount(0);
 	int fr = 0;
 	std::async(&Spacewar::timer_start, this); //run timer thread while main loop is contiuing
@@ -145,68 +145,10 @@ void Spacewar::initialize(HWND hwnd)
 void Spacewar::update()
 {
 	setFrameCountTime(getFrameCountTime() + 1);
-	/*if (bullet.getX() > GAME_WIDTH - 30)
-	{
-		// position at right screen edge
-		bullet.setActive(false);
-	              // reverse X direction
-	}
-	else if (bullet.getX() < 30)                  // else if hit left screen edge
-	{
-		bullet.setActive(false);
-	}
-	// if hit bottom screen edge
-	if (bullet.getY() > GAME_HEIGHT - 30)
-	{
-		bullet.setActive(false);
-	}
-	else if (bullet.getY() < 30)                  // else if hit top screen edge
-	{
-		bullet.setActive(false);             // reverse Y direction
-	}*/
-	// rotate ship
-	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
-	// make ship smaller
-	//ship.setScale(ship.getScale() - frameTime * SCALE_RATE);
-	// move ship right
-	/*ship.setX(ship.getX() + frameTime * SHIP_SPEED);
-	if (ship.getX() > GAME_WIDTH)               // if off screen right
-	{
-	ship.setX((float)-ship.getWidth());     // position off screen left
-	ship.setScale(SHIP_SCALE);              // set to starting size
-	}*/
-
-	//CONTROLS
-
-	//maybe put if key on, ship stop moving
 
 	ship.update(frameTime); //ship movement is done here
 
-	/*if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
-
-	if (input->isKeyDown(SHIP_LEFT_KEY))             // if move left
-	{
-
-		ship.setDegrees(90);
-
-		ship.setX(ship.getX() - frameTime * SHIP_SPEED);
-
-	}
-	if (input->isKeyDown(SHIP_UP_KEY))               // if move up
-	{
-		ship.setDegrees(180);
-
-		ship.setY(ship.getY() - frameTime * SHIP_SPEED);
-
-	}
-
-	if (input->isKeyDown(SHIP_DOWN_KEY))             // if move down
-	{
-		//ship.setDegrees(0);
-
-		//ship.setY(ship.getY() + frameTime * SHIP_SPEED);
-	}*/
-
+	//CONTROLS
 	if (input->isKeyDown(PLAYER_FIRE_KEY))
 	{
 
@@ -263,6 +205,9 @@ void Spacewar::collisions()
 			mciSendString("play player_injured.wav", NULL, 0, NULL);
 			zombieArray[i].setVisible(false);
 			zombieArray[i].setActive(false);
+			zombieArray.erase(zombieArray.begin() + i);
+			setZombieCount(getZombieCount() - 1);
+
 
 			if (ship.getPlayerVulnerable() == false){
 				ship.setHealth(ship.getHealth() - 20);
@@ -295,9 +240,11 @@ void Spacewar::collisions()
 		k = (rand() % 4 + 0) % 3;
 		zombieArray[i].setVisible(false);
 		zombieArray[i].setActive(false);
-		mciSendString("play zombie_death.wav",NULL,0,NULL);
+
+		mciSendString("play zombie_death.wav", NULL, 0, NULL);
 		heart2.setX(zombieArray[i].getX());
 		heart2.setY(zombieArray[i].getY());
+
 		if (!heart.getActive() == true)
 		{
 			heart.setX(heart2.getX());
@@ -314,16 +261,12 @@ void Spacewar::collisions()
 			heart.setVisible(true);
 			heart.setActive(true);
 		}
-		//else
-		//{
-		//heart.setVisible(false);
-		//heart.setActive(false);
-		//}
+		
+		zombieArray.erase(zombieArray.begin() + i);
+		setZombieCount(getZombieCount() - 1);
 
 		bullet.setActive(false);
 
-		//setZombieCount(getZombieCount() - 1); //somehow makes one bullet kill two zombies lol
-		//zombieArray[i].destroy(); <<crashes the thing lol
 		}
 	}
 	if (ship.collidesWith(heart, collisionVector))
@@ -471,19 +414,46 @@ void Spacewar::timer_start()
 	while (loop){
 		setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
 
-		if ((fmod(getSecondsPassed(), 3)) == 0){
+		if ((fmod(getSecondsPassed(), 1)) == 0)
+		{
 			// check if current amount of zombie is less than maximum allowed amount
 			//if true, create new zombie
 			Sleep(10);
 			if (getZombieCount() < getMaxZombieCount())
 			{
-				mciSendString("play zombie_comehere.wav", NULL, 0,NULL);
+				mciSendString("play zombie_comehere.wav", NULL, 0, NULL);
 				setZombieCount(getZombieCount() + 1);
-				zombieArray[getZombieCount() - 1] = spawnZombie();
+
+				Zombie z = spawnZombie();
+
+				zombieArray.push_back(z);
+
+				//zombieArray[getZombieCount() - 1] = spawnZombie();
 				zombieArray[getZombieCount() - 1].spawn();
 				//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
 			}
 			
+		}
+
+		if ((fmod(getSecondsPassed(), 10)) == 00)
+		{
+			// check if current amount of zombie is less than maximum allowed amount
+			//if true, create new zombie
+			Sleep(10);
+			if (getZombieCount() < getMaxZombieCount())
+			{
+				mciSendString("play zombie_comehere.wav", NULL, 0, NULL);
+				setZombieCount(getZombieCount() + 1);
+
+				Zombie z = spawnZombie();
+
+				zombieArray.push_back(z);
+
+				//zombieArray[getZombieCount() - 1] = spawnZombie();
+				zombieArray[getZombieCount() - 1].spawn();
+				//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
+			}
+
 		}
 	}
 }
