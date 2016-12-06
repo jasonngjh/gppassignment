@@ -21,6 +21,7 @@ namespace gameNS
 	const COLOR_ARGB FONT_COLOR = SETCOLOR_ARGB(255, 255, 15, 15);    // white
 }
 
+
 class Game
 {
 protected:
@@ -41,6 +42,7 @@ protected:
     bool    initialized;
 	float elapsedGameTime;
 	LONGLONG start;
+
 public:
     // Constructor
     Game();

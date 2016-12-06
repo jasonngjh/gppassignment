@@ -62,6 +62,7 @@ const char WALL4_IMAGE[] = "pictures\\wall2.png";//Bottomwall
 const char BULLET_IMAGE[] = "pictures\\bullet.png";//bullet
 const char HEART_IMAGE[] = "pictures\\pixelheart.png";//lifeup
 const char LIFEBAR_IMAGE[] = "pictures\\lifebar.png";//lifebar
+const char BLOOD_IMAGE[] = "pictures\\blood.png"; //blood effects
 
 const int LIFEBAR_START_FRAME = 0;
 const int LIFEBAR_END_FRAME = 4;

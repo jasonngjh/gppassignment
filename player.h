@@ -39,11 +39,15 @@ protected:
 	bool isFiring;		//state if player is shooting 
 
 public:
+	bool playerVulnerable;
 	// constructor
 	Player();
 
 	// inherited member functions
 	void update(float frameTime);
+
+	bool getPlayerVulnerable(){ return playerVulnerable; }
+	void setPlayerVulnerable(bool v) { playerVulnerable = v; }
 
 	void setFiringState(bool firingState){ isFiring = firingState; }
 	bool getFiringState(){ return isFiring; }

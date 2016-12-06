@@ -110,7 +110,7 @@ void Game::initialize(HWND hw)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing high resolution timer"));
 
     QueryPerformanceCounter(&timeStart);        // get starting time
-	
+
     initialized = true;
 }
 
