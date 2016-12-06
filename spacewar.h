@@ -61,6 +61,8 @@ private:
 	int k;
 	float zombieSpawnTime;
 	float frameCountTime;
+	float score;
+	int rng;
 
 public:
 	double secondsPassed;
@@ -84,6 +86,7 @@ public:
     void resetAll();
 	void checkFrameTime(int value);
 	int fr;
+	void setBackgroundRNG(int value);
 	void checkVulnerable();
 	void playBGM();
 	void displayBlood();
@@ -97,6 +100,8 @@ public:
 	int getZombieCount() { return zombieCount; }
 	void setZombieCount(int amt) { zombieCount = amt; }
 
+	float getScore(){ return score; }
+	void setScore(int sc){ score += sc; }
 	int getMaxZombieCount() { return maxZombieCount; }
 	void setMaxZombieCount(int amt) { maxZombieCount = amt; }
 

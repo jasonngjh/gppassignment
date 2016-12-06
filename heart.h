@@ -26,7 +26,7 @@ namespace HeartNS
 	const int   SHIP_START_FRAME = 0;       // ship starts at frame 0
 	const int   SHIP_END_FRAME = 3;         // ship animation frames 0,1,2,3
 	const float SHIP_ANIMATION_DELAY = 0.2f; // time between frames
-
+	const int hscore = 50;
 
 }
 

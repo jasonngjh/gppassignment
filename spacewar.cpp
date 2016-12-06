@@ -19,6 +19,7 @@ Spacewar::~Spacewar()
     releaseAll();           // call onLostDevice() for every graphics item
 }
 
+
 //=============================================================================
 // Initializes the game
 // Throws GameError on error
@@ -30,8 +31,8 @@ void Spacewar::initialize(HWND hwnd)
 	std::thread t(&Spacewar::playBGM, this);
 	t.join();
 
-	int i = rand() % 2;
-	switch (i)
+	srand(time(NULL));
+	switch (rand()%2)
 	{
 		case 0: // nebula texture
 			if (!nebulaTexture.initialize(graphics, GRASS_IMAGE))
@@ -96,6 +97,8 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Heart"));
 	if (!dxFont.initialize(graphics, gameNS::POINT_SIZE, true, false, gameNS::FONT))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
+	if (!dxFontScore.initialize(graphics, gameNS::POINT_SIZE, true, false, gameNS::FONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
 	if (!blood.initialize(graphics, 0, 0, 0, &bloodTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game"));
 
@@ -143,7 +146,25 @@ void Spacewar::update()
 {
 	setFrameCountTime(getFrameCountTime() + 1);
 	ship.update(frameTime);
-
+	if (bullet.getX() > GAME_WIDTH - 30)
+	{
+		// position at right screen edge
+		bullet.setVisible(false);
+	              // reverse X direction
+	}
+	else if (bullet.getX() < 30)                  // else if hit left screen edge
+	{
+		bullet.setVisible(false);
+	}
+	// if hit bottom screen edge
+	if (bullet.getY() > GAME_HEIGHT - 30)
+	{
+		bullet.setVisible(false);
+	}
+	else if (bullet.getY() < 30)                  // else if hit top screen edge
+	{
+		bullet.setVisible(false);             // reverse Y direction
+	}
 	// rotate ship
 	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
 	// make ship smaller
@@ -160,9 +181,13 @@ void Spacewar::update()
 
 	//maybe put if key on, ship stop moving
 
+<<<<<<< HEAD
 	ship.update(frameTime); //ship movement is done here
 
 	/*if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
+=======
+	if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
+>>>>>>> refs/remotes/origin/wexner1
 	{
 		ship.setDegrees(270.0f);
 
@@ -276,6 +301,8 @@ void Spacewar::collisions()
 	// if collision between bullet and zombies
 	if (bullet.collidesWith(zombieArray[i], collisionVector))
 	{
+		bullet.setVisible(false);
+		setScore(zombie.getScore());
 		k = (rand() % 4 + 0) % 3;
 		zombieArray[i].setVisible(false);
 		zombieArray[i].setActive(false);
@@ -310,9 +337,9 @@ void Spacewar::collisions()
 		//zombieArray[i].destroy(); <<crashes the thing lol
 		}
 	}
-
 	if (ship.collidesWith(heart, collisionVector))
 	{
+		setScore(heart.getScore());
 		lifebar.setVisible(true);
 		heart.setVisible(false);
 		heart.setActive(false);
@@ -366,6 +393,7 @@ Zombie Spacewar::spawnZombie()
 void Spacewar::render()
 {	
 	dxFont.setFontColor(graphicsNS::WHITE);
+	dxFontScore.setFontColor(graphicsNS::WHITE);
 	graphics->spriteBegin();                // begin drawing sprites
 	const int BUF_SIZE = 25;
 	static char buffer[BUF_SIZE];
@@ -384,12 +412,11 @@ void Spacewar::render()
 	{
 		zombieArray[i].draw();
 	}
-	if (fpsOn)           // if fps display requested
-	{
-		// convert fps to Cstring
+		_snprintf_s(buffer, BUF_SIZE, "Score: %d ", (int)getScore());
+		dxFontScore.print(buffer, GAME_WIDTH - 300, 1);
 		_snprintf_s(buffer, BUF_SIZE, "Seconds Passed: %d ",(int)getSecondsPassed());
 		dxFont.print(buffer, GAME_WIDTH - 300, GAME_HEIGHT - 25);
-	}
+
 
 	graphics->spriteEnd();                  // end drawing sprites
 
