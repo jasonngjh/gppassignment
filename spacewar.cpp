@@ -145,7 +145,6 @@ void Spacewar::initialize(HWND hwnd)
 void Spacewar::update()
 {
 	setFrameCountTime(getFrameCountTime() + 1);
-	ship.update(frameTime);
 	if (bullet.getX() > GAME_WIDTH - 30)
 	{
 		// position at right screen edge
@@ -497,6 +496,6 @@ void Spacewar::checkVulnerable()
 void Spacewar::displayBlood()
 {
 	blood.setVisible(true);
-	Sleep(2000);
+	Sleep(3000);
 	blood.setVisible(false);
 }
