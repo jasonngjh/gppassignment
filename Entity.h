@@ -44,7 +44,7 @@ protected:
 	bool    active;         // only active entities may collide
 	bool    rotatedBoxReady;    // true when rotated collision box is ready
 	int movementSpeed;
-
+	float score;
 	// --- The following functions are protected because they are not intended to be
 	// --- called from outside the class.
 	// Circular collision detection 
@@ -113,6 +113,8 @@ public:
 
 	// Return health;
 	virtual float getHealth()         const { return health; }
+
+	virtual float getScore()		  const { return score; }
 
 	// Return collision type (NONE, CIRCLE, BOX, ROTATED_BOX)
 	virtual entityNS::COLLISION_TYPE getCollisionType() { return collisionType; }

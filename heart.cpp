@@ -25,6 +25,8 @@ Heart::Heart() : Entity()
 	radius = 5;
 	health = 125;
 	collisionType = entityNS::CIRCLE;
+	score = HeartNS::hscore;
+
 }
 
 //=============================================================================

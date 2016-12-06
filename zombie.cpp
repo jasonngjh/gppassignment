@@ -21,6 +21,7 @@ Zombie::Zombie() : Entity()
 	currentFrame = startFrame;
 	radius = ZombieNS::WIDTH / 2.0;
 	collisionType = entityNS::CIRCLE;
+	score = ZombieNS::score;
 }
 
 //=============================================================================

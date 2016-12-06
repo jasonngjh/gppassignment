@@ -95,6 +95,8 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Heart"));
 	if (!dxFont.initialize(graphics, gameNS::POINT_SIZE, true, false, gameNS::FONT))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
+	if (!dxFontScore.initialize(graphics, gameNS::POINT_SIZE, true, false, gameNS::FONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
 	if (!blood.initialize(graphics, 0, 0, 0, &bloodTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game"));
 
@@ -285,6 +287,7 @@ void Spacewar::collisions()
 	// if collision between bullet and zombies
 	if (bullet.collidesWith(zombieArray[i], collisionVector))
 	{
+		setScore(zombie.getScore());
 		k = (rand() % 4 + 0) % 3;
 		zombieArray[i].setVisible(false);
 		zombieArray[i].setActive(false);
@@ -322,6 +325,7 @@ void Spacewar::collisions()
 
 	if (ship.collidesWith(heart, collisionVector))
 	{
+		setScore(heart.getScore());
 		lifebar.setVisible(true);
 		heart.setVisible(false);
 		heart.setActive(false);
@@ -369,6 +373,7 @@ Zombie Spacewar::spawnZombie()
 void Spacewar::render()
 {	
 	dxFont.setFontColor(graphicsNS::WHITE);
+	dxFontScore.setFontColor(graphicsNS::WHITE);
 	graphics->spriteBegin();                // begin drawing sprites
 	const int BUF_SIZE = 25;
 	static char buffer[BUF_SIZE];
@@ -387,12 +392,11 @@ void Spacewar::render()
 	{
 		zombieArray[i].draw();
 	}
-	if (fpsOn)           // if fps display requested
-	{
-		// convert fps to Cstring
+		_snprintf_s(buffer, BUF_SIZE, "Score: %d ", (int)getScore());
+		dxFontScore.print(buffer, GAME_WIDTH - 300, 1);
 		_snprintf_s(buffer, BUF_SIZE, "Seconds Passed: %d ",(int)getSecondsPassed());
 		dxFont.print(buffer, GAME_WIDTH - 300, GAME_HEIGHT - 25);
-	}
+
 
 	graphics->spriteEnd();                  // end drawing sprites
 
