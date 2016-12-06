@@ -36,11 +36,11 @@ void Spacewar::initialize(HWND hwnd)
 	{
 		case 0: // nebula texture
 			if (!nebulaTexture.initialize(graphics, GRASS_IMAGE))
-				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
+				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing grass background texture"));
 			break;
 		case 1: //nebula texture
 			if (!nebulaTexture.initialize(graphics, NEBULA_IMAGE))
-				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula texture"));
+				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing stone background texture"));
 			break;
 	}
 
@@ -56,15 +56,15 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initialiing zombie texture"));
 	//ship texture
 	if (!shipTexture.initialize(graphics, SHIP_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing ship texture"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing player texture"));
 	//bullet texture
 	if (!bulletTexture.initialize(graphics, BULLET_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet texture"));
 	if (!heartTexture.initialize(graphics, HEART_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing planet texture"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing hearts texture"));
 
 	if (!bloodTexture.initialize(graphics, BLOOD_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initiazing blood textyre"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initiazing screen blood textyre"));
 
 	// nebula
 	if (!nebula.initialize(graphics, 0, 0, 0, &nebulaTexture))
@@ -145,25 +145,25 @@ void Spacewar::initialize(HWND hwnd)
 void Spacewar::update()
 {
 	setFrameCountTime(getFrameCountTime() + 1);
-	if (bullet.getX() > GAME_WIDTH - 30)
+	/*if (bullet.getX() > GAME_WIDTH - 30)
 	{
 		// position at right screen edge
-		bullet.setVisible(false);
+		bullet.setActive(false);
 	              // reverse X direction
 	}
 	else if (bullet.getX() < 30)                  // else if hit left screen edge
 	{
-		bullet.setVisible(false);
+		bullet.setActive(false);
 	}
 	// if hit bottom screen edge
 	if (bullet.getY() > GAME_HEIGHT - 30)
 	{
-		bullet.setVisible(false);
+		bullet.setActive(false);
 	}
 	else if (bullet.getY() < 30)                  // else if hit top screen edge
 	{
-		bullet.setVisible(false);             // reverse Y direction
-	}
+		bullet.setActive(false);             // reverse Y direction
+	}*/
 	// rotate ship
 	//ship.setDegrees(ship.getDegrees() + frameTime * ROTATION_RATE);
 	// make ship smaller
@@ -353,6 +353,18 @@ void Spacewar::collisions()
 
 	
 	//player.update(frameTime);
+
+}
+
+//=============================================================================
+// Create bullets (called when player presses fire button)
+//=============================================================================
+Bullet Spacewar::createBullet()
+{
+	Bullet new_bullet;
+	new_bullet.create(player, player.getDegrees());
+
+	return bullet;
 
 }
 
