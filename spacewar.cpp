@@ -142,7 +142,6 @@ void Spacewar::initialize(HWND hwnd)
 void Spacewar::update()
 {
 	setFrameCountTime(getFrameCountTime() + 1);
-<<<<<<< HEAD
 	ship.update(frameTime);
 
 	// rotate ship
@@ -161,9 +160,7 @@ void Spacewar::update()
 
 	//maybe put if key on, ship stop moving
 
-=======
 	ship.update(frameTime); //ship movement is done here
->>>>>>> refs/remotes/origin/jack
 
 	/*if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
 	{
