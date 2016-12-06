@@ -28,6 +28,7 @@ void Spacewar::initialize(HWND hwnd)
     Game::initialize(hwnd); // throws GameError
 
 	std::thread t(&Spacewar::playBGM, this);
+	t.join();
 
 	int i = rand() % 2;
 	switch (i)
@@ -131,7 +132,6 @@ void Spacewar::initialize(HWND hwnd)
 	setZombieCount(0);
 	int fr = 0;
 	std::async(&Spacewar::timer_start, this); //run timer thread while main loop is contiuing
-	t.join();
     return;
 }
 
@@ -256,6 +256,7 @@ void Spacewar::collisions()
 		if (ship.collidesWith(zombieArray[i], collisionVector))
 		{
 			std::async(&Spacewar::displayBlood, this); //display blood when collide with zombie
+			mciSendString("play player_injured.wav", NULL, 0, NULL);
 			zombieArray[i].setVisible(false);
 			zombieArray[i].setActive(false);
 
@@ -288,6 +289,7 @@ void Spacewar::collisions()
 		k = (rand() % 4 + 0) % 3;
 		zombieArray[i].setVisible(false);
 		zombieArray[i].setActive(false);
+		mciSendString("play zombie_death.wav",NULL,0,NULL);
 		heart2.setX(zombieArray[i].getX());
 		heart2.setY(zombieArray[i].getY());
 		if (!heart.getActive() == true)
@@ -297,7 +299,6 @@ void Spacewar::collisions()
 		}
 		graphics->spriteBegin();
 		if (heart.getActive() == false)
-
 		{
 			heart.draw();
 		}
@@ -341,9 +342,10 @@ void Spacewar::collisions()
 		}
 		//else if (ship.getHealth() == 0)
 			//
-			//lifebar.setVisible(false);  NOT SUPPOSED TO BE HERE. GAME ENDING SCREEN.
-			
+			//lifebar.setVisible(false);  NOT SUPPOSED TO BE HERE. GAME ENDING SCREEN.	
 	}
+
+	
 	//player.update(frameTime);
 
 }
@@ -446,20 +448,19 @@ void Spacewar::timer_start()
 	while (loop){
 		setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
 
-		if ((fmod(getSecondsPassed() + 1, 3)) == 0){
-			setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
-			if ((fmod(getSecondsPassed() + 1, 3)) == 0){
-				// check if current amount of zombie is less than maximum allowed amount
-				//if true, create new zombie
-				Sleep(10);
-				if (getZombieCount() < getMaxZombieCount())
-				{
-					setZombieCount(getZombieCount() + 1);
-					zombieArray[getZombieCount() - 1] = spawnZombie();
-					zombieArray[getZombieCount() - 1].spawn();
-					//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
-				}
+		if ((fmod(getSecondsPassed(), 3)) == 0){
+			// check if current amount of zombie is less than maximum allowed amount
+			//if true, create new zombie
+			Sleep(10);
+			if (getZombieCount() < getMaxZombieCount())
+			{
+				mciSendString("play zombie_comehere.wav", NULL, 0,NULL);
+				setZombieCount(getZombieCount() + 1);
+				zombieArray[getZombieCount() - 1] = spawnZombie();
+				zombieArray[getZombieCount() - 1].spawn();
+				//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
 			}
+			
 		}
 	}
 }
