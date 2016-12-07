@@ -48,7 +48,8 @@ private:
 	Image lifebar;
 	Image blood;
 
-	Zombie zombieArray[10];
+	//Zombie zombieArray[10];
+	std::vector<Zombie> zombieArray;
 	int maxZombieCount; //amt of zombies allowed to exist (should be equal to zombieArray's size)
 	int zombieCount; //amt of zombies currently alive (should be less or equal to maxZombieCount)
 	
@@ -81,6 +82,7 @@ public:
     void collisions();  // "
 	void timer_start();
 	Zombie spawnZombie();
+	Bullet createBullet();
     void render();      // "
     void releaseAll();
     void resetAll();
