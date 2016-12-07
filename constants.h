@@ -88,22 +88,9 @@ const int  SHIP_COLS = 2;                // ship texture has 2 columns
 const int  SHIP_WIDTH = 32;              // width of ship image
 const int  SHIP_HEIGHT = 32;             // height of ship image
 const float ROTATION_RATE = 180.0f;             // degrees per second
-//const float SCALE_RATE = 0.2f;                  // % change per second
 const float SHIP_SPEED = 200.0f;                // pixels per second
 const float SHIP_SCALE = 1.5f;      
 const float ZOMBIE_SPEED = SHIP_SPEED / 2;
-//left wall 
-//const int WALL1_WIDTH = 30;
-//const int WALL1_HEIGHT = GAME_HEIGHT;
-//const int WALL1_x = GAME_WIDTH/2;
-//const int WALL1_y = GAME_HEIGHT/2;
-//top wall
-//const int WALL2_WIDTH = 800;
-//const int WALL2_HEIGHT = 30;
-//const int wall2_x = 1;
-//const int wall2_y = 1;
-//const float WALL2_ROTATION_RATE=90.0f;
-
 //bullet
 const int BULLET_COLS = 2;
 const int BULLET_HEIGHT = 12;

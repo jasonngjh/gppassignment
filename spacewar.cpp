@@ -71,9 +71,6 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing nebula"));
 	if (!lifebarTexture.initialize(graphics, LIFEBAR_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing lifebar texture"));
-	// place planet in center of screen
-	//planet.setX(GAME_WIDTH*0.5f - planet.getWidth()*0.5f);
-	//planet.setY(GAME_HEIGHT*0.5f - planet.getHeight()*0.5f);
 
 	// wall
 	if (!wall1.initialize(graphics, 0,0, 0, &wall1Texture))
@@ -124,12 +121,6 @@ void Spacewar::initialize(HWND hwnd)
 	ship.setActive(true);
 	setSpawnTime(200); //zombie spawn time set to every 20 frame time
 	blood.setVisible(false);
-
-	//ship.setVelocity(VECTOR2(PlayerNS::SPEED, -PlayerNS::SPEED)); // VECTOR2(X, Y)
-
-	//ship.setDegrees(45.0f);     \                       // angle of ship
-	//bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
-	//bullet.setY(GAME_HEIGHT / 4);
 
 	setMaxZombieCount(30); //matches max zombie count to size of zombie array to prevent crashing
 	setZombieCount(0);
@@ -208,7 +199,6 @@ void Spacewar::collisions()
 			zombieArray.erase(zombieArray.begin() + i);
 			setZombieCount(getZombieCount() - 1);
 
-
 			if (ship.getPlayerVulnerable() == false){
 				ship.setHealth(ship.getHealth() - 20);
 				ship.setPlayerVulnerable(true);
@@ -231,7 +221,6 @@ void Spacewar::collisions()
 			if (ship.getHealth() == 0)
 				lifebar.setVisible(false); //GAME SUPPOSED TO END HERE
 		}
-	//Zombie zombie = zombieArray[i];
 	// if collision between bullet and zombies
 	if (bullet.collidesWith(zombieArray[i], collisionVector))
 	{
@@ -276,6 +265,9 @@ void Spacewar::collisions()
 		heart.setVisible(false);
 		heart.setActive(false);
 		ship.setHealth(ship.getHealth() + 20);
+		if (ship.getHealth() > 100){
+			ship.setHealth(100);
+		}
 		if (ship.getHealth() == 100)
 			lifebar.setCurrentFrame(0);
 		else if (ship.getHealth() == 80)
@@ -293,10 +285,6 @@ void Spacewar::collisions()
 			//
 			//lifebar.setVisible(false);  NOT SUPPOSED TO BE HERE. GAME ENDING SCREEN.	
 	}
-
-	
-	//player.update(frameTime);
-
 }
 
 //=============================================================================
@@ -342,7 +330,6 @@ void Spacewar::render()
 	const int BUF_SIZE = 25;
 	static char buffer[BUF_SIZE];
 	nebula.draw();                          // add the orion nebula to the scene
-	//planet.draw();                          // add the planet to the scene
 	ship.draw();
 	wall1.draw();
 	wall2.draw();
@@ -427,10 +414,7 @@ void Spacewar::timer_start()
 				Zombie z = spawnZombie();
 
 				zombieArray.push_back(z);
-
-				//zombieArray[getZombieCount() - 1] = spawnZombie();
 				zombieArray[getZombieCount() - 1].spawn();
-				//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
 			}
 			
 		}
@@ -449,9 +433,7 @@ void Spacewar::timer_start()
 
 				zombieArray.push_back(z);
 
-				//zombieArray[getZombieCount() - 1] = spawnZombie();
 				zombieArray[getZombieCount() - 1].spawn();
-				//std::async(&Zombie::spawn, zombieArray[getZombieCount() - 1]); //asychronously spawn zombies
 			}
 
 		}
