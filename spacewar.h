@@ -90,7 +90,7 @@ public:
 	void checkVulnerable();
 	void playBGM();
 	void displayBlood();
-
+	void freezeZombie();
 	float getSpawnTime() { return zombieSpawnTime; }
 	void setSpawnTime(float time) { zombieSpawnTime = time; }
 

@@ -69,6 +69,21 @@ void Zombie::update(Image player,float frameTime){
 	spriteData.angle = atan2(x,y);*/
 
 }
+void Zombie::freeze(Image player, float frameTime){
+
+	//if (spriteData.x > player.getX())
+		spriteData.x = Zombie::getX();
+
+	//if (spriteData.x < player.getX())
+	//	spriteData.x = Zombie::getX();
+
+	//if (spriteData.y > player.getY())
+	//	spriteData.y = Zombie::getY();
+
+	//if (spriteData.y < player.getY())
+		spriteData.y = Zombie::getY();
+}
+
 void Zombie::destroy()
 {
 	delete this;

@@ -484,9 +484,13 @@ void Spacewar::checkVulnerable()
 	bool loop = true;
 	while (loop){
 		if (ship.getPlayerVulnerable() == true){
-			Sleep(3000);
-			ship.setPlayerVulnerable(false);
-			loop = false;
+			for (int i = 0; i < getZombieCount(); i++){
+				zombieArray[i].freeze(ship, frameTime);
+				Sleep(3000);
+				zombieArray[i].update(ship, frameTime);
+				ship.setPlayerVulnerable(false);
+				loop = false;
+			}
 		}
 	}
 }
@@ -499,3 +503,4 @@ void Spacewar::displayBlood()
 	Sleep(3000);
 	blood.setVisible(false);
 }
+
