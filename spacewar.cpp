@@ -31,13 +31,9 @@ void Spacewar::initialize(HWND hwnd)
 	std::thread t(&Spacewar::playBGM, this);
 	t.join();
 
-	srand(time(0));
+	srand(time(NULL));
 
-	if (!nebulaTexture.initialize(graphics, NEBULA_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing stone background texture"));
-
-
-	/*switch (rand()%2)
+	switch (rand()%2)
 	{
 		case 0: // nebula texture
 			if (!nebulaTexture.initialize(graphics, GRASS_IMAGE))
@@ -47,7 +43,7 @@ void Spacewar::initialize(HWND hwnd)
 			if (!nebulaTexture.initialize(graphics, NEBULA_IMAGE))
 				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing stone background texture"));
 			break;
-	}*/
+	}
 
 	if (!wall1Texture.initialize(graphics, WALL1_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall texture"));
@@ -163,10 +159,11 @@ void Spacewar::update()
 
 	ship.update(frameTime); //ship movement is done here
 
+
+
 	//CONTROLS
 	if (input->isKeyDown(PLAYER_FIRE_KEY) && ship.getActive())
 	{
-
 		//create Bullet at player X and Y
 		//add bullet to bullet array (for multiple bullets)
 
@@ -185,7 +182,7 @@ void Spacewar::update()
 
 	{
 		//endlessly loop update for each zombie until no more zombies
-		for (int i = 0; i < getZombieCount(); i++)
+		for (int i = 0; i < zombieArray.size(); i++)
 		{
 			zombieArray[i].update(ship, frameTime);
 		}
@@ -215,7 +212,7 @@ void Spacewar::collisions()
 {
 
 	VECTOR2 collisionVector;
-	for (int i = 0; i < getZombieCount(); i++)
+	for (int i = 0; i < zombieArray.size(); i++)
 	{
 		if (ship.collidesWith(zombieArray[i], collisionVector))
 		{
@@ -231,7 +228,7 @@ void Spacewar::collisions()
 				ship.setHealth(ship.getHealth() - 20);
 				ship.setPlayerVulnerable(true);
 
-				std::async(&Spacewar::checkVulnerable,this); //run asychronous thread to check if the player is vulnerable
+				std::async(&Spacewar::checkVulnerable, this); //run asychronous thread to check if the player is vulnerable
 			}
 
 			if (ship.getHealth() < 0)
@@ -258,59 +255,56 @@ void Spacewar::collisions()
 
 
 			}
-				
-		}
-	//Zombie zombie = zombieArray[i];
-	// if collision between bullet and zombies
-	if (bullet.collidesWith(zombieArray[i], collisionVector))
-	{
-
-		if (!bullet.getActive())
-		{
-			//do nothing
-		}
-			
-
-		else
-		{
-			setScore(zombie.getScore());
-			k = (rand() % 4 + 0) % 3;
-			zombieArray[i].setVisible(false);
-			zombieArray[i].setActive(false);
-
-			mciSendString("play zombie_death.wav", NULL, 0, NULL);
-			heart2.setX(zombieArray[i].getX());
-			heart2.setY(zombieArray[i].getY());
-
-			if (!heart.getActive() == true)
-			{
-				heart.setX(heart2.getX());
-				heart.setY(heart2.getY());
-			}
-			graphics->spriteBegin();
-			if (heart.getActive() == false)
-			{
-				heart.draw();
-			}
-			graphics->spriteEnd();
-			if (k == 1)
-			{
-				heart.setVisible(true);
-				heart.setActive(true);
-			}
-
-			zombieArray.erase(zombieArray.begin() + i);
-			setZombieCount(getZombieCount() - 1);
-
-			bullet.setVisible(false);
-			bullet.setActive(false);
-		}
-
-		
-		
 
 		}
 	}
+	for (int i = 0; i < zombieArray.size(); i++)
+	{
+	//Zombie zombie = zombieArray[i];
+	// if collision between bullet and zombies
+		if (bullet.collidesWith(zombieArray[i], collisionVector))
+		{
+
+			if (!bullet.getActive())
+			{
+				//do nothing
+			}else
+			{
+				setScore(zombie.getScore());
+				k = (rand() % 4 + 0) % 3;
+				zombieArray[i].setVisible(false);
+				zombieArray[i].setActive(false);
+
+				mciSendString("play zombie_death.wav", NULL, 0, NULL);
+				heart2.setX(zombieArray[i].getX());
+				heart2.setY(zombieArray[i].getY());
+
+				if (!heart.getActive() == true)
+				{
+					heart.setX(heart2.getX());
+					heart.setY(heart2.getY());
+				}
+				graphics->spriteBegin();
+				if (heart.getActive() == false)
+				{
+					heart.draw();
+				}
+				graphics->spriteEnd();
+				if (k == 1)
+				{
+					heart.setVisible(true);
+					heart.setActive(true);
+				}
+
+				zombieArray.erase(zombieArray.begin() + i);
+				setZombieCount(getZombieCount() - 1);
+
+				bullet.setVisible(false);
+				bullet.setActive(false);
+			}
+		}
+	}
+
 	if (ship.collidesWith(heart, collisionVector))
 	{
 		setScore(heart.getScore());
@@ -364,9 +358,6 @@ Zombie Spacewar::spawnZombie()
 	//behavior for zombie spawn
 	Zombie new_zombie;
 	new_zombie.spawn();
-
-	//srand(time(0));
-
 	
 
 	if (!new_zombie.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
@@ -405,7 +396,7 @@ void Spacewar::render()
 	bullet.draw();
 	blood.draw();
 	gameover_word.draw();
-	for (int i = 0; i < getZombieCount(); i++)
+	for (int i = 0; i < zombieArray.size(); i++)
 	{
 		zombieArray[i].draw();
 	}
