@@ -70,35 +70,40 @@ void Player::update(float frameTime)
         velocity.y = -velocity.y;               // reverse Y direction
     }
 
-	if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
+	if (active)
 	{
-		spriteData.angle = 270.0f;
-		Entity::setDegrees(270.0f);
+		if (input->isKeyDown(SHIP_RIGHT_KEY))            // if move right
+		{
+			spriteData.angle = 270.0f;
+			Entity::setDegrees(270.0f);
 
-		spriteData.x += frameTime * movementSpeed;
+			spriteData.x += frameTime * movementSpeed;
+		}
+		if (input->isKeyDown(SHIP_LEFT_KEY))             // if move left
+		{
+			spriteData.angle = 90.0f;
+			Entity::setDegrees(90.0f);
+
+			spriteData.x -= frameTime * movementSpeed;
+		}
+		if (input->isKeyDown(SHIP_UP_KEY))               // if move up
+		{
+			spriteData.angle = 180.0f;
+			Entity::setDegrees(180.0f);
+
+			spriteData.y -= frameTime * movementSpeed;
+		}
+
+		if (input->isKeyDown(SHIP_DOWN_KEY))             // if move down
+		{
+			spriteData.angle = 0;
+			Entity::setDegrees(0);
+
+			spriteData.y += frameTime * movementSpeed;
+
+		}
 	}
-	if (input->isKeyDown(SHIP_LEFT_KEY))             // if move left
-	{
-		spriteData.angle = 90.0f;
-		Entity::setDegrees(90.0f);
 
-		spriteData.x -= frameTime * movementSpeed;
-	}
-	if (input->isKeyDown(SHIP_UP_KEY))               // if move up
-	{
-		spriteData.angle = 180.0f;
-		Entity::setDegrees(180.0f);
-
-		spriteData.y -= frameTime * movementSpeed;
-	}
-
-	if (input->isKeyDown(SHIP_DOWN_KEY))             // if move down
-	{
-		spriteData.angle = 0;
-		Entity::setDegrees(0);
-
-		spriteData.y += frameTime * movementSpeed;
-
-	}
+	
 
 }

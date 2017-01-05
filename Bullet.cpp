@@ -100,20 +100,20 @@ void Bullet::update(float frameTime)
 
 		// disappear off walls
 		// if hit right screen edge
-		if (spriteData.x > GAME_WIDTH - BulletNS::WIDTH*getScale())
+		if (spriteData.x > GAME_WIDTH - BulletNS::WIDTH*getScale() - 30)
 		{
 			active = false;
 		}
-		else if (spriteData.x <= 0)                  // else if hit left screen edge
+		else if (spriteData.x <= 30)                  // else if hit left screen edge
 		{
 			active = false;
 		}
 		// if hit bottom screen edge
-		if (spriteData.y > GAME_HEIGHT - BulletNS::HEIGHT*getScale())
+		if (spriteData.y > GAME_HEIGHT - BulletNS::HEIGHT*getScale() - 30)
 		{
 			active = false;
 		}
-		else if (spriteData.y <= 0)                  // else if hit top screen edge
+		else if (spriteData.y <= 30)                  // else if hit top screen edge
 		{
 			active = false;
 		}

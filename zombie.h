@@ -26,14 +26,20 @@ class Zombie : public Entity{
 public:
 	//constructor
 	Zombie();
-		
+
+	float ZOMBIE_SPEED = ZOMBIE_SPEED;
+
 	// inherited member functions
 	void spawn();
-	void update(Image player,float frameTime);
+	void update(Image player, float frameTime);
 	void destroy();
 
-	
+	void setZombieSpeed(float speed){
+		ZOMBIE_SPEED = speed;
+	}
 
+	float getZombieSpeed(){
+		return ZOMBIE_SPEED;
+	}
 };
-
 #endif

@@ -36,6 +36,7 @@ private:
 	TextureManager heartTexture;
 	TextureManager lifebarTexture;
 	TextureManager bloodTexture;
+	TextureManager gameoverTexture;
 	Image   nebula;                 // nebula image
 	Player ship;						//ship image
 	Player player;			
@@ -47,11 +48,14 @@ private:
 	Zombie zombie2;
 	Image lifebar;
 	Image blood;
+	Image gameover_word;
 
-	Zombie zombieArray[10];
+	//Zombie zombieArray[10];
+	std::vector<Zombie> zombieArray;
 	int maxZombieCount; //amt of zombies allowed to exist (should be equal to zombieArray's size)
 	int zombieCount; //amt of zombies currently alive (should be less or equal to maxZombieCount)
 	
+	bool isZombieSpawning;
 
 	Bullet bullet; //default bullet
 	Heart heart;
@@ -81,6 +85,7 @@ public:
     void collisions();  // "
 	void timer_start();
 	Zombie spawnZombie();
+	Bullet createBullet();
     void render();      // "
     void releaseAll();
     void resetAll();
@@ -108,7 +113,8 @@ public:
 	double getSecondsPassed() { return secondsPassed; }
 	void setSecondsPassed(double seconds) { secondsPassed = seconds; }
 
-
+	bool getIsZombieSpawning() { return isZombieSpawning; }
+	void setIsZombieSpawning(bool boolean) { isZombieSpawning = boolean; }
 
 };
 
