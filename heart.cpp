@@ -22,10 +22,11 @@ Heart::Heart() : Entity()
 	//s5tartFrame = PlayerNS::SHIP_START_FRAME;      // first frame of ship animation
 	//endFrame = PlayerNS::SHIP_END_FRAME;      // last frame of ship animation
 	currentFrame = startFrame;
-	radius = 5;
-	health = 125;
+	radius = 15;
+	health = 25;
 	collisionType = entityNS::CIRCLE;
 	score = HeartNS::hscore;
+	
 
 }
 

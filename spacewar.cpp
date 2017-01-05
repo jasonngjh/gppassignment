@@ -31,8 +31,13 @@ void Spacewar::initialize(HWND hwnd)
 	std::thread t(&Spacewar::playBGM, this);
 	t.join();
 
-	srand(time(NULL));
-	switch (rand()%2)
+	srand(time(0));
+
+	if (!nebulaTexture.initialize(graphics, NEBULA_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing stone background texture"));
+
+
+	/*switch (rand()%2)
 	{
 		case 0: // nebula texture
 			if (!nebulaTexture.initialize(graphics, GRASS_IMAGE))
@@ -42,7 +47,7 @@ void Spacewar::initialize(HWND hwnd)
 			if (!nebulaTexture.initialize(graphics, NEBULA_IMAGE))
 				throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing stone background texture"));
 			break;
-	}
+	}*/
 
 	if (!wall1Texture.initialize(graphics, WALL1_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wall texture"));
@@ -64,7 +69,10 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing hearts texture"));
 
 	if (!bloodTexture.initialize(graphics, BLOOD_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initiazing screen blood textyre"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initiazing screen blood texture"));
+
+	if (!gameoverTexture.initialize(graphics, GAMEOVER_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initiazing screen game over texture"));
 
 	// nebula
 	if (!nebula.initialize(graphics, 0, 0, 0, &nebulaTexture))
@@ -100,7 +108,10 @@ void Spacewar::initialize(HWND hwnd)
 	if (!dxFontScore.initialize(graphics, gameNS::POINT_SIZE, true, false, gameNS::FONT))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize DirectX font."));
 	if (!blood.initialize(graphics, 0, 0, 0, &bloodTexture))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing screen blood"));
+
+	if (!gameover_word.initialize(graphics, 0, 0, 0, &gameoverTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing game over announcement"));
 
 	std::clock_t start;
 	start = std::clock();
@@ -124,6 +135,9 @@ void Spacewar::initialize(HWND hwnd)
 	ship.setActive(true);
 	setSpawnTime(200); //zombie spawn time set to every 20 frame time
 	blood.setVisible(false);
+	gameover_word.setX(GAME_WIDTH / 7);
+	gameover_word.setY(GAME_HEIGHT / 3);
+	gameover_word.setVisible(false);
 
 	//ship.setVelocity(VECTOR2(PlayerNS::SPEED, -PlayerNS::SPEED)); // VECTOR2(X, Y)
 
@@ -131,7 +145,8 @@ void Spacewar::initialize(HWND hwnd)
 	//bullet.setX(GAME_WIDTH / 4);              // start above and left of planet
 	//bullet.setY(GAME_HEIGHT / 4);
 
-	setMaxZombieCount(30); //matches max zombie count to size of zombie array to prevent crashing
+	setMaxZombieCount(30); //matches max zombie count to size of zombie array to prevent crashingue)
+	setIsZombieSpawning(true);
 	setZombieCount(0);
 	int fr = 0;
 	std::async(&Spacewar::timer_start, this); //run timer thread while main loop is contiuing
@@ -149,7 +164,7 @@ void Spacewar::update()
 	ship.update(frameTime); //ship movement is done here
 
 	//CONTROLS
-	if (input->isKeyDown(PLAYER_FIRE_KEY))
+	if (input->isKeyDown(PLAYER_FIRE_KEY) && ship.getActive())
 	{
 
 		//create Bullet at player X and Y
@@ -161,10 +176,13 @@ void Spacewar::update()
 	}//cant move while shooting/shooting has delay
 
 	//update for bullet
+
+
 	bullet.update(frameTime);
 
 	//update for zombies
 	if (getZombieCount() > 0)
+
 	{
 		//endlessly loop update for each zombie until no more zombies
 		for (int i = 0; i < getZombieCount(); i++)
@@ -229,43 +247,67 @@ void Spacewar::collisions()
 			if (ship.getHealth() == 20)
 				lifebar.setCurrentFrame(4);
 			if (ship.getHealth() == 0)
+			{
+				//game over
 				lifebar.setVisible(false); //GAME SUPPOSED TO END HERE
+				ship.setActive(false);
+				ship.setVisible(false);
+				gameover_word.setVisible(true);
+				mciSendString("play wilhelm_scream.wav", NULL, 0, NULL);
+
+
+
+			}
+				
 		}
 	//Zombie zombie = zombieArray[i];
 	// if collision between bullet and zombies
 	if (bullet.collidesWith(zombieArray[i], collisionVector))
 	{
-		bullet.setVisible(false);
-		setScore(zombie.getScore());
-		k = (rand() % 4 + 0) % 3;
-		zombieArray[i].setVisible(false);
-		zombieArray[i].setActive(false);
 
-		mciSendString("play zombie_death.wav", NULL, 0, NULL);
-		heart2.setX(zombieArray[i].getX());
-		heart2.setY(zombieArray[i].getY());
+		if (!bullet.getActive())
+		{
+			//do nothing
+		}
+			
 
-		if (!heart.getActive() == true)
+		else
 		{
-			heart.setX(heart2.getX());
-			heart.setY(heart2.getY());
+			setScore(zombie.getScore());
+			k = (rand() % 4 + 0) % 3;
+			zombieArray[i].setVisible(false);
+			zombieArray[i].setActive(false);
+
+			mciSendString("play zombie_death.wav", NULL, 0, NULL);
+			heart2.setX(zombieArray[i].getX());
+			heart2.setY(zombieArray[i].getY());
+
+			if (!heart.getActive() == true)
+			{
+				heart.setX(heart2.getX());
+				heart.setY(heart2.getY());
+			}
+			graphics->spriteBegin();
+			if (heart.getActive() == false)
+			{
+				heart.draw();
+			}
+			graphics->spriteEnd();
+			if (k == 1)
+			{
+				heart.setVisible(true);
+				heart.setActive(true);
+			}
+
+			zombieArray.erase(zombieArray.begin() + i);
+			setZombieCount(getZombieCount() - 1);
+
+			bullet.setVisible(false);
+			bullet.setActive(false);
 		}
-		graphics->spriteBegin();
-		if (heart.getActive() == false)
-		{
-			heart.draw();
-		}
-		graphics->spriteEnd();
-		if (k == 1)
-		{
-			heart.setVisible(true);
-			heart.setActive(true);
-		}
+
 		
-		zombieArray.erase(zombieArray.begin() + i);
-		setZombieCount(getZombieCount() - 1);
-
-		bullet.setActive(false);
+		
 
 		}
 	}
@@ -285,9 +327,12 @@ void Spacewar::collisions()
 		else if (ship.getHealth() == 40)
 			lifebar.setCurrentFrame(3);
 		else if (ship.getHealth() == 20)
-		{
-			
+		{			
 			lifebar.setCurrentFrame(4);
+		}
+		if (ship.getHealth() > 100)
+		{
+			ship.setHealth(100);
 		}
 		//else if (ship.getHealth() == 0)
 			//
@@ -320,8 +365,15 @@ Zombie Spacewar::spawnZombie()
 	Zombie new_zombie;
 	new_zombie.spawn();
 
+	//srand(time(0));
+
+	
+
 	if (!new_zombie.initialize(this, ZombieNS::WIDTH, ZombieNS::HEIGHT, ZombieNS::ZOMBIE_COLS, &zombieTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing zombie"));
+
+	//new_zombie.setZombieSpeed(600);
+	new_zombie.setZombieSpeed(rand()%100 + rand()%75);
 
 	return new_zombie;
 }
@@ -352,6 +404,7 @@ void Spacewar::render()
 	lifebar.draw();
 	bullet.draw();
 	blood.draw();
+	gameover_word.draw();
 	for (int i = 0; i < getZombieCount(); i++)
 	{
 		zombieArray[i].draw();
@@ -376,6 +429,7 @@ void Spacewar::releaseAll()
 	zombieTexture.onLostDevice();
 	bulletTexture.onLostDevice();
 	bloodTexture.onLostDevice();
+	gameoverTexture.onLostDevice();
     Game::releaseAll();
     return;
 }
@@ -390,6 +444,7 @@ void Spacewar::resetAll()
 	zombieTexture.onResetDevice();
 	bulletTexture.onResetDevice();
 	bloodTexture.onResetDevice();
+	gameoverTexture.onResetDevice();
     Game::resetAll();
     return;
 }
@@ -411,11 +466,24 @@ void Spacewar::timer_start()
 	clock_t timer = clock();//start timer
 
 	bool loop = true;
+	bool healthCheck = true;
 	while (loop){
 		setSecondsPassed((clock() - timer) / (double)CLOCKS_PER_SEC);  //convert computer timer to real life seconds
 
-		if ((fmod(getSecondsPassed(), 1)) == 0)
+		
+
+		if (ship.getHealth() > 0)
+			healthCheck = true;
+		else
 		{
+			healthCheck = false;
+			loop = false;
+		}
+			
+
+		if ((fmod(getSecondsPassed(), 1)) == 0 && healthCheck && getIsZombieSpawning())
+		{
+			score += 25;
 			// check if current amount of zombie is less than maximum allowed amount
 			//if true, create new zombie
 			Sleep(10);
@@ -435,7 +503,7 @@ void Spacewar::timer_start()
 			
 		}
 
-		if ((fmod(getSecondsPassed(), 10)) == 00)
+		if ((fmod(getSecondsPassed(), 1)) == 0 && healthCheck && getIsZombieSpawning())
 		{
 			// check if current amount of zombie is less than maximum allowed amount
 			//if true, create new zombie
@@ -455,6 +523,9 @@ void Spacewar::timer_start()
 			}
 
 		}
+
+		
+
 	}
 }
 //=============================================================================
@@ -466,7 +537,7 @@ void Spacewar::checkVulnerable()
 	bool loop = true;
 	while (loop){
 		if (ship.getPlayerVulnerable() == true){
-			Sleep(3000);
+			Sleep(350);
 			ship.setPlayerVulnerable(false);
 			loop = false;
 		}
@@ -478,6 +549,6 @@ void Spacewar::checkVulnerable()
 void Spacewar::displayBlood()
 {
 	blood.setVisible(true);
-	Sleep(3000);
+	Sleep(350);
 	blood.setVisible(false);
 }
